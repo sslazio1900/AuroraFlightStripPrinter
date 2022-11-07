@@ -1,0 +1,116 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Vce Out</title>
+
+    <style media="all,print">
+        @media print {
+            @page {
+                margin: 0;
+                size: landscape;
+            }
+            html {
+                margin-top: 12mm !important;
+            }
+            body {
+                margin: 0;
+            }
+        }
+        
+        html, body {
+            width: 200mm;
+            height: 26mm;
+            margin: 0;
+            padding: 0;
+            font-family: monospace;
+        }
+
+        html {
+            margin-top: 2mm;
+        }
+
+
+        table {
+            background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAjcAAABKCAYAAABHC3WYAAACLklEQVR4nO3d3UrDQBSF0RPJg8+b17sisaitEzPus9alIHR+Ov1IQ7PVwRjj+Cd4yoc9dKuqrdue6jT+49icH6zs+N60WLn27hPwGw52oJwFd+aBVbxZCWCCm0kEViFu5nCwA+UsuDMPXErcAABRxA0AEEXcAABRxA0AEEXcAABRxA0AEEXcAABRxA0AEEXcAABRxA0AEEXcAABRxA0AEEXcAABRxA0AEEXczLElDAIAEuzHMYwxLOyLOs+dfQPAKj7FTVXdrA5PcuUKgGU8ihsfVADAv+WeGwAgintuAIAortwAAFHEDQAQRdwAAFHEDQAQRdwAAFHEDQAQRdwAAFHEDQAQRdwAAFHEDQAQRdwAAFHEDQAQRdwAAFHEDQAQZbecwExjjM7zuZU5qBXnwZr0Im6As9zMLIvYLEQv4gY4iw8U4BLuuQEAorhyA0zl3gbgaq7cAABRxA0AEEXcAABRxA0AEEXcAABRxA0AEEXcAABRxA0AEEXcAABRPv1CsV8X5RX2zde6zI99wKrszV4ePX7Bk3x5lgck/lzy+8vZwaqcUc08ihubAM7j/QVwMvfcAABRptxzc/yfbt9tdh8/37MnAP7O7Cs33b9z7z5+ALicr6UAgCjiBgCIIm4AgCjiBgCIIm4AgCjiBgCIIm4AgCjiBgCIIm4AgCjiBgCIIm4AgCjiBgCIIm4AgCjiBgCIMjtutubbo/v4AeBy+4wXMMZovZLdxw8Ay6iqd1WwRLKcXxj/AAAAAElFTkSuQmCC') !important;
+            background-repeat: no-repeat !important;
+            background-size: 200mm 26mm !important;
+            margin: 0;
+            padding: 0;
+            width: 200mm;
+            height: 26mm;
+            border-spacing: 0;
+            border: 1px solid #666;
+        }
+
+            table tbody {
+                margin: 0;
+                padding: 0;
+            }
+
+            table tr td {
+                margin: 0;
+                padding: 0 4px;
+                box-sizing: border-box;
+                /*border: 1px solid #c00;*/
+                border: 1px solid transparent;
+            }
+
+        .callsign {
+            font-weight: bolder;
+            font-size: 37px;
+            text-align: center
+        }
+
+        .arrival-or-rwy {
+            font-weight: bolder;
+            font-size: 20px;
+            text-align: center;
+        }
+
+        .route {
+            font-weight: bold;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <table>
+        <tbody>
+            <tr style="height: 26px;">
+                <td style="width: 110px">A[assr]</td>
+                <td style="width: 94px">
+                    <span style="float: left">[acft-typ]</span>
+                    <span style="float: right">[rfl]</span>
+                </td>
+                <td style="width: 83px;" rowspan="4"></td>
+                <td style="width: 78px;" rowspan="3">
+                    &nbsp;<span class="arrival-or-rwy">[rwy]</span><br />
+                    &nbsp;[eobt]<br />
+                </td>
+                <td style="width: 88px;" rowspan="2"></td>
+                <td style="width: 90px;" rowspan="2"></td>
+                <td style="width: 52px" rowspan="2"></td>
+                <td rowspan="4"></td>
+            </tr>
+            <tr style="height: 25px;">
+                <td colspan="2" rowspan="2" class="callsign">[cs]</td>
+
+            </tr>
+            <tr style="height: 21px">
+                <td colspan="3">[sid] &nbsp;&nbsp; [afl]</td>
+            </tr>
+            <tr style="height: 25px">
+                <td>
+                    <span style="float: left; vertical-align: bottom">O</span>
+                    <span style="float: right">[dep]</span>
+                </td>
+                <td class="arrival-or-rwy">[dest]</td>
+                <td colspan="4" class="route">[rte]</td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

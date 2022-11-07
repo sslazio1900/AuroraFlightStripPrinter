@@ -1,0 +1,124 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Vce In</title>
+
+    <style media="all,print">
+        @media print {
+            @page {
+                margin: 0;
+                size: landscape;
+            }
+            html {
+                margin-top: 12mm !important;
+            }
+            body {
+                margin: 0;
+            }
+            table {
+                background-color: #00ffc0 !important;
+            }
+        }
+
+        html, body {
+            width: 200mm;
+            height: 26mm;
+            margin: 0;
+            padding: 0;
+            font-family: monospace;
+        }
+
+        html {
+            margin-top: 2mm;
+        }
+
+
+        table {
+            background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAjcAAABKCAYAAABHC3WYAAADcklEQVR4nO3cv47UVRgG4HeUhtKe2sQb4E+DtIiG0oYCaKxIgERop8FEuQISEykhscJwAdKg9MIFaE9JZcZMmI3L7CLj7MzOOd95nnqT+b7zyyRv5vz2DQBAJZPedplOpw1Msb5988/m59/7PutyDmPq9bm3NHcrsyx/bg/PcvnsdjsN2/SR0wXgCGYOj9YINwBAKcINAFCKcAMAlCLcAAClCDcAQCnCDQBQinADAJQi3AAApQg3AEApwg0AUIpwAwCUItwAAKUINwBAKcINAFCKcAMAlCLcAAClCDcAQCnCDQBQinADAJQi3AAApQg3AEApwg0AUIpwAwCUItwAAKUINwBAKSd6W2Y6nTYwBQDQKr/cAAClCDe7cWnEpQHgOAg3x2uS5G6SByMtDQDHqbt3bjp2MsmPST5NcjbJn6MfCABsg19ujsepJM8Wn3Q+yV/VFwaAXRFutu9ckudJfk5yJcmb6gsDwC65ltquq0m+T3I9ydPKi8I6eq12aGnuVmZR00FLhJvt+DjJ/SRfJrmQ5FXFJQGgRcLN5n2S5HGSWZIzSV5XWxA2ZNbpQbY0dyuz9PosKUq42azPkjxJ8kuSb5P8XWk52LBJhwc6a2juVmZp6UxWJYwVJ9xszryY76ckd5I8rLIUbFMv72ksz7nLuVuZpaUzWZX3gsYh3BzdZBFobiS5vPjPKABgR4Sbo1ku5tNfAwA7pudmfYr5AKBBws165sV8vynmA4D2uJb6/xTzAUDDhJvVKeYDgA4IN6uZF/M9WvylYj4AaJh3bj5sXsz3IskfSb4QbACgbcLNf5sX8/2a5F6S2xqHAaB9rqUOp5gPADol3BykmA8AOuZa6l2K+QCgc8LNvxTzAUABrqXemhfz/ZDkmmI+AOjb6OFmr5jvqySfK+YDgP6NHG72F/Od1l8DADWM+s6NYj4AKGrEcKOYDwAKG+laSjEfAAxglHCjmA8ABjHCtZRiPgAYSPVwo5gPAAZT+VpKMR8ADKhiuFHMBwADqxZu9or5Jor5AGBMld65mRfz/Z7kZZKLgg0AjKlKuNkr5vsuyS3FfAAwrt6vpRTzAQDv6DncKOYDAA7o9VpKMR8AcKgew41iPgDgvXq8lrqZ5BvFfADAYXoMN183MMMmTPpfYSOcw5h6fe4tze27sz5nBwBAJ5L8A3ShlS7euw4kAAAAAElFTkSuQmCC') !important;
+            background-repeat: no-repeat !important;
+            background-size: 200mm 26mm !important;
+            background-color: rgb(245, 254, 106);
+            margin: 0;
+            padding: 0;
+            width: 200mm;
+            height: 26mm;
+            border-spacing: 0;
+            border: 1px solid #666;
+        }
+
+            table tbody {
+                margin: 0;
+                padding: 0;
+            }
+
+            table tr td {
+                margin: 0;
+                padding: 0 4px;
+                box-sizing: border-box;
+                /*border: 1px solid #c00;*/
+                border: 1px solid transparent;
+            }
+
+        .callsign {
+            font-weight: bolder;
+            font-size: 37px;
+            text-align: center
+        }
+
+        .arrival-or-rwy {
+            font-weight: bolder;
+            font-size: 20px;
+            text-align: center;
+        }
+
+        .route {
+            font-weight: bold;
+            font-size: 14px;
+        }
+        .stand {
+            font-weight: bold;
+            font-size: 25px;
+        }
+    </style>
+</head>
+<body>
+    <table>
+        <tbody>
+            <tr style="height: 25px">
+            	<td style="width: 214px"></td>
+            	<td style="width: 168px">[dep] <span style="float: right;">[acft-typ]</span></td>
+            	<td style="width: 61px"></td>
+            	<td style="width: 47px"></td>
+            	<td style="width: 45px"></td>
+            	<td style="width: 60px"></td>
+                <td rowspan="3">
+                    <div style="text-align: right;">[p-time]</div>
+                    <br>
+                    <br>
+                    <div style="text-align: left;">[ssr]</div>
+                    <div style="text-align: right;" class="stand">[stand]</div>
+                </td>
+            </tr>
+            <tr style="height: 50px">
+            	<td></td>
+            	<td class="callsign">[cs]</td>
+            	<td></td>
+            	<td style="vertical-align: bottom;">[eta]</td>
+            	<td></td>
+            	<td style="vertical-align: bottom;" class="arrival-or-rwy">[rwy]</td>
+            </tr>
+            <tr>
+            	<td>[eta]</td>
+            	<td style="text-align: right;">[acft-cat]</td>
+            	<td></td>
+            	<td></td>
+            	<td></td>
+            	<td></td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

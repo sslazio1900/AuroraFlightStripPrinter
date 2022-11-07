@@ -1,0 +1,13 @@
+{
+  "profiles": {
+    "Aurora Enabled": {
+      "commandName": "Project"
+    },
+    "Aurora Disabled": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "AuroraEnabled": "false"
+      }
+    }
+  }
+}
