@@ -91,24 +91,30 @@ public class FlightStripPrinterViewModel : PropertyChangedBase, IViewModel
 
     public async Task PrintStrip()
     {
-        var callsign = await _aurora.GetSelectedTrafficAsync();
-        if (callsign is null)
+        var tfcData = await _aurora.GetSelectedTrafficAsync();
+        if (tfcData is null)
         {
-            _logger.LogWarning("Unable to detect the label selected in Aurora");
+            _logger.LogWarning("Unable to detect the label data selected in Aurora");
+            return;
         }
 
-        //_fileShowed = await _stripPrintService.ConvertToPdf(callsign);
-        //UiBrowser?.Navigate(new Uri($"file:///{_fileShowed}"));
-        //UiBrowser!.Visibility = System.Windows.Visibility.Visible;
+        _fileShowed = await _stripPrintService.BindAndConvertToPdf(tfcData);
+        UiBrowser?.Navigate(new Uri($"file:///{_fileShowed}"));
+        UiBrowser!.Visibility = System.Windows.Visibility.Visible;
 
-        //await Task.Delay(800);
-        //if (_fileShowed is null)
-        //{
-        //    _logger.LogError("La strip non c'è!!");
-        //    return;
-        //}
-        //_stripPrintService.PrintWholeDocument(_fileShowed);
-        //_logger.LogWarning("Flightstrip printed: {filename}", _fileShowed);
+        if (_fileShowed is null)
+        {
+            _logger.LogError("Unable to detect strip to print - {callsign}", tfcData.Callsign);
+            return;
+        }
+        if (_stripPrintService.PrintWholeDocument(_fileShowed))
+        {
+            _logger.LogInformation("Flightstrip printed - {callsign}", tfcData.Callsign);
+        }
+        else
+        {
+            _logger.LogWarning("Flightstrip print failed or refused - {callsign}", tfcData.Callsign);
+        }
     }
     #endregion
 
@@ -117,7 +123,9 @@ public class FlightStripPrinterViewModel : PropertyChangedBase, IViewModel
     {
         if (e.Key != Key.F9) return;
         _logger.LogDebug("Strip print requested");
+#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
         this.PrintStrip();
+#pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
     }
     #endregion
 

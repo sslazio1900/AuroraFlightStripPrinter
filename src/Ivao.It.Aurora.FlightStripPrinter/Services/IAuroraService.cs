@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Ivao.It.Aurora.FlightStripPrinter.Services.Models;
+using System;
 using System.Threading.Tasks;
 
 namespace Ivao.It.Aurora.FlightStripPrinter.Services;
@@ -6,5 +7,5 @@ namespace Ivao.It.Aurora.FlightStripPrinter.Services;
 public interface IAuroraService : IDisposable
 {
     Task ConnectAsync();
-    Task<string?> GetSelectedTrafficAsync();
+    Task<AuroraTraffic?> GetSelectedTrafficAsync();
 }

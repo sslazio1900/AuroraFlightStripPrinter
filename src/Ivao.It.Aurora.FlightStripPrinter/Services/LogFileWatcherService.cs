@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace Ivao.It.Aurora.FlightStripPrinter.Services;
 
-public class LogFileWatcherService : ILogFileWatcherService
+public sealed class LogFileWatcherService : ILogFileWatcherService
 {
     private FileSystemWatcher _watcher;
 
