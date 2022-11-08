@@ -44,14 +44,22 @@ public sealed class FlightStripPrintService : IFlightStripPrintService
         //La print queue name può essere salvata per poter poi stampare "silent" senza passare dalla print dialog
         if (_printQueueName is null && (dialogPrint.ShowDialog() ?? false))
         {
-            //Print
-            doc.PrintSettings.SelectPageRange(1, 1);
-            doc.PrintSettings.PrinterName = dialogPrint.PrintQueue.Name;
             _printQueueName = dialogPrint.PrintQueue.Name;
-            doc.Print();
-            return true;
         }
-        return false;
+        if (_printQueueName is null) return false;
+
+        //Print
+        doc.PrintSettings.SelectPageRange(1, 1);
+        doc.PrintSettings.PrinterName = dialogPrint.PrintQueue.Name;
+        try
+        {
+            doc.Print();
+        }
+        catch (Exception)
+        {
+            return false;
+        }
+        return true;
     }
 
     private static string BindStrip(string html, Flightplan fpl, TrafficPosition pos)
@@ -69,6 +77,10 @@ public sealed class FlightStripPrintService : IFlightStripPrintService
         var entry = routeSegments.First(i => FixRegex.IsMatch(i));
         var exit = routeSegments.Reverse().First(i => FixRegex.IsMatch(i));
 
+        //Route truncate: primi 3 blocchi (SID WPT AWY) ... ultimi 3 blocchi (AWY WPT STAR)
+        var routeChunks = fpl.Route.Split(' ');
+        var route = $"{string.Join(' ', routeChunks[..3])} ... {string.Join(' ', routeChunks[^3..])}";
+
         var strip = html
             .Replace("[cs]", pos.Callsign)
             //.Replace("[vid]", fpl.Vid)
@@ -85,7 +97,7 @@ public sealed class FlightStripPrintService : IFlightStripPrintService
             .Replace("[dest]", fpl.ArrivalIcao)
             .Replace("[tas]", fpl.CruisingSpeed)
             .Replace("[alt]", fpl.AlternateIcao)
-            .Replace("[rte]", fpl.Route)
+            .Replace("[rte]", route)
             .Replace("[rmk]", fpl.Remarks)
             //.Replace("[pob]", fpl.p)
             .Replace("[eobt]", fpl.DepartureTime)

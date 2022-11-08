@@ -80,5 +80,4 @@ public class HtmlToPdf
             File.Delete(file);
         }
     }
-    //TODO Test overwrite of the strip
 }

@@ -8,9 +8,10 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:svg="http://sharpvectors.codeplex.com/svgc/"
     Title="IVAO IT Flight Strip Printer"
-    WindowStartupLocation="CenterScreen"
+    Width="750"
     Height="750"
-    MinWidth="1200"
+    MinWidth="750"
+    WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
     <mah:MetroWindow.IconTemplate>
         <DataTemplate>

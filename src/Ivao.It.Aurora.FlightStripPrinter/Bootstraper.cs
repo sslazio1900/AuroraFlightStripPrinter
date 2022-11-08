@@ -72,7 +72,7 @@ public class Bootstrapper : BootstrapperBase
         await DisplayRootViewForAsync<ShellViewModel>(
             new Dictionary<string, object>{
                 {"Title", "IVAO IT Aurora Flight Strip Printer" },
-                {"MinWidth", 600 },
+                {"MinWidth", 750 },
                 {"MinHeight", 600 },
             });
     }

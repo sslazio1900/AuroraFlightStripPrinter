@@ -108,7 +108,7 @@ public class FlightStripPrinterViewModel : PropertyChangedBase, IViewModel
         }
         if (_stripPrintService.PrintWholeDocument(_fileShowed))
         {
-            _logger.LogInformation("Flightstrip printed - {callsign}", tfcData.Callsign);
+            _logger.LogInformation("Flightstrip print request sent - {callsign}", tfcData.Callsign);
         }
         else
         {
