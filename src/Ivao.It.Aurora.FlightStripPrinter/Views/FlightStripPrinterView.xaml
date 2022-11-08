@@ -21,10 +21,22 @@
 
         <!--  Browser  -->
         <WebBrowser x:Name="WBrowser" Visibility="Collapsed" />
+        <Label
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Visibility="{Binding ElementName=WBrowser, Path=Visibility, Converter={cv:InvertedVisibilityConverter}}">
+            Strip preview... available once a strip will be generated
+        </Label>
 
         <!--  LOGS  -->
         <DockPanel Grid.Row="1">
-            <Label DockPanel.Dock="Top">Logs</Label>
+            <Label
+                Background="SlateGray"
+                BorderBrush="DarkSlateGray"
+                BorderThickness="0,0,0,4"
+                DockPanel.Dock="Top">
+                Logs
+            </Label>
             <ListBox
                 ItemsSource="{Binding Logs}"
                 ScrollViewer.HorizontalScrollBarVisibility="Hidden"

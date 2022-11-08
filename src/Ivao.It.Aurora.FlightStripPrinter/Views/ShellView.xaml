@@ -6,10 +6,22 @@
     xmlns:local="clr-namespace:Ivao.It.Aurora.FlightStripPrinter.Views"
     xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    Title="MainWindow"
+    xmlns:svg="http://sharpvectors.codeplex.com/svgc/"
+    Title="IVAO IT Flight Strip Printer"
+    WindowStartupLocation="CenterScreen"
     Height="750"
     MinWidth="1200"
     mc:Ignorable="d">
+    <mah:MetroWindow.IconTemplate>
+        <DataTemplate>
+            <svg:SvgViewbox
+                Width="22"
+                Height="22"
+                Source="/Images/it_symbol_WHITE.svg" />
+        </DataTemplate>
+    </mah:MetroWindow.IconTemplate>
+
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="120" />
@@ -17,11 +29,27 @@
         </Grid.RowDefinitions>
 
         <!--  Header  -->
-        <StackPanel>
-            <Label>
-                Flight strips printer
-            </Label>
-        </StackPanel>
+        <DockPanel>
+            <svg:SvgViewbox
+                Height="90"
+                Margin="50,0,0,0"
+                HorizontalAlignment="Left"
+                Source="/Images/Logo_IT_WHITE.svg" />
+            <StackPanel DockPanel.Dock="Right">
+                <Label
+                    Margin="60,30,0,0"
+                    FontFamily="Poppins"
+                    FontSize="25">
+                    Flight Strips Printer
+                </Label>
+                <Label
+                    Margin="60,-10,0,0"
+                    FontFamily="Poppins"
+                    FontSize="12">
+                    v1.0.0
+                </Label>
+            </StackPanel>
+        </DockPanel>
         <ContentControl
             x:Name="ActiveItem"
             Grid.Row="1"
@@ -29,3 +57,4 @@
 
     </Grid>
 </mah:MetroWindow>
+

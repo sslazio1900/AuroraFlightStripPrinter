@@ -24,8 +24,6 @@ public class FlightStripPrinterViewModel : PropertyChangedBase, IViewModel
     private readonly KeyboardHook _hooksKeys;
 
     private string? _fileShowed;
-    private string? _printQueueName;
-
     public WebBrowser? UiBrowser;
 
     #region Binded properties
@@ -62,6 +60,7 @@ public class FlightStripPrinterViewModel : PropertyChangedBase, IViewModel
         _logWhatcher = logWhatcher;
         _stripPrintService = stripPrintService;
         _hooksKeys = new KeyboardHook();
+        Logs = new ObservableCollection<string>();
     }
 
     #region Commands
@@ -76,7 +75,7 @@ public class FlightStripPrinterViewModel : PropertyChangedBase, IViewModel
                 await _aurora.ConnectAsync();
             }
             IsConnected = true;
-            _logger.LogInformation("Connected to Aurora");
+            _logger.LogWarning("Connected to Aurora");
 
             _hooksKeys.SetPresentationSource(PresentationSourceProvider.Current!);
             _hooksKeys.KeyUp += new KeyEventHandler(HotkeyUp);
@@ -143,7 +142,9 @@ public class FlightStripPrinterViewModel : PropertyChangedBase, IViewModel
 
 public class FlightStripPrinterViewModelDesign : FlightStripPrinterViewModel
 {
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
     public FlightStripPrinterViewModelDesign() : base(null, null, null, null)
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
     {
         this.Logs = new ObservableCollection<string> {
             "12456 [INF] Ciao",

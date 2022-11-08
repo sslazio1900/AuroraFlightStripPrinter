@@ -78,38 +78,20 @@ public class MouseHook : GlobalHook
             switch (eventType)
             {
                 case MouseEventType.MouseDown:
-                    if (MouseDown != null)
-                    {
-                        MouseDown(this, new HotMouseEventArgs(e, button));
-                    }
+                    MouseDown?.Invoke(this, new HotMouseEventArgs(e, button));
                     break;
                 case MouseEventType.MouseUp:
-                    if (Click != null)
-                    {
-                        Click(this, new HotMouseEventArgs(e, button));
-                    }
-                    if (MouseUp != null)
-                    {
-                        MouseUp(this, new HotMouseEventArgs(e, button));
-                    }
+                    Click?.Invoke(this, new HotMouseEventArgs(e, button));
+                    MouseUp?.Invoke(this, new HotMouseEventArgs(e, button));
                     break;
                 case MouseEventType.DoubleClick:
-                    if (DoubleClick != null)
-                    {
-                        DoubleClick(this, new HotMouseEventArgs(e, button));
-                    }
+                    DoubleClick?.Invoke(this, new HotMouseEventArgs(e, button));
                     break;
                 case MouseEventType.MouseWheel:
-                    if (MouseWheel != null)
-                    {
-                        MouseWheel(this, e);
-                    }
+                    MouseWheel?.Invoke(this, e);
                     break;
                 case MouseEventType.MouseMove:
-                    if (MouseMove != null)
-                    {
-                        MouseMove(this, e);
-                    }
+                    MouseMove?.Invoke(this, e);
                     break;
                 default:
                     break;

@@ -1,12 +1,12 @@
 ﻿using Caliburn.Micro;
 using Ivao.It.Aurora.FlightStripPrinter.Services;
 using Ivao.It.Aurora.FlightStripPrinter.ViewModels;
-using Ivao.It.FlightStripper;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Serilog;
 using Serilog.Extensions.Logging;
+using Serilog.Filters;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
@@ -92,18 +92,22 @@ public class Bootstrapper : BootstrapperBase
 
     private void CreateLogger()
     {
+        var auroraSources = Matching.FromSource("Ivao.It.AuroraConnector");
         var traceId = Guid.NewGuid();
+
         Log.Logger = new LoggerConfiguration()
             .MinimumLevel.Verbose()
-            .WriteTo.File(
-                $"{DataFolderProvider.GetLogsFolder()}/log-{traceId}.txt",
-#if DEBUG
-                restrictedToMinimumLevel: Serilog.Events.LogEventLevel.Verbose,
-#else
-                restrictedToMinimumLevel: Serilog.Events.LogEventLevel.Information,
-#endif
-                outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level:u3}] {Message:lj}{NewLine}{Exception}",
-                flushToDiskInterval: TimeSpan.FromMilliseconds(500))
+            .WriteTo.Logger(l => l
+                .Filter.ByIncludingOnly(auroraSources)
+                .WriteTo.File($"{DataFolderProvider.GetLogsFolder()}/aurora-{traceId}.txt",
+                                outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level:u3}] {Message:lj}{NewLine}{Exception}")
+            )
+            .WriteTo.Logger(l => l
+                .Filter.ByExcluding(auroraSources)
+                .WriteTo.File($"{DataFolderProvider.GetLogsFolder()}/log-{traceId}.txt",
+                                outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss} [{Level:u3}] {Message:lj}{NewLine}{Exception}",
+                                flushToDiskInterval: TimeSpan.FromMilliseconds(500))
+            )
             .CreateLogger();
         _lf = new SerilogLoggerFactory(Log.Logger);
     }

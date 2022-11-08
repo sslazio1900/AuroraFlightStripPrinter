@@ -23,7 +23,9 @@ public abstract class GlobalHook
     [StructLayout(LayoutKind.Sequential)]
     protected class MouseHookStruct
     {
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         public POINT pt;
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         public int hwnd;
         public int wHitTestCode;
         public int dwExtraInfo;
@@ -32,7 +34,9 @@ public abstract class GlobalHook
     [StructLayout(LayoutKind.Sequential)]
     protected class MouseLLHookStruct
     {
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         public POINT pt;
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         public int mouseData;
         public int flags;
         public int time;
@@ -145,7 +149,9 @@ public abstract class GlobalHook
 
     #region Constructor
 
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
     public GlobalHook()
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
     {
 
         //Application.ApplicationExit += new EventHandler(Application_ApplicationExit);

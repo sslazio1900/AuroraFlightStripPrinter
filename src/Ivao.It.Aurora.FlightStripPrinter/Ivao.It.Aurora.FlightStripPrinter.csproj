@@ -6,10 +6,51 @@
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
     <UserSecretsId>69FC90A6-26BF-484E-9D51-50B42EE5E555</UserSecretsId>
+    <ApplicationIcon>Icons\it_symbol_WHITE_128.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Icons\it_symbol_WHITE_128.ico" />
+    <None Remove="Icons\it_symbol_WHITE_16.ico" />
+    <None Remove="Icons\it_symbol_WHITE_24.ico" />
+    <None Remove="Icons\it_symbol_WHITE_256.ico" />
+    <None Remove="Icons\it_symbol_WHITE_32.ico" />
+    <None Remove="Icons\it_symbol_WHITE_48.ico" />
+    <None Remove="Icons\it_symbol_WHITE_64.ico" />
+    <None Remove="Icons\it_symbol_WHITE_96.ico" />
+    <None Remove="Images\it_symbol_WHITE.svg" />
+    <None Remove="Images\ivao_white.svg" />
+    <None Remove="Images\Logo_IT_WHITE.svg" />
+    <None Remove="Images\logo_s_white.svg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Icons\it_symbol_WHITE_128.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Icons\it_symbol_WHITE_48.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Icons\it_symbol_WHITE_128.ico" />
+    <Resource Include="Icons\it_symbol_WHITE_16.ico" />
+    <Resource Include="Icons\it_symbol_WHITE_24.ico" />
+    <Resource Include="Icons\it_symbol_WHITE_256.ico" />
+    <Resource Include="Icons\it_symbol_WHITE_32.ico" />
+    <Resource Include="Icons\it_symbol_WHITE_64.ico" />
+    <Resource Include="Icons\it_symbol_WHITE_96.ico" />
+    <Resource Include="Images\it_symbol_WHITE.svg" />
+    <Resource Include="Images\ivao_white.svg" />
+    <Resource Include="Images\Logo_IT_WHITE.svg">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\logo_s_white.svg" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Caliburn.Micro" Version="4.0.212" />
+    <PackageReference Include="FreeSpire.PDF" Version="8.6.0" />
     <PackageReference Include="Ivao.It.AuroraConnector" Version="1.1.0-beta2" />
     <PackageReference Include="MahApps.Metro" Version="2.4.9" />
     <PackageReference Include="MahApps.Metro.IconPacks" Version="4.11.0" />
@@ -21,11 +62,37 @@
     <PackageReference Include="Serilog" Version="2.12.0" />
     <PackageReference Include="Serilog.Extensions.Logging" Version="3.1.0" />
     <PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
+    <PackageReference Include="Serilog.Sinks.Map" Version="1.0.2" />
     <PackageReference Include="SharpVectors" Version="1.8.1" />
+    <PackageReference Include="Syncfusion.HtmlToPdfConverter.Net.Windows" Version="20.3.0.56" />
+    <PackageReference Include="Syncfusion.Licensing" Version="20.3.0.56" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Ivao.It.FlightStripper\Ivao.It.FlightStripper.csproj" />
+    <None Update="Templates\blank.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Templates\template_any_in.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Templates\template_any_out.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Templates\template_lipz_in.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Templates\template_lipz_out.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Templates\template_lirf_in.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Templates\template_lirf_out.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Templates\template_trans.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

@@ -1,5 +1,4 @@
-﻿using Ivao.It.FlightStripper;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using System;
 using System.IO;
 using System.Windows.Controls;

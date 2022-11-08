@@ -21,7 +21,6 @@ public sealed class AuroraService : IAuroraService
     public async Task ConnectAsync()
     {
         await _aurora.ConnectAsync();
-        _logger.LogInformation("Connected to Aurora");
     }
 
     public async Task<AuroraTraffic?> GetSelectedTrafficAsync()

@@ -5,7 +5,7 @@ namespace Ivao.It.Aurora.FlightStripPrinter.Services;
 
 public sealed class LogFileWatcherService : ILogFileWatcherService
 {
-    private FileSystemWatcher _watcher;
+    private FileSystemWatcher? _watcher;
 
     public LogFileWatcherService()
     {
@@ -17,7 +17,7 @@ public sealed class LogFileWatcherService : ILogFileWatcherService
     {
         if (OnLogfileChanged is null) return;
         var fileToWatch = GetMostRecentLogFile(logFoldlerPath);
-        _watcher = new FileSystemWatcher(fileToWatch.DirectoryName, fileToWatch.Name);
+        _watcher = new FileSystemWatcher(fileToWatch.DirectoryName!, fileToWatch.Name);
         _watcher.Changed += OnLogfileChanged;
         _watcher.NotifyFilter = NotifyFilters.LastAccess | NotifyFilters.LastWrite;
         _watcher.EnableRaisingEvents = true;
@@ -26,7 +26,7 @@ public sealed class LogFileWatcherService : ILogFileWatcherService
 
     public void Stop()
     {
-        _watcher.Dispose();
+        _watcher?.Dispose();
     }
 
 
