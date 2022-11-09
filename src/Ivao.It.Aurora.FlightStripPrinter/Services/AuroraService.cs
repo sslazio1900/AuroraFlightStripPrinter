@@ -4,6 +4,9 @@ using Ivao.It.AuroraConnector;
 using Ivao.It.AuroraConnector.AuroraMessages.Responses;
 using Ivao.It.AuroraConnector.AuroraMessages.Requests;
 using Ivao.It.Aurora.FlightStripPrinter.Services.Models;
+using Spire.Pdf.Exporting.XPS.Schema;
+using Ivao.It.AuroraConnector.Models;
+using System.Collections.Generic;
 
 namespace Ivao.It.Aurora.FlightStripPrinter.Services;
 
@@ -25,7 +28,7 @@ public sealed class AuroraService : IAuroraService
 
     public async Task<AuroraTraffic?> GetSelectedTrafficAsync()
     {
-        var response = await _aurora.SendAsync<SelectedTrafficResponse>(new SelectedTrafficRequest());
+        var response = await _aurora.SendAsync<CallsignResponse>(new SelectedTrafficRequest());
         if (response.Callsign is null)
         {
             _logger.LogError("No Aurora traffic selected");
@@ -41,6 +44,18 @@ public sealed class AuroraService : IAuroraService
         }
 
         return new AuroraTraffic(response.Callsign, pos.LabelData, fpl.Flightplan);
+    }
+
+    public async Task<List<AirportConfig>?> GetControlledAirportsAsync()
+    {
+        var resp = await _aurora.SendAsync<ControlledAirportsRwyConfigResponse>(new ControlledAirportsRwyConfigRequest());
+        if (resp?.Airports is null)
+        {
+            _logger.LogError("Unable to read Controlled Airports");
+            return null;
+        }
+
+        return resp.Airports;
     }
 
     public void Dispose()

@@ -2,9 +2,7 @@
 using Ivao.It.Aurora.FlightStripPrinter.HotMouseAndKeys;
 using Ivao.It.Aurora.FlightStripPrinter.Services;
 using Ivao.It.AuroraConnector.Exceptions;
-using Ivao.It.FlightStripper;
 using Microsoft.Extensions.Logging;
-using Spire.Pdf;
 using System;
 using System.Collections.ObjectModel;
 using System.IO;
@@ -93,11 +91,17 @@ public class FlightStripPrinterViewModel : PropertyChangedBase, IViewModel
         var tfcData = await _aurora.GetSelectedTrafficAsync();
         if (tfcData is null)
         {
-            _logger.LogWarning("Unable to detect the label data selected in Aurora");
+            _logger.LogWarning("Unable to get selected label data from Aurora");
             return;
         }
+        var controlledApts = await _aurora.GetControlledAirportsAsync();
+        if (controlledApts is null)
+        {
+            _logger.LogWarning("Unable to get controlled airports data from Aurora");
+            controlledApts = new();
+        }
 
-        _fileShowed = await _stripPrintService.BindAndConvertToPdf(tfcData);
+        _fileShowed = await _stripPrintService.BindAndConvertToPdf(tfcData, controlledApts);
         UiBrowser?.Navigate(new Uri($"file:///{_fileShowed}"));
         UiBrowser!.Visibility = System.Windows.Visibility.Visible;
 

@@ -7,6 +7,8 @@ using Ivao.It.AuroraConnector.Models;
 using System.Text.RegularExpressions;
 using System.Linq;
 using Ivao.It.Aurora.FlightStripPrinter.Services.Models;
+using System.Collections.Generic;
+using Ivao.It.FlightStripper;
 
 namespace Ivao.It.Aurora.FlightStripPrinter.Services;
 
@@ -16,17 +18,24 @@ public sealed class FlightStripPrintService : IFlightStripPrintService
     private static Regex FixRegex = new Regex("^[A-Z]{3,5}$", RegexOptions.Compiled);
     private static Regex CleanUpRegex = new Regex("\\[[\\w-]*\\]", RegexOptions.Compiled);
 
-   
 
-    public async Task<string> BindAndConvertToPdf(AuroraTraffic tfc)
+    /// <inheritdoc/>
+    public async Task<string> BindAndConvertToPdf(AuroraTraffic tfc, List<AirportConfig> apts)
     {
         HtmlToPdf converter = new();
 
-        //TODO Dynamic Templates
-        var template = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Templates\template_any_in.html");
+        var trafficType = IsDepArrOrTrans(tfc, apts);
+        var template = GetTemplatePath(trafficType);
         var html = await File.ReadAllTextAsync(template);
-        
-        html = BindStrip(html, tfc.Flightplan, tfc.Pos);
+        var rwy = trafficType.Type switch
+        {
+            TrafficType.Departure => trafficType.Cfg?.DepRwys.Count == 1 ? trafficType.Cfg?.DepRwys[0] : null,
+            TrafficType.Arrival => trafficType.Cfg?.ArrRwys.Count == 1 ? trafficType.Cfg?.ArrRwys[0] : null,
+            TrafficType.Transit => null,
+            _ => throw new ArgumentOutOfRangeException()
+        };
+
+        html = BindStrip(html, tfc.Flightplan, tfc.Pos, rwy);
 
         var fileShowed = await converter.CreateStripInPathAsync(tfc.Callsign, html);
         await converter.ConvertToPdfAsync(tfc.Callsign);
@@ -35,6 +44,7 @@ public sealed class FlightStripPrintService : IFlightStripPrintService
     }
 
 
+    /// <inheritdoc/>
     public bool PrintWholeDocument(string filePath)
     {
         PdfDocument doc = new PdfDocument();
@@ -62,7 +72,17 @@ public sealed class FlightStripPrintService : IFlightStripPrintService
         return true;
     }
 
-    private static string BindStrip(string html, Flightplan fpl, TrafficPosition pos)
+
+
+
+    /// <summary>
+    /// Binda i dati sulla flightstrip
+    /// </summary>
+    /// <param name="html"></param>
+    /// <param name="fpl"></param>
+    /// <param name="pos"></param>
+    /// <returns></returns>
+    private static string BindStrip(string html, Flightplan fpl, TrafficPosition pos, string? rwy)
     {
         //ETA
         var deptTimeHh = int.Parse(fpl.DepartureTime[..2]);
@@ -80,6 +100,9 @@ public sealed class FlightStripPrintService : IFlightStripPrintService
         //Route truncate: primi 3 blocchi (SID WPT AWY) ... ultimi 3 blocchi (AWY WPT STAR)
         var routeChunks = fpl.Route.Split(' ');
         var route = $"{string.Join(' ', routeChunks[..3])} ... {string.Join(' ', routeChunks[^3..])}";
+
+        //TODO CHECK NEXT FROM TRAFFIC POS -> Freq? Nome? Se Freq molto utile...
+
 
         var strip = html
             .Replace("[cs]", pos.Callsign)
@@ -109,11 +132,66 @@ public sealed class FlightStripPrintService : IFlightStripPrintService
             .Replace("[afl]", pos.AltitudeLabel)
             .Replace("[exit-fix]", entry)
             .Replace("[entry-fix]", exit)
-            .Replace("[stand]", pos.CurrentGate);
-        //.Replace("[p-time]", traffic.Clearance.LastPrintTime?.ToString("HHmm"));
+            .Replace("[stand]", pos.CurrentGate)
+            .Replace("[p-time]", DateTime.UtcNow.ToString("HHmm"));
+
+        if (rwy is not null)
+        {
+            strip.Replace("[rwy]", rwy);
+        }
 
         strip = CleanUpRegex.Replace(strip, string.Empty);
 
         return strip;
+    }
+
+    /// <summary>
+    /// Trova il template. Se il volo è domestico, stampa la strip transit.
+    /// </summary>
+    /// <param name="tfc"></param>
+    /// <param name="cfg"></param>
+    /// <returns></returns>
+    private static string GetTemplatePath((TrafficType Type, AirportConfig? Cfg) trafficType)
+    {
+        string template;
+
+        switch (trafficType.Type)
+        {
+            case TrafficType.Departure:
+                template = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @$"Templates\template_{trafficType.Cfg!.Icao}_out.html");
+                return File.Exists(template)
+                    ? template
+                    : Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @$"Templates\template_{Consts.AnyTemplate}_out.html");
+            case TrafficType.Arrival:
+                template = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @$"Templates\template_{trafficType.Cfg!.Icao}_out.html");
+                return File.Exists(template)
+                    ? template
+                    : Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @$"Templates\template_{Consts.AnyTemplate}_out.html");
+            default:
+                return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Templates\template_trans.html");
+        }
+    }
+
+    /// <summary>
+    /// Partenza, arrivo o transit? Determina il tipo e restituisce l'airport config da usare
+    /// </summary>
+    /// <param name="tfc"></param>
+    /// <param name="apts"></param>
+    /// <returns></returns>
+    private static (TrafficType Type, AirportConfig? Cfg) IsDepArrOrTrans(AuroraTraffic tfc, List<AirportConfig> apts)
+    {
+        var depApt = apts.FirstOrDefault(a => a.Icao == tfc.Flightplan.DepartureIcao);
+        var arrApt = apts.FirstOrDefault(a => a.Icao == tfc.Flightplan.ArrivalIcao);
+
+        if (depApt is not null && arrApt is null) return new(TrafficType.Departure, depApt);
+        if (arrApt is not null && depApt is null) return new(TrafficType.Arrival, arrApt);
+        return new(TrafficType.Transit, null);
+    }
+
+    private enum TrafficType
+    {
+        Transit,
+        Departure,
+        Arrival,
     }
 }

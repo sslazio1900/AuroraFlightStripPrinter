@@ -51,7 +51,7 @@
   <ItemGroup>
     <PackageReference Include="Caliburn.Micro" Version="4.0.212" />
     <PackageReference Include="FreeSpire.PDF" Version="8.6.0" />
-    <PackageReference Include="Ivao.It.AuroraConnector" Version="1.1.0-beta2" />
+    <PackageReference Include="Ivao.It.AuroraConnector" Version="1.2.0-beta" />
     <PackageReference Include="MahApps.Metro" Version="2.4.9" />
     <PackageReference Include="MahApps.Metro.IconPacks" Version="4.11.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="6.0.1" />
