@@ -32,6 +32,7 @@ public sealed class FlightStripPrintService : IFlightStripPrintService
             TrafficType.Departure => trafficType.Cfg?.DepRwys.Count == 1 ? trafficType.Cfg?.DepRwys[0] : null,
             TrafficType.Arrival => trafficType.Cfg?.ArrRwys.Count == 1 ? trafficType.Cfg?.ArrRwys[0] : null,
             TrafficType.Transit => null,
+            TrafficType.Vfr => null,
             _ => throw new ArgumentOutOfRangeException()
         };
 
@@ -99,7 +100,11 @@ public sealed class FlightStripPrintService : IFlightStripPrintService
 
         //Route truncate: primi 3 blocchi (SID WPT AWY) ... ultimi 3 blocchi (AWY WPT STAR)
         var routeChunks = fpl.Route.Split(' ');
-        var route = $"{string.Join(' ', routeChunks[..3])} ... {string.Join(' ', routeChunks[^3..])}";
+        string route = fpl.Route;
+        if (routeChunks.Length >= 3)
+        {
+            route = $"{string.Join(' ', routeChunks[..3])} ... {string.Join(' ', routeChunks[^3..])}";
+        }
 
         //TODO CHECK NEXT FROM TRAFFIC POS -> Freq? Nome? Se Freq molto utile...
 
@@ -170,10 +175,7 @@ public sealed class FlightStripPrintService : IFlightStripPrintService
                     ? template
                     : Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @$"Templates\template_{Consts.AnyTemplate}_out.html");
             case TrafficType.Vfr:
-                template = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @$"Templates\template_{trafficType.Cfg!.Icao}_vfr.html");
-                return File.Exists(template)
-                    ? template
-                    : Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @$"Templates\template_{Consts.AnyTemplate}_vfrs.html");
+                    return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @$"Templates\template_{Consts.AnyTemplate}_vfr.html");
             default:
                 return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Templates\template_trans.html");
         }
