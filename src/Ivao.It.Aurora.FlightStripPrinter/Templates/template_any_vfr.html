@@ -1,0 +1,139 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Vce In</title>
+
+    <style media="all,print">
+        @media print {
+            @page {
+                margin: 0;
+                size: landscape;
+            }
+
+            html {
+                margin-top: 12mm !important;
+            }
+
+            body {
+                margin: 0;
+            }
+
+            table {
+                background-color: #00ffc0 !important;
+            }
+        }
+
+        html,
+        body {
+            width: 200mm;
+            height: 26mm;
+            margin: 0;
+            padding: 0;
+            font-family: monospace;
+        }
+
+        html {
+            margin-top: 2mm;
+        }
+
+        /*DON'T TOUCH: REPLACED BY THE APP FOR FLIGHTSTRIP ROTATION*/
+        body {}
+
+        /*END OF DON'T TOUCH ... :D */
+
+        table {
+            background-image: url('data:image/png;base64,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') !important;
+            background-repeat: no-repeat !important;
+            background-size: 200mm 26mm !important;
+            background-color: #f896e3;
+            margin: 0;
+            padding: 0;
+            width: 200mm;
+            height: 26mm;
+            border-spacing: 0;
+            border: 1px solid #666;
+        }
+
+        table tbody {
+            margin: 0;
+            padding: 0;
+        }
+
+        table tr td {
+            margin: 0;
+            padding: 0 4px;
+            box-sizing: border-box;
+            /* border: 1px solid rgb(44, 0, 204); */
+            border: 1px solid transparent;
+        }
+
+        .callsign {
+            font-weight: bolder;
+            font-size: 37px;
+            text-align: center
+        }
+
+        .arrival-or-rwy {
+            font-weight: bolder;
+            font-size: 20px;
+            text-align: center;
+        }
+
+        .route {
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .stand {
+            font-weight: bolder;
+            vertical-align: top;
+            font-size: 20px;
+            padding-top: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <table>
+        <tbody>
+            <tr style="height: 20px;">
+                <td style="width: 75px;"></td>
+                <td style="width: 115px;"></td>
+                <td style="width: 160px;">
+                    <span style="float: left;">[assr]</span>
+                    <span style="float: right;">[acft-typ]</span>
+                </td>                
+                <td rowspan="3" style="width: 450px;"></td>
+                <td rowspan="3" style="width: 60px;">
+                    <span style="font-weight: bold; margin-top: -20px; display: block; text-align: center;">[no-fpl]</span>
+                </td>
+                
+            </tr>
+            <tr style="height: 25px;">
+                <td></td>
+                <td></td>
+                <td rowspan="2" class="callsign">[cs]</td>
+                
+            </tr>
+            <tr style="height: 21px">
+                
+            </tr>
+            <tr style="height: 25px">
+                <td></td>
+                <td></td>
+                <td  class="route">
+                    <span style="float: left;">[dep2]</span>
+                    <span style="float: right;">[dest2]</span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+
+</body>
+
+</html>

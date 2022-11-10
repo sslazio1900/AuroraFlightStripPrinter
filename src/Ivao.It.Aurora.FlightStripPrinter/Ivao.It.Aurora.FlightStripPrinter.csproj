@@ -73,6 +73,9 @@
     <None Update="Templates\blank.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Templates\template_any_vfr.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Templates\template_any_in.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

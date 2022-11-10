@@ -24,7 +24,7 @@ public sealed class FlightStripPrintService : IFlightStripPrintService
     {
         HtmlToPdf converter = new();
 
-        var trafficType = IsDepArrOrTrans(tfc, apts);
+        var trafficType = GetTrafficType(tfc, apts);
         var template = GetTemplatePath(trafficType);
         var html = await File.ReadAllTextAsync(template);
         var rwy = trafficType.Type switch
@@ -115,9 +115,11 @@ public sealed class FlightStripPrintService : IFlightStripPrintService
             //.Replace("[transp]", fpl.)
             .Replace("[rules]", fpl.FlightRules)
             .Replace("[rfl]", fpl.CruisingAlt)
-            .Replace("[rf]", fpl.CruisingAlt.Replace("F", ""))
+            .Replace("[rf]", fpl.CruisingAlt?.Replace("F", ""))
             .Replace("[dep]", fpl.DepartureIcao)
+            .Replace("[dep2]", fpl.DepartureIcao?.Substring(2, 2))
             .Replace("[dest]", fpl.ArrivalIcao)
+            .Replace("[dest2]", fpl.ArrivalIcao?.Substring(2, 2))
             .Replace("[tas]", fpl.CruisingSpeed)
             .Replace("[alt]", fpl.AlternateIcao)
             .Replace("[rte]", route)
@@ -132,6 +134,7 @@ public sealed class FlightStripPrintService : IFlightStripPrintService
             .Replace("[exit-fix]", entry)
             .Replace("[entry-fix]", exit)
             .Replace("[stand]", pos.CurrentGate)
+            .Replace("[no-fpl]", fpl.Route.Contains("NO FPL") ? null : "&check;")
             .Replace("[p-time]", DateTime.UtcNow.ToString("HHmm"));
 
         if (rwy is not null)
@@ -166,6 +169,11 @@ public sealed class FlightStripPrintService : IFlightStripPrintService
                 return File.Exists(template)
                     ? template
                     : Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @$"Templates\template_{Consts.AnyTemplate}_out.html");
+            case TrafficType.Vfr:
+                template = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @$"Templates\template_{trafficType.Cfg!.Icao}_vfr.html");
+                return File.Exists(template)
+                    ? template
+                    : Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @$"Templates\template_{Consts.AnyTemplate}_vfrs.html");
             default:
                 return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Templates\template_trans.html");
         }
@@ -177,11 +185,12 @@ public sealed class FlightStripPrintService : IFlightStripPrintService
     /// <param name="tfc"></param>
     /// <param name="apts"></param>
     /// <returns></returns>
-    private static (TrafficType Type, AirportConfig? Cfg) IsDepArrOrTrans(AuroraTraffic tfc, List<AirportConfig> apts)
+    private static (TrafficType Type, AirportConfig? Cfg) GetTrafficType(AuroraTraffic tfc, List<AirportConfig> apts)
     {
         var depApt = apts.FirstOrDefault(a => a.Icao == tfc.Flightplan.DepartureIcao);
         var arrApt = apts.FirstOrDefault(a => a.Icao == tfc.Flightplan.ArrivalIcao);
 
+        if (tfc.Flightplan.FlightRules == "V") return new(TrafficType.Vfr, null);
         if (depApt is not null && arrApt is null) return new(TrafficType.Departure, depApt);
         if (arrApt is not null && depApt is null) return new(TrafficType.Arrival, arrApt);
         return new(TrafficType.Transit, null);
@@ -192,5 +201,6 @@ public sealed class FlightStripPrintService : IFlightStripPrintService
         Transit,
         Departure,
         Arrival,
+        Vfr
     }
 }
