@@ -1,5 +1,4 @@
-﻿using Spire.Pdf.Exporting.XPS.Schema;
-using System;
+﻿using System;
 using System.Globalization;
 using System.Windows.Data;
 using System.Windows.Markup;

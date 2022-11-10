@@ -51,7 +51,6 @@
 
   <ItemGroup>
     <PackageReference Include="Caliburn.Micro" Version="4.0.212" />
-    <PackageReference Include="FreeSpire.PDF" Version="8.6.0" />
     <PackageReference Include="Ivao.It.AuroraConnector" Version="1.2.1-beta" />
     <PackageReference Include="MahApps.Metro" Version="2.4.9" />
     <PackageReference Include="MahApps.Metro.IconPacks" Version="4.11.0" />
@@ -65,8 +64,9 @@
     <PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
     <PackageReference Include="Serilog.Sinks.Map" Version="1.0.2" />
     <PackageReference Include="SharpVectors" Version="1.8.1" />
-    <PackageReference Include="Syncfusion.HtmlToPdfConverter.Net.Windows" Version="20.3.0.56" />
+    <PackageReference Include="Syncfusion.HtmlToPdfConverter.WPF" Version="20.3.0.56" />
     <PackageReference Include="Syncfusion.Licensing" Version="20.3.0.56" />
+    <PackageReference Include="Syncfusion.PdfViewer.WPF" Version="20.3.0.56" />
   </ItemGroup>
 
   <ItemGroup>

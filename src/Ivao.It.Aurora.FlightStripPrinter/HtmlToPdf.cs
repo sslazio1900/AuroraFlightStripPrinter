@@ -2,6 +2,7 @@
 using Syncfusion.HtmlConverter;
 using Syncfusion.Licensing;
 using System;
+using System.Drawing;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -48,10 +49,14 @@ public class HtmlToPdf
         var sourceFilePath = Path.Combine(AppDataPath, $"{flightStripName}.html");
         var convertedFilePath = Path.Combine(AppDataPath, $"{flightStripName}.pdf");
 
-        var rotatedContents = await RotateFlightStrip(sourceFilePath);
+        //var rotatedContents = await RotateFlightStrip(sourceFilePath);
+        var stripContents = await File.ReadAllTextAsync(sourceFilePath);
 
         HtmlToPdfConverter htmlConverter = new HtmlToPdfConverter();
-        Syncfusion.Pdf.PdfDocument document = htmlConverter.Convert(rotatedContents, "localhost");
+        htmlConverter.ConverterSettings.PdfPageSize = new SizeF(300f, 45f);
+        htmlConverter.ConverterSettings.Margin.All = 0;
+        htmlConverter.ConverterSettings.PageRotateAngle = Syncfusion.Pdf.PdfPageRotateAngle.RotateAngle90;
+        Syncfusion.Pdf.PdfDocument document = htmlConverter.Convert(stripContents, "localhost");
         MemoryStream stream = new MemoryStream();
         document.Save(stream);
 

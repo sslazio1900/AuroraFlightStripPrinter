@@ -2,13 +2,16 @@
 using System;
 using System.IO;
 using System.Windows.Controls;
-using Spire.Pdf;
+//using Spire.Pdf;
 using Ivao.It.AuroraConnector.Models;
 using System.Text.RegularExpressions;
 using System.Linq;
 using Ivao.It.Aurora.FlightStripPrinter.Services.Models;
 using System.Collections.Generic;
 using Ivao.It.FlightStripper;
+using Syncfusion.Windows.PdfViewer;
+using Caliburn.Micro;
+using System.Printing;
 
 namespace Ivao.It.Aurora.FlightStripPrinter.Services;
 
@@ -44,27 +47,27 @@ public sealed class FlightStripPrintService : IFlightStripPrintService
         return fileShowed;
     }
 
-
     /// <inheritdoc/>
     public bool PrintWholeDocument(string filePath)
     {
-        PdfDocument doc = new PdfDocument();
-        doc.LoadFromFile(filePath.Replace(".html", ".pdf"));
-        PrintDialog dialogPrint = new PrintDialog();
+        PdfViewerControl viewer = new PdfViewerControl();
+        viewer.Load(filePath.Replace(".html", ".pdf"));
+        PrintDialog dialog = new PrintDialog();
 
         //La print queue name può essere salvata per poter poi stampare "silent" senza passare dalla print dialog
-        if (_printQueueName is null && (dialogPrint.ShowDialog() ?? false))
+        if (_printQueueName is null && (dialog.ShowDialog() ?? false))
         {
-            _printQueueName = dialogPrint.PrintQueue.Name;
+            _printQueueName = dialog.PrintQueue.Name;
         }
         if (_printQueueName is null) return false;
 
         //Print
-        doc.PrintSettings.SelectPageRange(1, 1);
-        doc.PrintSettings.PrinterName = dialogPrint.PrintQueue.Name;
+        viewer.PrinterSettings.PageSize = PdfViewerPrintSize.CustomScale;
+        viewer.PrinterSettings.ShowPrintStatusDialog = true;
+        viewer.PrinterSettings.ScalePercentage = 190f;
         try
         {
-            doc.Print();
+            viewer.Print(_printQueueName);
         }
         catch (Exception)
         {
@@ -72,6 +75,36 @@ public sealed class FlightStripPrintService : IFlightStripPrintService
         }
         return true;
     }
+
+
+    ///// <inheritdoc/>
+    //public bool PrintWholeDocument(string filePath)
+    //{
+    //    PdfDocument doc = new PdfDocument();
+    //    doc.LoadFromFile(filePath.Replace(".html", ".pdf"));
+    //    PrintDialog dialogPrint = new PrintDialog();
+
+    //    //La print queue name può essere salvata per poter poi stampare "silent" senza passare dalla print dialog
+    //    if (_printQueueName is null && (dialogPrint.ShowDialog() ?? false))
+    //    {
+    //        _printQueueName = dialogPrint.PrintQueue.Name;
+    //    }
+    //    if (_printQueueName is null) return false;
+
+    //    //Print
+    //    doc.PrintSettings.SelectPageRange(1, 1);
+    //    doc.PrintSettings.PrinterName = dialogPrint.PrintQueue.Name;
+    //    doc.PrintSettings.
+    //    try
+    //    {
+    //        doc.Print();
+    //    }
+    //    catch (Exception)
+    //    {
+    //        return false;
+    //    }
+    //    return true;
+    //}
 
 
 
