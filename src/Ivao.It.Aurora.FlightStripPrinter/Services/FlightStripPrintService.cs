@@ -95,15 +95,15 @@ public sealed class FlightStripPrintService : IFlightStripPrintService
 
         //Entry/Exit
         var routeSegments = fpl.Route.Split(" ", StringSplitOptions.RemoveEmptyEntries);
-        var entry = routeSegments.First(i => FixRegex.IsMatch(i));
-        var exit = routeSegments.Reverse().First(i => FixRegex.IsMatch(i));
+        var entry = routeSegments.FirstOrDefault(i => FixRegex.IsMatch(i));
+        var exit = routeSegments.Reverse().FirstOrDefault(i => FixRegex.IsMatch(i));
 
         //Route truncate: primi 3 blocchi (SID WPT AWY) ... ultimi 3 blocchi (AWY WPT STAR)
         var routeChunks = fpl.Route.Split(' ');
         string route = fpl.Route;
         if (routeChunks.Length >= 3)
         {
-            route = $"{string.Join(' ', routeChunks[..3])} ... {string.Join(' ', routeChunks[^3..])}";
+            route = $"{string.Join(' ', routeChunks[..3])}...{string.Join(' ', routeChunks[^3..])}";
         }
 
         //TODO CHECK NEXT FROM TRAFFIC POS -> Freq? Nome? Se Freq molto utile...
