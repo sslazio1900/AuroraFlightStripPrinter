@@ -15,18 +15,28 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition />
-            <RowDefinition Height="3*" />
+            <RowDefinition Height="2*" />
             <RowDefinition Height="60" />
         </Grid.RowDefinitions>
 
         <!--  Browser  -->
-        <WebBrowser x:Name="WBrowser" Visibility="Collapsed" />
-        <Label
-            HorizontalAlignment="Center"
-            VerticalAlignment="Center"
-            Visibility="{Binding ElementName=WBrowser, Path=Visibility, Converter={cv:InvertedVisibilityConverter}}">
-            Strip preview... available once a strip will be generated
-        </Label>
+        <DockPanel>
+            <Label
+                Background="SlateGray"
+                BorderBrush="DarkSlateGray"
+                BorderThickness="0,0,0,4"
+                DockPanel.Dock="Top">
+                Print preview / Last strip printed
+            </Label>
+            <WebBrowser x:Name="WBrowser" Visibility="Collapsed" />
+            <Label
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Visibility="{Binding ElementName=WBrowser, Path=Visibility, Converter={cv:InvertedVisibilityConverter}}">
+                Strip preview... available once a strip will be generated
+            </Label>
+        </DockPanel>
+
 
         <!--  LOGS  -->
         <DockPanel Grid.Row="1">
