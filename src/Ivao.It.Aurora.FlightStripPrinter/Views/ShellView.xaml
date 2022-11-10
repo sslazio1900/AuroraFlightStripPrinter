@@ -44,11 +44,10 @@
                     Flight Strips Printer
                 </Label>
                 <Label
+                    x:Name="Version"
                     Margin="60,-10,0,0"
                     FontFamily="Poppins"
-                    FontSize="12">
-                    v1.0.0
-                </Label>
+                    FontSize="12" />
             </StackPanel>
         </DockPanel>
         <ContentControl
