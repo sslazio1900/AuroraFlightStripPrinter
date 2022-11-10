@@ -127,7 +127,6 @@ public sealed class FlightStripPrintService : IFlightStripPrintService
             .Replace("[eet]", fpl.Eet)
             .Replace("[eta]", eta.ToString("HHmm"))
             .Replace("[endur]", fpl.Endurance)
-            //.Replace("[rwy]", traffic.Clearance.Rwy)
             .Replace("[sid]", pos.WaypointLabel)
             .Replace("[afl]", pos.AltitudeLabel)
             .Replace("[exit-fix]", entry)

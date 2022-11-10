@@ -4,7 +4,6 @@ using Ivao.It.AuroraConnector;
 using Ivao.It.AuroraConnector.AuroraMessages.Responses;
 using Ivao.It.AuroraConnector.AuroraMessages.Requests;
 using Ivao.It.Aurora.FlightStripPrinter.Services.Models;
-using Spire.Pdf.Exporting.XPS.Schema;
 using Ivao.It.AuroraConnector.Models;
 using System.Collections.Generic;
 
