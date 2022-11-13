@@ -49,7 +49,6 @@ public class HtmlToPdf
         var sourceFilePath = Path.Combine(AppDataPath, $"{flightStripName}.html");
         var convertedFilePath = Path.Combine(AppDataPath, $"{flightStripName}.pdf");
 
-        //var rotatedContents = await RotateFlightStrip(sourceFilePath);
         var stripContents = await File.ReadAllTextAsync(sourceFilePath);
 
         HtmlToPdfConverter htmlConverter = new HtmlToPdfConverter();
@@ -62,13 +61,6 @@ public class HtmlToPdf
         document.Save(stream);
 
         await File.WriteAllBytesAsync(convertedFilePath, stream.ToArray());
-    }
-
-    private async Task<string> RotateFlightStrip(string stripPath)
-    {
-        var contents = await File.ReadAllTextAsync(stripPath);
-        contents = contents.Replace(Consts.ToBeReplaced, Consts.StripRotationCss);
-        return contents;
     }
 
     private static void WipeoutTempFolder()
