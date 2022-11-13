@@ -1,45 +1,37 @@
 ﻿using Caliburn.Micro;
 using Ivao.It.Aurora.FlightStripPrinter.Models;
-using System.IO;
+using Ivao.It.Aurora.FlightStripPrinter.Services;
 using System.Threading.Tasks;
-using YamlDotNet.Serialization;
-using YamlDotNet.Serialization.NamingConventions;
 
 namespace Ivao.It.Aurora.FlightStripPrinter.ViewModels;
 
 public class SettingsViewModel : Screen, IViewModel
 {
-    private SettingsModel _settings;
-    public SettingsModel Settings
+    private readonly ISettingsService _settingsService;
+
+    private SettingsModel? _settings;
+    public SettingsModel? Settings
     {
-        get => _settings; set
+        get => _settings; 
+        set
         {
             _settings = value;
             NotifyOfPropertyChange();
         }
     }
 
-    public SettingsViewModel()
+    public SettingsViewModel(ISettingsService settingsService)
     {
+        _settingsService = settingsService;
     }
 
     public async Task ViewLoadedAsync()
-    {
-        if (!File.Exists(DataFolderProvider.SettingsFile))
-        {
-            Settings= new SettingsModel();
-            return;
-        }
-        var yaml = await File.ReadAllTextAsync(DataFolderProvider.SettingsFile);
-        var ser = new DeserializerBuilder().WithNamingConvention(CamelCaseNamingConvention.Instance).Build();
-        Settings = ser.Deserialize<SettingsModel>(yaml);
-    }
+        => Settings = await _settingsService.GetSettingsAsync();
 
     public async Task SaveSettingsAndClose()
     {
-        var ser = new SerializerBuilder().WithNamingConvention(CamelCaseNamingConvention.Instance).Build();
-        var yaml = ser.Serialize(Settings);
-        await File.WriteAllTextAsync(DataFolderProvider.SettingsFile, yaml);
+        if (Settings is null) return;
+        await _settingsService.StoreSettingsAsync(Settings);
         await this.TryCloseAsync();
     }
 }

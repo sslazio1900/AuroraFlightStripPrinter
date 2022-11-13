@@ -475,3 +475,4 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+/src/Ivao.It.Aurora.FlightStripPrinter/appsettings.beta.json

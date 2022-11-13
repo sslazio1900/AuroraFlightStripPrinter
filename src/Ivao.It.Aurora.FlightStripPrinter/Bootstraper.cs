@@ -47,6 +47,7 @@ public class Bootstrapper : BootstrapperBase
         //Services
         sc.AddScoped<ILogFileWatcherService, LogFileWatcherService>();
         sc.AddTransient<IAuroraService, AuroraService>();
+        sc.AddTransient<ISettingsService, SettingsService>();
         sc.AddScoped<IFlightStripPrintService, FlightStripPrintService>();
 
         //Caliburn

@@ -1,25 +1,30 @@
-﻿using System.Threading.Tasks;
-using System;
-using System.IO;
-using System.Windows.Controls;
-//using Spire.Pdf;
-using Ivao.It.AuroraConnector.Models;
-using System.Text.RegularExpressions;
-using System.Linq;
+﻿using Ivao.It.Aurora.FlightStripPrinter.Models;
 using Ivao.It.Aurora.FlightStripPrinter.Services.Models;
-using System.Collections.Generic;
+using Ivao.It.AuroraConnector.Models;
 using Ivao.It.FlightStripper;
 using Syncfusion.Windows.PdfViewer;
-using Caliburn.Micro;
-using System.Printing;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+using System.Windows.Controls;
 
 namespace Ivao.It.Aurora.FlightStripPrinter.Services;
 
 public sealed class FlightStripPrintService : IFlightStripPrintService
 {
     private string? _printQueueName;
-    private static Regex FixRegex = new Regex("^[A-Z]{3,5}$", RegexOptions.Compiled);
-    private static Regex CleanUpRegex = new Regex("\\[[\\w-]*\\]", RegexOptions.Compiled);
+    private static readonly Regex FixRegex = new Regex("^[A-Z]{3,5}$", RegexOptions.Compiled);
+    private static readonly Regex CleanUpRegex = new Regex("\\[[\\w-]*\\]", RegexOptions.Compiled);
+    private readonly ISettingsService _settingsService;
+    private SettingsModel? LastSettingsRead;
+
+    public FlightStripPrintService(ISettingsService settingsService)
+    {
+        _settingsService = settingsService;
+    }
 
 
     /// <inheritdoc/>
@@ -42,7 +47,8 @@ public sealed class FlightStripPrintService : IFlightStripPrintService
         html = BindStrip(html, tfc.Flightplan, tfc.Pos, rwy);
 
         var fileShowed = await converter.CreateStripInPathAsync(tfc.Callsign, html);
-        await converter.ConvertToPdfAsync(tfc.Callsign);
+        LastSettingsRead = await _settingsService.GetSettingsAsync();
+        await converter.ConvertToPdfAsync(tfc.Callsign, LastSettingsRead);
 
         return fileShowed;
     }
@@ -58,7 +64,8 @@ public sealed class FlightStripPrintService : IFlightStripPrintService
         //Print
         viewer.PrinterSettings.PageSize = PdfViewerPrintSize.CustomScale;
         viewer.PrinterSettings.ShowPrintStatusDialog = true;
-        viewer.PrinterSettings.ScalePercentage = 190f;
+        //viewer.PrinterSettings.ScalePercentage = 190f;
+        viewer.PrinterSettings.ScalePercentage = LastSettingsRead?.PrintZoom ?? 0;
         try
         {
             viewer.Print(_printQueueName);
@@ -75,7 +82,7 @@ public sealed class FlightStripPrintService : IFlightStripPrintService
         PrintDialog dialog = new PrintDialog();
         if (
             (forcePrinterChoice || _printQueueName is null)
-            && 
+            &&
             (dialog.ShowDialog() ?? false)
             )
         {
@@ -84,37 +91,6 @@ public sealed class FlightStripPrintService : IFlightStripPrintService
         }
         return false;
     }
-
-    ///// <inheritdoc/>
-    //public bool PrintWholeDocument(string filePath)
-    //{
-    //    PdfDocument doc = new PdfDocument();
-    //    doc.LoadFromFile(filePath.Replace(".html", ".pdf"));
-    //    PrintDialog dialogPrint = new PrintDialog();
-
-    //    //La print queue name può essere salvata per poter poi stampare "silent" senza passare dalla print dialog
-    //    if (_printQueueName is null && (dialogPrint.ShowDialog() ?? false))
-    //    {
-    //        _printQueueName = dialogPrint.PrintQueue.Name;
-    //    }
-    //    if (_printQueueName is null) return false;
-
-    //    //Print
-    //    doc.PrintSettings.SelectPageRange(1, 1);
-    //    doc.PrintSettings.PrinterName = dialogPrint.PrintQueue.Name;
-    //    doc.PrintSettings.
-    //    try
-    //    {
-    //        doc.Print();
-    //    }
-    //    catch (Exception)
-    //    {
-    //        return false;
-    //    }
-    //    return true;
-    //}
-
-
 
 
     /// <summary>
@@ -211,12 +187,12 @@ public sealed class FlightStripPrintService : IFlightStripPrintService
                     ? template
                     : Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @$"Templates\template_{Consts.AnyTemplate}_out.html");
             case TrafficType.Arrival:
-                template = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @$"Templates\template_{trafficType.Cfg!.Icao}_out.html");
+                template = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @$"Templates\template_{trafficType.Cfg!.Icao}_in.html");
                 return File.Exists(template)
                     ? template
-                    : Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @$"Templates\template_{Consts.AnyTemplate}_out.html");
+                    : Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @$"Templates\template_{Consts.AnyTemplate}_in.html");
             case TrafficType.Vfr:
-                    return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @$"Templates\template_{Consts.AnyTemplate}_vfr.html");
+                return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @$"Templates\template_{Consts.AnyTemplate}_vfr.html");
             default:
                 return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Templates\template_trans.html");
         }

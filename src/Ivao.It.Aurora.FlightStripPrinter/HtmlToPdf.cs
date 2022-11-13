@@ -1,4 +1,5 @@
-﻿using Ivao.It.FlightStripper;
+﻿using Ivao.It.Aurora.FlightStripPrinter.Models;
+using Ivao.It.FlightStripper;
 using Syncfusion.HtmlConverter;
 using Syncfusion.Licensing;
 using System;
@@ -42,7 +43,7 @@ public class HtmlToPdf
         return filepath;
     }
 
-    public async Task ConvertToPdfAsync(string flightStripName)
+    public async Task ConvertToPdfAsync(string flightStripName, SettingsModel settings)
     {
         if (AppDataPath is null) throw new InvalidOperationException("Html2Pdf component not initialized");
 
@@ -52,9 +53,13 @@ public class HtmlToPdf
         var stripContents = await File.ReadAllTextAsync(sourceFilePath);
 
         HtmlToPdfConverter htmlConverter = new HtmlToPdfConverter();
-        htmlConverter.ConverterSettings.PdfPageSize = new SizeF(300f, 65f);
-        htmlConverter.ConverterSettings.Margin.All = 0;
-        htmlConverter.ConverterSettings.Margin.Bottom = 16f;
+        htmlConverter.ConverterSettings.PdfPageSize = new SizeF(300f, 65f); //TODO Configure
+        //htmlConverter.ConverterSettings.Margin.All = 0;
+        //htmlConverter.ConverterSettings.Margin.Bottom = 16f;
+        htmlConverter.ConverterSettings.Margin.Top = settings.MarginTop;
+        htmlConverter.ConverterSettings.Margin.Right = settings.MarginRight;
+        htmlConverter.ConverterSettings.Margin.Bottom = settings.MarginBottom;
+        htmlConverter.ConverterSettings.Margin.Left = settings.MarginLeft;
         htmlConverter.ConverterSettings.PageRotateAngle = Syncfusion.Pdf.PdfPageRotateAngle.RotateAngle90;
         Syncfusion.Pdf.PdfDocument document = htmlConverter.Convert(stripContents, "localhost");
         MemoryStream stream = new MemoryStream();

@@ -84,7 +84,7 @@ public class FlightStripPrinterViewModel : PropertyChangedBase, IViewModel
         }
         catch (AuroraException ex)
         {
-            _logger.LogError("Unable to connect to Aurora");
+            _logger.LogError(ex, "Unable to connect to Aurora");
         }
     }
 
