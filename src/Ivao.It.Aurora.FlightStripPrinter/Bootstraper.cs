@@ -17,7 +17,6 @@ namespace Ivao.It.Aurora.FlightStripPrinter;
 public class Bootstrapper : BootstrapperBase
 {
     private ServiceProvider? _serviceProvider;
-    private ILoggerFactory? _lf;
 
     public Bootstrapper()
     {
@@ -26,7 +25,6 @@ public class Bootstrapper : BootstrapperBase
 
     protected override void Configure()
     {
-        CreateLogger();
         var sc = new ServiceCollection();
 
         //Config - Json like aspnetcore
@@ -37,7 +35,7 @@ public class Bootstrapper : BootstrapperBase
             .AddUserSecrets(Assembly.GetExecutingAssembly())
             .Build();
 
-        sc.AddLogging(conf => conf.AddSerilog());
+        sc.AddLogging(conf => conf.AddSerilog(CreateLogger()));
 
         //ViewModels
         sc.AddScoped<ShellViewModel>();
@@ -94,7 +92,7 @@ public class Bootstrapper : BootstrapperBase
         base.OnUnhandledException(sender, e);
     }
 
-    private void CreateLogger()
+    private Serilog.ILogger CreateLogger()
     {
         var auroraSources = Matching.FromSource("Ivao.It.AuroraConnector");
         var traceId = Guid.NewGuid();
@@ -113,6 +111,7 @@ public class Bootstrapper : BootstrapperBase
                                 flushToDiskInterval: TimeSpan.FromMilliseconds(500))
             )
             .CreateLogger();
-        _lf = new SerilogLoggerFactory(Log.Logger);
+
+        return Log.Logger;
     }
 }
