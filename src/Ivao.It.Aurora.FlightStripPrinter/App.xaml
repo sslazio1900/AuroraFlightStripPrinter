@@ -21,6 +21,16 @@
                         <Setter Property="Background" Value="SlateGray" />
                         <Setter Property="BorderBrush" Value="DarkSlateGray" />
                         <Setter Property="BorderThickness" Value="0,0,0,4" />
+                        <Setter Property="FontSize" Value="14" />
+                        <Setter Property="FontFamily" Value="Poppins" />
+                        <Setter Property="FontWeight" Value="DemiBold" />
+                    </Style>
+
+                    <Style x:Key="Header2" TargetType="Label">
+                        <Setter Property="Background" Value="SlateGray" />
+                        <Setter Property="BorderBrush" Value="DarkSlateGray" />
+                        <Setter Property="BorderThickness" Value="0,0,0,4" />
+                        <Setter Property="FontFamily" Value="Poppins" />
                     </Style>
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>

@@ -9,9 +9,9 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="Settings"
     Width="450"
-    Height="550"
+    Height="700"
     MinWidth="450"
-    MinHeight="550"
+    MinHeight="680"
     ResizeMode="CanMinimize"
     WindowStartupLocation="CenterOwner"
     mc:Ignorable="d">
@@ -24,30 +24,109 @@
         </DataTemplate>
     </mah:MetroWindow.IconTemplate>
 
+
+    <mah:MetroWindow.Resources>
+        <ResourceDictionary>
+            <Style x:Key="LabelAffixTb" TargetType="Label">
+                <Setter Property="VerticalAlignment" Value="Center" />
+                <Setter Property="Background" Value="Gray" />
+                <Setter Property="BorderThickness" Value="1" />
+                <Setter Property="BorderBrush" Value="LightGray" />
+                <Setter Property="Margin" Value="0,0,5,0" />
+            </Style>
+        </ResourceDictionary>
+    </mah:MetroWindow.Resources>
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition />
-            <RowDefinition Height=".5*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="68" />
             <RowDefinition Height="2*" />
             <RowDefinition Height="40" />
         </Grid.RowDefinitions>
 
-        <TextBlock Padding="10" TextWrapping="Wrap">
-            Use this settings to set up the flightstrip print.<LineBreak />
-            Use zoom to print at the correct size (a low DPI thermal printer should print a strip downsized from the HTML template).<LineBreak />
-            Set up margins to center the stip on the paper support, to minimize cuts and folding after print to fit the strip in their holder.</TextBlock>
+        <!--  Local Area Code  -->
+        <StackPanel>
+            <Label Style="{StaticResource Header}">Area ICAO Code</Label>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
 
-        <DockPanel Grid.Row="1">
-            <Label DockPanel.Dock="Top" Style="{StaticResource Header}">
-                Print Zoom
-            </Label>
-            <StackPanel>
-                <TextBox x:Name="Settings_PrintZoom" Margin="5" />
-            </StackPanel>
-        </DockPanel>
+                <TextBlock Padding="10" TextWrapping="Wrap">
+                    Set the first letters of your area ICAO code for the proper shortening of ICAO codes.<LineBreak />
+                    If you're controlling LIRR, set LI. Every "LI*" will be shortened to the last 2 letters. If blank, no shortening will be applied.</TextBlock>
 
-        <StackPanel Grid.Row="2">
-            <Label DockPanel.Dock="Top" Style="{StaticResource Header}">
+                <TextBox
+                    x:Name="Settings_AreaIcaoCode"
+                    Grid.Column="1"
+                    Margin="5"
+                    VerticalAlignment="Center"
+                    MaxLength="2" />
+            </Grid>
+        </StackPanel>
+
+        <!--  Sizing help  -->
+        <StackPanel Grid.Row="1">
+            <Label HorizontalContentAlignment="Center" Style="{StaticResource Header}">Strip Print Options</Label>
+            <TextBlock
+                Grid.Row="1"
+                Padding="10"
+                TextWrapping="Wrap">
+                Use this settings to set up the flightstrip print.<LineBreak />
+                Use zoom to print at the correct size (a low DPI thermal printer should print a strip downsized from the HTML template).<LineBreak />
+                Set up margins to center the stip on the paper support, to minimize cuts and folding after print to fit the strip in their holder.</TextBlock>
+        </StackPanel>
+
+        <!--  Zoom, Width & Heigth  -->
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <!--  Print Zoom  -->
+            <DockPanel>
+                <Label DockPanel.Dock="Top" Style="{StaticResource Header2}">
+                    Print Zoom
+                </Label>
+                <DockPanel>
+                    <Label DockPanel.Dock="Right" Style="{StaticResource LabelAffixTb}">
+                        %
+                    </Label>
+                    <TextBox x:Name="Settings_PrintZoom" Margin="0,4" />
+                </DockPanel>
+            </DockPanel>
+
+            <!--  Strip Width  -->
+            <DockPanel Grid.Column="1">
+                <Label DockPanel.Dock="Top" Style="{StaticResource Header2}">
+                    Strip Width
+                </Label>
+                <DockPanel>
+                    <Label DockPanel.Dock="Right" Style="{StaticResource LabelAffixTb}">mm</Label>
+                    <TextBox x:Name="Settings_StripWidth" Margin="0,4" />
+                </DockPanel>
+            </DockPanel>
+
+            <!--  Strip Heigth  -->
+            <DockPanel Grid.Column="2">
+                <Label DockPanel.Dock="Top" Style="{StaticResource Header2}">
+                    Strip Heigth
+                </Label>
+                <DockPanel>
+                    <Label DockPanel.Dock="Right" Style="{StaticResource LabelAffixTb}">mm</Label>
+                    <TextBox x:Name="Settings_StripHeigth" Margin="0,4" />
+                </DockPanel>
+            </DockPanel>
+        </Grid>
+
+        <!--  Margins  -->
+        <StackPanel Grid.Row="3">
+            <Label DockPanel.Dock="Top" Style="{StaticResource Header2}">
                 Margins
             </Label>
             <Grid Margin="5,10,5,0">
@@ -64,10 +143,6 @@
 
                 <Grid.Resources>
                     <ResourceDictionary>
-                        <Style BasedOn="{StaticResource MahApps.Styles.TextBox}" TargetType="TextBox">
-                            <Setter Property="Width" Value="80" />
-                        </Style>
-
                         <Style TargetType="Border">
                             <Setter Property="Padding" Value="5" />
                             <Setter Property="Background" Value="#4b4b4b" />
@@ -84,7 +159,10 @@
                             <icons:PackIconVaadinIcons VerticalAlignment="Center" Kind="MarginTop" />
                             <Label>Top</Label>
                         </DockPanel>
-                        <TextBox x:Name="Settings_MarginTop" />
+                        <DockPanel>
+                            <Label DockPanel.Dock="Right" Style="{StaticResource LabelAffixTb}">mm</Label>
+                            <TextBox x:Name="Settings_MarginTop" />
+                        </DockPanel>
                     </StackPanel>
                 </Border>
 
@@ -95,7 +173,10 @@
                             <icons:PackIconVaadinIcons VerticalAlignment="Center" Kind="MarginLeft" />
                             <Label>Left</Label>
                         </DockPanel>
-                        <TextBox x:Name="Settings_MarginLeft" />
+                        <DockPanel>
+                            <Label DockPanel.Dock="Right" Style="{StaticResource LabelAffixTb}">mm</Label>
+                            <TextBox x:Name="Settings_MarginLeft" />
+                        </DockPanel>
                     </StackPanel>
                 </Border>
 
@@ -106,7 +187,10 @@
                             <icons:PackIconVaadinIcons VerticalAlignment="Center" Kind="MarginBottom" />
                             <Label>Bottom</Label>
                         </DockPanel>
-                        <TextBox x:Name="Settings_MarginBottom" />
+                        <DockPanel>
+                            <Label DockPanel.Dock="Right" Style="{StaticResource LabelAffixTb}">mm</Label>
+                            <TextBox x:Name="Settings_MarginBottom" />
+                        </DockPanel>
                     </StackPanel>
                 </Border>
 
@@ -117,7 +201,10 @@
                             <icons:PackIconVaadinIcons VerticalAlignment="Center" Kind="MarginRight" />
                             <Label>Right</Label>
                         </DockPanel>
-                        <TextBox x:Name="Settings_MarginRight" />
+                        <DockPanel>
+                            <Label DockPanel.Dock="Right" Style="{StaticResource LabelAffixTb}">mm</Label>
+                            <TextBox x:Name="Settings_MarginRight" />
+                        </DockPanel>
                     </StackPanel>
                 </Border>
 
@@ -133,7 +220,8 @@
             </Grid>
         </StackPanel>
 
-        <Border Grid.Row="3" Padding="2">
+        <!--  Actions  -->
+        <Border Grid.Row="4" Padding="2">
             <Button x:Name="SaveSettingsAndClose" Content="Save and Close" />
         </Border>
     </Grid>

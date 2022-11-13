@@ -4,6 +4,27 @@ namespace Ivao.It.Aurora.FlightStripPrinter.Models;
 
 public class SettingsModel : PropertyChangedBase
 {
+    private string _areaIcaoCode;
+    public string AreaIcaoCode
+    {
+        get { return _areaIcaoCode; }
+        set { _areaIcaoCode = value; NotifyOfPropertyChange(); }
+    }
+
+    private int _stripWidth;
+    public int StripWidth
+    {
+        get { return _stripWidth; }
+        set { _stripWidth = value; NotifyOfPropertyChange(); }
+    }
+
+    private int _stripHeigth;
+    public int StripHeigth
+    {
+        get { return _stripHeigth; }
+        set { _stripHeigth = value; NotifyOfPropertyChange(); }
+    }
+
     private int _printZoom;
     public int PrintZoom
     {
