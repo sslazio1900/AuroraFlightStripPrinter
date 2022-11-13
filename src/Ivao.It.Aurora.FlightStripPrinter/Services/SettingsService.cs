@@ -19,10 +19,24 @@ public class SettingsService : ISettingsService
         return ser.Deserialize<SettingsModel>(yaml);
     }
 
+
     public async Task StoreSettingsAsync(SettingsModel settings)
     {
         var ser = new SerializerBuilder().WithNamingConvention(CamelCaseNamingConvention.Instance).Build();
         var yaml = ser.Serialize(settings);
         await File.WriteAllTextAsync(DataFolderProvider.SettingsFile, yaml);
+    }
+
+    public async Task InitNewSettingsIfNotExisting()
+    {
+        if (File.Exists(DataFolderProvider.SettingsFile)) return;
+
+        var settings = new SettingsModel
+        {
+            PrintZoom = 100,
+            StripHeigth = 65,
+            StripWidth = 300,
+        };
+        await StoreSettingsAsync(settings);
     }
 }

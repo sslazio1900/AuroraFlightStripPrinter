@@ -53,7 +53,8 @@ public class HtmlToPdf
         var stripContents = await File.ReadAllTextAsync(sourceFilePath);
 
         HtmlToPdfConverter htmlConverter = new HtmlToPdfConverter();
-        htmlConverter.ConverterSettings.PdfPageSize = new SizeF(300f, 65f); //TODO Configure
+        //htmlConverter.ConverterSettings.PdfPageSize = new SizeF(300f, 65f);
+        htmlConverter.ConverterSettings.PdfPageSize = new SizeF(settings.StripWidth, settings.StripHeigth);
         //htmlConverter.ConverterSettings.Margin.All = 0;
         //htmlConverter.ConverterSettings.Margin.Bottom = 16f;
         htmlConverter.ConverterSettings.Margin.Top = settings.MarginTop;

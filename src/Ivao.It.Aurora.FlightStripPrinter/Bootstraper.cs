@@ -71,6 +71,8 @@ public class Bootstrapper : BootstrapperBase
 
     protected override async void OnStartup(object sender, StartupEventArgs e)
     {
+        await IoC.Get<ISettingsService>().InitNewSettingsIfNotExisting();
+
         await DisplayRootViewForAsync<ShellViewModel>(
             new Dictionary<string, object>{
                 {"Title", "IVAO IT Aurora Flight Strip Printer" },

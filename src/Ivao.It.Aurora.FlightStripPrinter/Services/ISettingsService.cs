@@ -7,4 +7,5 @@ public interface ISettingsService
 {
     Task<SettingsModel> GetSettingsAsync();
     Task StoreSettingsAsync(SettingsModel settings);
+    Task InitNewSettingsIfNotExisting();
 }
