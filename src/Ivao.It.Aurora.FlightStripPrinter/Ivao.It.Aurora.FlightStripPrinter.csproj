@@ -75,6 +75,9 @@
     <None Update="appsettings.beta.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="appsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="Templates\blank.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

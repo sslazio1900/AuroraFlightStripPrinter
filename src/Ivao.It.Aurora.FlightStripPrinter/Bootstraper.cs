@@ -19,11 +19,11 @@ public class Bootstrapper : BootstrapperBase
     public Bootstrapper()
     {
         Initialize();
-        EnvironmentHandler.ForceEnvIfNotSet();
     }
 
     protected override void Configure()
     {
+        EnvironmentHandler.ForceEnvIfNotSet();
         var sc = new ServiceCollection();
 
         //Config - Json like aspnetcore
