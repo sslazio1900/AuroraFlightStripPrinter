@@ -146,6 +146,11 @@ public class FlightStripPrinterViewModel : PropertyChangedBase, IViewModel
             Logs = new ObservableCollection<string>(logs.Reverse());
         }
     }
+
+    public Task ViewLoadedAsync()
+    {
+        throw new NotImplementedException();
+    }
 }
 
 

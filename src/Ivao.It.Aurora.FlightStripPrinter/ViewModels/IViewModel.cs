@@ -1,6 +1,8 @@
-﻿namespace Ivao.It.Aurora.FlightStripPrinter.ViewModels
+﻿using System.Threading.Tasks;
+
+namespace Ivao.It.Aurora.FlightStripPrinter.ViewModels;
+
+internal interface IViewModel
 {
-    internal interface IViewModel
-    {
-    }
+    Task ViewLoadedAsync();
 }

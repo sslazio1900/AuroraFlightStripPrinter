@@ -24,4 +24,9 @@ public class ShellViewModel : Conductor<object>, IViewModel
     }
 
     public async Task ShowSettings() => await this.ShowDialogAsync<SettingsViewModel>();
+
+    public Task ViewLoadedAsync()
+    {
+        throw new System.NotImplementedException();
+    }
 }
