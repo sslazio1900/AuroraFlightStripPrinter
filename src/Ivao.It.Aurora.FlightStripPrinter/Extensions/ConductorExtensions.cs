@@ -20,8 +20,6 @@ public static class ConductorExtensions
         if (vmToActivate is null) throw new NullReferenceException(nameof(vmToActivate));
         if (viewdowManager is null) throw new NullReferenceException(nameof(viewdowManager));
 
-        await cond.ActivateItemAsync(vmToActivate, cancellationToken);
         await viewdowManager.ShowDialogAsync(vmToActivate, context, settings);
-        await cond.DeactivateItemAsync(vmToActivate, true, cancellationToken);
     }
 }
