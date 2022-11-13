@@ -1,17 +1,27 @@
 ﻿using Caliburn.Micro;
+using Ivao.It.Aurora.FlightStripPrinter.Extensions;
 using System.Reflection;
+using System.Threading.Tasks;
 
-namespace Ivao.It.Aurora.FlightStripPrinter.ViewModels
+namespace Ivao.It.Aurora.FlightStripPrinter.ViewModels;
+
+public class ShellViewModel : Conductor<object>, IViewModel
 {
-    public class ShellViewModel : Conductor<object>, IViewModel
-    {
-        public string Version => $"v{Assembly.GetExecutingAssembly().GetName().Version!.Major}.{Assembly.GetExecutingAssembly().GetName().Version!.Minor}.{Assembly.GetExecutingAssembly().GetName().Version!.Build}";
+    private readonly IWindowManager _winManager;
 
-        protected override async void OnViewLoaded(object view)
-        {
-            base.OnViewLoaded(view);
-            var vm = IoC.Get<FlightStripPrinterViewModel>();
-            await this.ActivateItemAsync(vm);
-        }
+    public ShellViewModel(IWindowManager winManager)
+    {
+        _winManager = winManager;
     }
+
+    public string Version => $"v{Assembly.GetExecutingAssembly().GetName().Version!.Major}.{Assembly.GetExecutingAssembly().GetName().Version!.Minor}.{Assembly.GetExecutingAssembly().GetName().Version!.Build}";
+
+    protected override async void OnViewLoaded(object view)
+    {
+        base.OnViewLoaded(view);
+        var vm = IoC.Get<FlightStripPrinterViewModel>();
+        await this.ActivateItemAsync(vm);
+    }
+
+    public async Task ShowSettings() => await this.ShowDialogAsync<SettingsViewModel>();
 }

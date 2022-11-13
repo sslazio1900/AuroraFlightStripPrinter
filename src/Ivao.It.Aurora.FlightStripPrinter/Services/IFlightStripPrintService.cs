@@ -19,6 +19,7 @@ public interface IFlightStripPrintService
     /// Prints the PDF file at the corresponding path
     /// </summary>
     /// <param name="filePath"></param>
+    /// <param name="forcePrinterChoice"></param>
     /// <returns></returns>
-    bool PrintWholeDocument(string filePath);
+    bool PrintWholeDocument(string filePath, bool forcePrinterChoice = false);
 }

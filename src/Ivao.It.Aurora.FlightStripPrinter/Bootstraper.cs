@@ -42,6 +42,7 @@ public class Bootstrapper : BootstrapperBase
         //ViewModels
         sc.AddScoped<ShellViewModel>();
         sc.AddScoped<FlightStripPrinterViewModel>();
+        sc.AddScoped<SettingsViewModel>();
 
         //Services
         sc.AddScoped<ILogFileWatcherService, LogFileWatcherService>();
@@ -72,7 +73,7 @@ public class Bootstrapper : BootstrapperBase
         await DisplayRootViewForAsync<ShellViewModel>(
             new Dictionary<string, object>{
                 {"Title", "IVAO IT Aurora Flight Strip Printer" },
-                {"MinWidth", 750 },
+                {"MinWidth", 800 },
                 {"MinHeight", 600 },
             });
     }

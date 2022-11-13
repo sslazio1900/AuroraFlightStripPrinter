@@ -34,10 +34,12 @@ public class FlightStripPrinterViewModel : PropertyChangedBase, IViewModel
             _isConnected = value;
             this.NotifyOfPropertyChange(() => CanConnectToAurora);
             this.NotifyOfPropertyChange(() => CanPrintStrip);
+            this.NotifyOfPropertyChange(() => CanPrintStripWithPrinterChoice);
         }
     }
     public bool CanConnectToAurora => !this.IsConnected;
     public bool CanPrintStrip => this.IsConnected;
+    public bool CanPrintStripWithPrinterChoice => this.IsConnected;
 
     private ObservableCollection<string> _logs;
     public ObservableCollection<string> Logs
@@ -86,7 +88,10 @@ public class FlightStripPrinterViewModel : PropertyChangedBase, IViewModel
         }
     }
 
-    public async Task PrintStrip()
+    public async Task PrintStrip() =>  await this.PrintStripHandler();
+    public async Task PrintStripWithPrinterChoice() =>  await this.PrintStripHandler(true);
+
+    private async Task PrintStripHandler(bool forcePrinterChoice = false)
     {
         var tfcData = await _aurora.GetSelectedTrafficAsync();
         if (tfcData is null)
@@ -110,7 +115,7 @@ public class FlightStripPrinterViewModel : PropertyChangedBase, IViewModel
             _logger.LogError("Unable to detect strip to print - {callsign}", tfcData.Callsign);
             return;
         }
-        if (_stripPrintService.PrintWholeDocument(_fileShowed))
+        if (_stripPrintService.PrintWholeDocument(_fileShowed, forcePrinterChoice))
         {
             _logger.LogInformation("Flightstrip print request sent - {callsign}", tfcData.Callsign);
         }

@@ -15,6 +15,14 @@
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
                 <!--  Theme setting  -->
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Themes/Dark.Blue.xaml" />
+
+                <ResourceDictionary>
+                    <Style x:Key="Header" TargetType="Label">
+                        <Setter Property="Background" Value="SlateGray" />
+                        <Setter Property="BorderBrush" Value="DarkSlateGray" />
+                        <Setter Property="BorderThickness" Value="0,0,0,4" />
+                    </Style>
+                </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

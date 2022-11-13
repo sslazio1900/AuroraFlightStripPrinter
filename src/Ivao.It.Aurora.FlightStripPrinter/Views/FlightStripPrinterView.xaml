@@ -21,11 +21,7 @@
 
         <!--  Browser  -->
         <DockPanel>
-            <Label
-                Background="SlateGray"
-                BorderBrush="DarkSlateGray"
-                BorderThickness="0,0,0,4"
-                DockPanel.Dock="Top">
+            <Label DockPanel.Dock="Top" Style="{StaticResource Header}">
                 Print preview / Last strip printed
             </Label>
             <WebBrowser x:Name="WBrowser" Visibility="Collapsed" />
@@ -40,11 +36,7 @@
 
         <!--  LOGS  -->
         <DockPanel Grid.Row="1">
-            <Label
-                Background="SlateGray"
-                BorderBrush="DarkSlateGray"
-                BorderThickness="0,0,0,4"
-                DockPanel.Dock="Top">
+            <Label DockPanel.Dock="Top" Style="{StaticResource Header}">
                 Logs
             </Label>
             <ListBox
@@ -64,6 +56,7 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition />
+                <ColumnDefinition />
             </Grid.ColumnDefinitions>
             <Grid.Resources>
                 <Style BasedOn="{StaticResource MahApps.Styles.Button}" TargetType="Button">
@@ -75,6 +68,10 @@
                 x:Name="PrintStrip"
                 Grid.Column="1"
                 Content="Print Current Strip (F9)" />
+            <Button
+                x:Name="PrintStripWithPrinterChoice"
+                Grid.Column="2"
+                Content="Print With Printer Setup" />
         </Grid>
     </Grid>
 </UserControl>

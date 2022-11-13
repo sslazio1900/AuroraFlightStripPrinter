@@ -48,18 +48,12 @@ public sealed class FlightStripPrintService : IFlightStripPrintService
     }
 
     /// <inheritdoc/>
-    public bool PrintWholeDocument(string filePath)
+    public bool PrintWholeDocument(string filePath, bool forcePrinterChoice = false)
     {
         PdfViewerControl viewer = new PdfViewerControl();
         viewer.Load(filePath.Replace(".html", ".pdf"));
-        PrintDialog dialog = new PrintDialog();
 
-        //La print queue name può essere salvata per poter poi stampare "silent" senza passare dalla print dialog
-        if (_printQueueName is null && (dialog.ShowDialog() ?? false))
-        {
-            _printQueueName = dialog.PrintQueue.Name;
-        }
-        if (_printQueueName is null) return false;
+        if (!SetPrinterQueue(forcePrinterChoice)) return false;
 
         //Print
         viewer.PrinterSettings.PageSize = PdfViewerPrintSize.CustomScale;
@@ -76,6 +70,20 @@ public sealed class FlightStripPrintService : IFlightStripPrintService
         return true;
     }
 
+    private bool SetPrinterQueue(bool forcePrinterChoice = false)
+    {
+        PrintDialog dialog = new PrintDialog();
+        if (
+            (forcePrinterChoice || _printQueueName is null)
+            && 
+            (dialog.ShowDialog() ?? false)
+            )
+        {
+            _printQueueName = dialog.PrintQueue.Name;
+            return true;
+        }
+        return false;
+    }
 
     ///// <inheritdoc/>
     //public bool PrintWholeDocument(string filePath)
