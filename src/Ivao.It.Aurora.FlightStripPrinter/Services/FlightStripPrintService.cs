@@ -44,10 +44,11 @@ public sealed class FlightStripPrintService : IFlightStripPrintService
             _ => throw new ArgumentOutOfRangeException()
         };
 
+        LastSettingsRead = await _settingsService.GetSettingsAsync();
+
         html = BindStrip(html, tfc.Flightplan, tfc.Pos, rwy);
 
         var fileShowed = await converter.CreateStripInPathAsync(tfc.Callsign, html);
-        LastSettingsRead = await _settingsService.GetSettingsAsync();
         await converter.ConvertToPdfAsync(tfc.Callsign, LastSettingsRead);
 
         return fileShowed;
@@ -100,7 +101,7 @@ public sealed class FlightStripPrintService : IFlightStripPrintService
     /// <param name="fpl"></param>
     /// <param name="pos"></param>
     /// <returns></returns>
-    private static string BindStrip(string html, Flightplan fpl, TrafficPosition pos, string? rwy)
+    private string BindStrip(string html, Flightplan fpl, TrafficPosition pos, string? rwy)
     {
         //ETA
         var deptTimeHh = int.Parse(fpl.DepartureTime[..2]);
@@ -123,6 +124,14 @@ public sealed class FlightStripPrintService : IFlightStripPrintService
             route = $"{string.Join(' ', routeChunks[..3])}...{string.Join(' ', routeChunks[^3..])}";
         }
 
+        var depIcao2 = fpl.DepartureIcao.StartsWith(LastSettingsRead?.AreaIcaoCode ?? string.Empty) 
+            ? fpl.DepartureIcao?.Substring(2, 2) 
+            : fpl.DepartureIcao;
+
+        var arrIcao2 = fpl.ArrivalIcao.StartsWith(LastSettingsRead?.AreaIcaoCode ?? string.Empty)
+            ? fpl.ArrivalIcao?.Substring(2, 2)
+            : fpl.ArrivalIcao;
+
         //TODO CHECK NEXT FROM TRAFFIC POS -> Freq? Nome? Se Freq molto utile...
 
 
@@ -139,9 +148,9 @@ public sealed class FlightStripPrintService : IFlightStripPrintService
             .Replace("[rfl]", fpl.CruisingAlt)
             .Replace("[rf]", fpl.CruisingAlt?.Replace("F", ""))
             .Replace("[dep]", fpl.DepartureIcao)
-            .Replace("[dep2]", fpl.DepartureIcao?.Substring(2, 2))
+            .Replace("[dep2]", depIcao2)
             .Replace("[dest]", fpl.ArrivalIcao)
-            .Replace("[dest2]", fpl.ArrivalIcao?.Substring(2, 2))
+            .Replace("[dest2]", arrIcao2)
             .Replace("[tas]", fpl.CruisingSpeed)
             .Replace("[alt]", fpl.AlternateIcao)
             .Replace("[rte]", route)
@@ -151,7 +160,7 @@ public sealed class FlightStripPrintService : IFlightStripPrintService
             .Replace("[eet]", fpl.Eet)
             .Replace("[eta]", eta.ToString("HHmm"))
             .Replace("[endur]", fpl.Endurance)
-            .Replace("[sid]", pos.WaypointLabel)
+            .Replace("[proc-wpt]", pos.WaypointLabel)
             .Replace("[afl]", pos.AltitudeLabel)
             .Replace("[exit-fix]", entry)
             .Replace("[entry-fix]", exit)
