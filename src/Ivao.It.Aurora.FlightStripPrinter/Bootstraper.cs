@@ -7,6 +7,8 @@ using Serilog;
 using Serilog.Filters;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Threading;
@@ -110,6 +112,11 @@ public class Bootstrapper : BootstrapperBase
                                 flushToDiskInterval: TimeSpan.FromMilliseconds(500))
             )
             .CreateLogger();
+
+        //Manual file retaining policy: trace-id custom named file breakes Serilogs retaining policy
+        var files = new DirectoryInfo(DataFolderProvider.GetLogsFolder()).GetFiles().OrderByDescending(f => f.LastWriteTime).Skip(20);
+        foreach (var file in files)
+            file.Delete();
 
         return Log.Logger;
     }
