@@ -33,10 +33,10 @@ public class Bootstrapper : BootstrapperBase
         IConfiguration config = new ConfigurationBuilder()
             .SetBasePath(AppContext.BaseDirectory)
             .AddJsonFile("appsettings.json", optional: true)
+            .AddJsonFile($"appsettings.{EnvironmentHandler.GetCurrentEnvironment()}.json", optional: true)
             .AddUserSecrets(Assembly.GetExecutingAssembly())
             .Build();
 
-        //sc.AddSingleton<ILoggerFactory>(_lf);
         sc.AddLogging(conf => conf.AddSerilog());
 
         //ViewModels
