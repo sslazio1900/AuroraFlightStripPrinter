@@ -147,10 +147,7 @@ public class FlightStripPrinterViewModel : PropertyChangedBase, IViewModel
         }
     }
 
-    public Task ViewLoadedAsync()
-    {
-        throw new NotImplementedException();
-    }
+    public Task ViewLoadedAsync() => Task.CompletedTask;
 }
 
 

@@ -19,6 +19,7 @@ public class Bootstrapper : BootstrapperBase
     public Bootstrapper()
     {
         Initialize();
+        EnvironmentHandler.ForceEnvIfNotSet();
     }
 
     protected override void Configure()
