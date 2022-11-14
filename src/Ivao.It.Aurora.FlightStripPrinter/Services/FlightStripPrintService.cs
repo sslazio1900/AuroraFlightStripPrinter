@@ -2,6 +2,7 @@
 using Ivao.It.Aurora.FlightStripPrinter.Services.Models;
 using Ivao.It.AuroraConnector.Models;
 using Ivao.It.FlightStripper;
+using Microsoft.Extensions.Logging;
 using Syncfusion.Windows.PdfViewer;
 using System;
 using System.Collections.Generic;
@@ -19,39 +20,49 @@ public sealed class FlightStripPrintService : IFlightStripPrintService
     private static readonly Regex FixRegex = new Regex("^[A-Z]{3,5}$", RegexOptions.Compiled);
     private static readonly Regex CleanUpRegex = new Regex("\\[[\\w-]*\\]", RegexOptions.Compiled);
     private readonly ISettingsService _settingsService;
+    private readonly ILogger<FlightStripPrintService> _logger;
     private SettingsModel? LastSettingsRead;
 
-    public FlightStripPrintService(ISettingsService settingsService)
+    public FlightStripPrintService(ISettingsService settingsService, ILogger<FlightStripPrintService> logger)
     {
         _settingsService = settingsService;
+        _logger = logger;
     }
 
 
     /// <inheritdoc/>
-    public async Task<string> BindAndConvertToPdf(AuroraTraffic tfc, List<AirportConfig> apts)
+    public async Task<string?> BindAndConvertToPdf(AuroraTraffic tfc, List<AirportConfig> apts)
     {
         HtmlToPdf converter = new();
 
-        var trafficType = GetTrafficType(tfc, apts);
-        var template = GetTemplatePath(trafficType);
-        var html = await File.ReadAllTextAsync(template);
-        var rwy = trafficType.Type switch
+        try
         {
-            TrafficType.Departure => trafficType.Cfg?.DepRwys.Count == 1 ? trafficType.Cfg?.DepRwys[0] : null,
-            TrafficType.Arrival => trafficType.Cfg?.ArrRwys.Count == 1 ? trafficType.Cfg?.ArrRwys[0] : null,
-            TrafficType.Transit => null,
-            TrafficType.Vfr => null,
-            _ => throw new ArgumentOutOfRangeException()
-        };
+            var trafficType = GetTrafficType(tfc, apts);
+            var template = GetTemplatePath(trafficType);
+            var html = await File.ReadAllTextAsync(template);
+            var rwy = trafficType.Type switch
+            {
+                TrafficType.Departure => trafficType.Cfg?.DepRwys.Count == 1 ? trafficType.Cfg?.DepRwys[0] : null,
+                TrafficType.Arrival => trafficType.Cfg?.ArrRwys.Count == 1 ? trafficType.Cfg?.ArrRwys[0] : null,
+                TrafficType.Transit => null,
+                TrafficType.Vfr => null,
+                _ => throw new ArgumentOutOfRangeException()
+            };
 
-        LastSettingsRead = await _settingsService.GetSettingsAsync();
+            LastSettingsRead = await _settingsService.GetSettingsAsync();
 
-        html = BindStrip(html, tfc.Flightplan, tfc.Pos, rwy);
+            html = BindStrip(html, tfc.Flightplan, tfc.Pos, rwy);
 
-        var fileShowed = await converter.CreateStripInPathAsync(tfc.Callsign, html);
-        await converter.ConvertToPdfAsync(tfc.Callsign, LastSettingsRead);
+            var fileShowed = await converter.CreateStripInPathAsync(tfc.Callsign, html);
+            await converter.ConvertToPdfAsync(tfc.Callsign, LastSettingsRead);
 
-        return fileShowed;
+            return fileShowed;
+        }
+        catch(Exception ex)
+        {
+            _logger.LogError(ex, "Error binding/printing strip");
+            throw;
+        }
     }
 
     /// <inheritdoc/>

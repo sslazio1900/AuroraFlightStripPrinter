@@ -13,7 +13,7 @@ public interface IFlightStripPrintService
     /// <param name="tfc"></param>
     /// <param name="apts"></param>
     /// <returns></returns>
-    Task<string> BindAndConvertToPdf(AuroraTraffic tfc, List<AirportConfig> apts);
+    Task<string?> BindAndConvertToPdf(AuroraTraffic tfc, List<AirportConfig> apts);
 
     /// <summary>
     /// Prints the PDF file at the corresponding path
