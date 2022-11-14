@@ -93,6 +93,7 @@ public class FlightStripPrinterViewModel : PropertyChangedBase, IViewModel
 
     private async Task PrintStripHandler(bool forcePrinterChoice = false)
     {
+        _logger.LogDebug("Strip print requested");
         var tfcData = await _aurora.GetSelectedTrafficAsync();
         if (tfcData is null)
         {

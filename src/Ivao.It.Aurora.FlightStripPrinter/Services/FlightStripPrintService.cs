@@ -83,9 +83,10 @@ public sealed class FlightStripPrintService : IFlightStripPrintService
         {
             viewer.Print(_printQueueName);
         }
-        catch (Exception)
+        catch (Exception e)
         {
-            _logger.LogError("Failed to print strip");
+            //TODO Separate log from user log showed pup
+            _logger.LogError(e, "Failed to print strip");
             return false;
         }
         return true;
