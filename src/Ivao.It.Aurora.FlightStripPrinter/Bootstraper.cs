@@ -33,7 +33,9 @@ public class Bootstrapper : BootstrapperBase
             .SetBasePath(AppContext.BaseDirectory)
             .AddJsonFile("appsettings.json", optional: true)
             .AddJsonFile($"appsettings.{EnvironmentHandler.GetCurrentEnvironment()}.json", optional: true)
+#if DEBUG
             .AddUserSecrets(Assembly.GetExecutingAssembly())
+#endif
             .Build();
 
         sc.AddLogging(conf => conf.AddSerilog(CreateLogger()));

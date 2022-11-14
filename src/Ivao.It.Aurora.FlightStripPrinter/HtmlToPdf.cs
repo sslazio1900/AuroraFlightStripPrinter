@@ -1,5 +1,4 @@
 ﻿using Ivao.It.Aurora.FlightStripPrinter.Models;
-using Ivao.It.FlightStripper;
 using Syncfusion.HtmlConverter;
 using Syncfusion.Licensing;
 using System;
