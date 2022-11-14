@@ -11,13 +11,13 @@
     <ROW Property="AI_REQUIRED_DOTNET_CORE_DISPLAY" MultiBuildValue="AnyCPU_Beta:6.0" ValueLocId="-"/>
     <ROW Property="AI_REQUIRED_DOTNET_CORE_VERSION" MultiBuildValue="AnyCPU_Beta:6.0" ValueLocId="-"/>
     <ROW Property="ALLUSERS" Value="1"/>
-    <ROW Property="ARPCOMMENTS" Value="This installer database contains the logic and data required to install [|ProductName]." ValueLocId="*"/>
+    <ROW Property="ARPCOMMENTS" Value="This installer contains the logic and data required to install [|ProductName]." ValueLocId="*"/>
     <ROW Property="CTRLS" Value="2"/>
     <ROW Property="Manufacturer" Value="IVAO Italy"/>
-    <ROW Property="ProductCode" Value="1033:{D3ECAB85-0810-4FE3-8667-C76F94D2D6C0} " Type="16"/>
+    <ROW Property="ProductCode" Value="1033:{D650FAC4-40D7-41FD-AAAE-DD7E9B70AE68} " Type="16"/>
     <ROW Property="ProductLanguage" Value="1033"/>
     <ROW Property="ProductName" Value="Aurora FlightStrip Printer Beta"/>
-    <ROW Property="ProductVersion" Value="1.1.0"/>
+    <ROW Property="ProductVersion" Value="1.1.1"/>
     <ROW Property="RUNAPPLICATION" Value="1" Type="4"/>
     <ROW Property="SecureCustomProperties" Value="OLDPRODUCTS;AI_NEWERPRODUCTFOUND"/>
     <ROW Property="UpgradeCode" Value="{E92EA208-06F5-49BB-98A4-B1004E0C07B1}"/>
@@ -36,10 +36,12 @@
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiDirsComponent">
     <ROW Directory="APPDIR" Directory_Parent="TARGETDIR" DefaultDir="APPDIR:." IsPseudoRoot="1"/>
+    <ROW Directory="BlinkFilesWindows_Dir" Directory_Parent="APPDIR" DefaultDir="BLINKB~1|BlinkBinariesWindows"/>
     <ROW Directory="DesktopFolder" Directory_Parent="TARGETDIR" DefaultDir="DESKTO~1|DesktopFolder" IsPseudoRoot="1"/>
     <ROW Directory="IVAOItaly_Dir" Directory_Parent="SHORTCUTDIR" DefaultDir="IVAOIT~1|IVAO Italy"/>
     <ROW Directory="SHORTCUTDIR" Directory_Parent="TARGETDIR" DefaultDir="SHORTC~1|SHORTCUTDIR" IsPseudoRoot="1"/>
     <ROW Directory="TARGETDIR" DefaultDir="SourceDir"/>
+    <ROW Directory="Templates_Dir" Directory_Parent="APPDIR" DefaultDir="TEMPLA~1|Templates"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiCompsComponent">
     <ROW Component="APPDIR" ComponentId="{E5A49316-B291-416C-A5F2-25F1756773A2}" Directory_="APPDIR" Attributes="0"/>
@@ -318,9 +320,11 @@
     <ROW Component="UIAutomationTypes.dll" ComponentId="{6804FD2C-7291-4DE8-A17E-B09A13674A8E}" Directory_="APPDIR" Attributes="0" KeyPath="UIAutomationTypes.dll"/>
     <ROW Component="WindowsBase.dll" ComponentId="{BCCEA810-7ECB-45B3-A279-59F3E30D68E8}" Directory_="APPDIR" Attributes="0" KeyPath="WindowsBase.dll"/>
     <ROW Component="YamlDotNet.dll" ComponentId="{73C35F3B-09B2-4247-8A0F-2D0A7342B72D}" Directory_="APPDIR" Attributes="0" KeyPath="YamlDotNet.dll"/>
-    <ROW Component="chrome.dll" ComponentId="{64678BBC-2C1B-4D51-BC34-ADFBC66E91DA}" Directory_="APPDIR" Attributes="256" KeyPath="chrome.dll"/>
-    <ROW Component="chrome.exe" ComponentId="{0091E86E-8A8A-4B04-9E4C-883066E3DAD4}" Directory_="APPDIR" Attributes="256" KeyPath="chrome.exe"/>
-    <ROW Component="chrome_elf.dll" ComponentId="{683F7C18-42B5-40CF-87BF-B7745448FA1B}" Directory_="APPDIR" Attributes="256" KeyPath="chrome_elf.dll"/>
+    <ROW Component="blank.html" ComponentId="{4CC301EB-9F75-455C-8ADF-846EDAB6DBB2}" Directory_="Templates_Dir" Attributes="0" KeyPath="blank.html" Type="0"/>
+    <ROW Component="chrome.dll_1" ComponentId="{04863A66-FD29-49EF-8CDD-FA87A3D3847F}" Directory_="BlinkFilesWindows_Dir" Attributes="256" KeyPath="chrome.dll_1"/>
+    <ROW Component="chrome.exe_1" ComponentId="{6E788235-5A2F-4287-951B-DBCC32F38188}" Directory_="BlinkFilesWindows_Dir" Attributes="256" KeyPath="chrome.exe_1"/>
+    <ROW Component="chrome_elf.dll_1" ComponentId="{B919CC08-9B1A-4961-8487-6C7FC08FD182}" Directory_="BlinkFilesWindows_Dir" Attributes="256" KeyPath="chrome_elf.dll_1"/>
+    <ROW Component="manifest" ComponentId="{11C77D14-89E3-44EE-87B0-F104344A7504}" Directory_="BlinkFilesWindows_Dir" Attributes="0" KeyPath="manifest_1" Type="0"/>
     <ROW Component="mscorlib.dll" ComponentId="{D82509A7-03DA-4300-A356-6656351BD629}" Directory_="APPDIR" Attributes="0" KeyPath="mscorlib.dll"/>
     <ROW Component="netstandard.dll" ComponentId="{9818073E-272D-44ED-9355-CBB1F0267D5E}" Directory_="APPDIR" Attributes="0" KeyPath="netstandard.dll"/>
   </COMPONENT>
@@ -382,7 +386,6 @@
     <ROW File="MahApps.Metro.IconPacks.MaterialLight.dll" Component_="MahApps.Metro.IconPacks.MaterialLight.dll" FileName="MAHAP~24.DLL|MahApps.Metro.IconPacks.MaterialLight.dll" Attributes="0" SourcePath="C:\Users\E.Innocenti\.nuget\packages\mahapps.metro.iconpacks\4.11.0\lib\net5.0-windows7.0\MahApps.Metro.IconPacks.MaterialLight.dll" SelfReg="false"/>
     <ROW File="netstandard.dll" Component_="netstandard.dll" FileName="NETSTA~1.DLL|netstandard.dll" Attributes="0" SourcePath="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\6.0.11\ref\net6.0\netstandard.dll" SelfReg="false"/>
     <ROW File="MahApps.Metro.IconPacks.Zondicons.dll" Component_="MahApps.Metro.IconPacks.Zondicons.dll" FileName="MAHAP~25.DLL|MahApps.Metro.IconPacks.Zondicons.dll" Attributes="0" SourcePath="C:\Users\E.Innocenti\.nuget\packages\mahapps.metro.iconpacks\4.11.0\lib\net5.0-windows7.0\MahApps.Metro.IconPacks.Zondicons.dll" SelfReg="false"/>
-    <ROW File="resources.pak" Component_="Ivao.It.Aurora.FlightStripPrinter.runtimeconfig.json" FileName="RESOUR~1.PAK|resources.pak" Attributes="0" SourcePath="..\..\src\Ivao.It.Aurora.FlightStripPrinter\bin\Beta\net6.0-windows\BlinkBinaries\resources.pak" SelfReg="false"/>
     <ROW File="MahApps.Metro.IconPacks.Modern.dll" Component_="MahApps.Metro.IconPacks.Modern.dll" FileName="MAHAP~26.DLL|MahApps.Metro.IconPacks.Modern.dll" Attributes="0" SourcePath="C:\Users\E.Innocenti\.nuget\packages\mahapps.metro.iconpacks\4.11.0\lib\net5.0-windows7.0\MahApps.Metro.IconPacks.Modern.dll" SelfReg="false"/>
     <ROW File="MahApps.Metro.IconPacks.RemixIcon.dll" Component_="MahApps.Metro.IconPacks.RemixIcon.dll" FileName="MAHAP~27.DLL|MahApps.Metro.IconPacks.RemixIcon.dll" Attributes="0" SourcePath="C:\Users\E.Innocenti\.nuget\packages\mahapps.metro.iconpacks\4.11.0\lib\net5.0-windows7.0\MahApps.Metro.IconPacks.RemixIcon.dll" SelfReg="false"/>
     <ROW File="MahApps.Metro.IconPacks.Octicons.dll" Component_="MahApps.Metro.IconPacks.Octicons.dll" FileName="MAHAP~28.DLL|MahApps.Metro.IconPacks.Octicons.dll" Attributes="0" SourcePath="C:\Users\E.Innocenti\.nuget\packages\mahapps.metro.iconpacks\4.11.0\lib\net5.0-windows7.0\MahApps.Metro.IconPacks.Octicons.dll" SelfReg="false"/>
@@ -427,7 +430,6 @@
     <ROW File="System.Console.dll" Component_="System.Console.dll" FileName="SYSTE~20.DLL|System.Console.dll" Attributes="0" SourcePath="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\6.0.11\ref\net6.0\System.Console.dll" SelfReg="false"/>
     <ROW File="PresentationFramework.Aero.dll" Component_="PresentationFramework.Aero.dll" FileName="PRESEN~3.DLL|PresentationFramework.Aero.dll" Attributes="0" SourcePath="C:\Program Files\dotnet\packs\Microsoft.WindowsDesktop.App.Ref\6.0.11\ref\net6.0\PresentationFramework.Aero.dll" SelfReg="false"/>
     <ROW File="PresentationFramework.Aero2.dll" Component_="PresentationFramework.Aero2.dll" FileName="PRESEN~4.DLL|PresentationFramework.Aero2.dll" Attributes="0" SourcePath="C:\Program Files\dotnet\packs\Microsoft.WindowsDesktop.App.Ref\6.0.11\ref\net6.0\PresentationFramework.Aero2.dll" SelfReg="false"/>
-    <ROW File="manifest" Component_="Ivao.It.Aurora.FlightStripPrinter.runtimeconfig.json" FileName="100048~1.MAN|100.0.4896.127.manifest" Attributes="0" SourcePath="..\..\src\Ivao.It.Aurora.FlightStripPrinter\bin\Beta\net6.0-windows\BlinkBinaries\100.0.4896.127.manifest" SelfReg="false"/>
     <ROW File="PresentationFramework.AeroLite.dll" Component_="PresentationFramework.AeroLite.dll" FileName="PRESEN~5.DLL|PresentationFramework.AeroLite.dll" Attributes="0" SourcePath="C:\Program Files\dotnet\packs\Microsoft.WindowsDesktop.App.Ref\6.0.11\ref\net6.0\PresentationFramework.AeroLite.dll" SelfReg="false"/>
     <ROW File="System.Windows.Extensions.dll" Component_="System.Windows.Extensions.dll" FileName="SYSTE~21.DLL|System.Windows.Extensions.dll" Attributes="0" SourcePath="C:\Program Files\dotnet\packs\Microsoft.WindowsDesktop.App.Ref\6.0.11\ref\net6.0\System.Windows.Extensions.dll" SelfReg="false"/>
     <ROW File="PresentationFramework.Classic.dll" Component_="PresentationFramework.Classic.dll" FileName="PRESEN~6.DLL|PresentationFramework.Classic.dll" Attributes="0" SourcePath="C:\Program Files\dotnet\packs\Microsoft.WindowsDesktop.App.Ref\6.0.11\ref\net6.0\PresentationFramework.Classic.dll" SelfReg="false"/>
@@ -540,7 +542,7 @@
     <ROW File="System.Runtime.Serialization.Primitives.dll" Component_="System.Runtime.Serialization.Primitives.dll" FileName="SYST~104.DLL|System.Runtime.Serialization.Primitives.dll" Attributes="0" SourcePath="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\6.0.11\ref\net6.0\System.Runtime.Serialization.Primitives.dll" SelfReg="false"/>
     <ROW File="System.Printing.dll" Component_="System.Printing.dll" FileName="SYST~105.DLL|System.Printing.dll" Attributes="0" SourcePath="C:\Program Files\dotnet\packs\Microsoft.WindowsDesktop.App.Ref\6.0.11\ref\net6.0\System.Printing.dll" SelfReg="false"/>
     <ROW File="System.Reflection.dll" Component_="System.Reflection.dll" FileName="SYST~106.DLL|System.Reflection.dll" Attributes="0" SourcePath="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\6.0.11\ref\net6.0\System.Reflection.dll" SelfReg="false"/>
-    <ROW File="template_trans.html" Component_="Ivao.It.Aurora.FlightStripPrinter.runtimeconfig.json" FileName="TEMPLA~1.HTM|template_trans.html" Attributes="0" SourcePath="..\..\src\Ivao.It.Aurora.FlightStripPrinter\bin\Beta\net6.0-windows\Templates\template_trans.html" SelfReg="false"/>
+    <ROW File="template_trans.html" Component_="blank.html" FileName="TEMPLA~6.HTM|template_trans.html" Attributes="0" SourcePath="..\..\src\Ivao.It.Aurora.FlightStripPrinter\bin\Beta\net6.0-windows\Templates\template_trans.html" SelfReg="false"/>
     <ROW File="System.Reflection.Emit.dll" Component_="System.Reflection.Emit.dll" FileName="SYST~107.DLL|System.Reflection.Emit.dll" Attributes="0" SourcePath="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\6.0.11\ref\net6.0\System.Reflection.Emit.dll" SelfReg="false"/>
     <ROW File="System.Reflection.Emit.Lightweight.dll" Component_="System.Reflection.Emit.Lightweight.dll" FileName="SYST~108.DLL|System.Reflection.Emit.Lightweight.dll" Attributes="0" SourcePath="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\6.0.11\ref\net6.0\System.Reflection.Emit.Lightweight.dll" SelfReg="false"/>
     <ROW File="System.Text.Encoding.CodePages.dll" Component_="System.Text.Encoding.CodePages.dll" FileName="SYST~109.DLL|System.Text.Encoding.CodePages.dll" Attributes="0" SourcePath="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\6.0.11\ref\net6.0\System.Text.Encoding.CodePages.dll" SelfReg="false"/>
@@ -560,7 +562,6 @@
     <ROW File="System.Runtime.InteropServices.RuntimeInformation.dll" Component_="System.Runtime.InteropServices.RuntimeInformation.dll" FileName="SYST~123.DLL|System.Runtime.InteropServices.RuntimeInformation.dll" Attributes="0" SourcePath="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\6.0.11\ref\net6.0\System.Runtime.InteropServices.RuntimeInformation.dll" SelfReg="false"/>
     <ROW File="System.Runtime.Numerics.dll" Component_="System.Runtime.Numerics.dll" FileName="SYST~124.DLL|System.Runtime.Numerics.dll" Attributes="0" SourcePath="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\6.0.11\ref\net6.0\System.Runtime.Numerics.dll" SelfReg="false"/>
     <ROW File="System.Runtime.Serialization.dll" Component_="System.Runtime.Serialization.dll" FileName="SYST~125.DLL|System.Runtime.Serialization.dll" Attributes="0" SourcePath="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\6.0.11\ref\net6.0\System.Runtime.Serialization.dll" SelfReg="false"/>
-    <ROW File="chrome_200_percent.pak" Component_="Ivao.It.Aurora.FlightStripPrinter.runtimeconfig.json" FileName="CHROME~1.PAK|chrome_200_percent.pak" Attributes="0" SourcePath="..\..\src\Ivao.It.Aurora.FlightStripPrinter\bin\Beta\net6.0-windows\BlinkBinaries\chrome_200_percent.pak" SelfReg="false"/>
     <ROW File="System.Runtime.Serialization.Formatters.dll" Component_="System.Runtime.Serialization.Formatters.dll" FileName="SYST~126.DLL|System.Runtime.Serialization.Formatters.dll" Attributes="0" SourcePath="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\6.0.11\ref\net6.0\System.Runtime.Serialization.Formatters.dll" SelfReg="false"/>
     <ROW File="System.Runtime.Serialization.Json.dll" Component_="System.Runtime.Serialization.Json.dll" FileName="SYST~127.DLL|System.Runtime.Serialization.Json.dll" Attributes="0" SourcePath="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\6.0.11\ref\net6.0\System.Runtime.Serialization.Json.dll" SelfReg="false"/>
     <ROW File="System.Runtime.Serialization.Xml.dll" Component_="System.Runtime.Serialization.Xml.dll" FileName="SYST~128.DLL|System.Runtime.Serialization.Xml.dll" Attributes="0" SourcePath="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\6.0.11\ref\net6.0\System.Runtime.Serialization.Xml.dll" SelfReg="false"/>
@@ -594,7 +595,6 @@
     <ROW File="System.Threading.Timer.dll" Component_="System.Threading.Timer.dll" FileName="SYST~156.DLL|System.Threading.Timer.dll" Attributes="0" SourcePath="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\6.0.11\ref\net6.0\System.Threading.Timer.dll" SelfReg="false"/>
     <ROW File="System.Transactions.dll" Component_="System.Transactions.dll" FileName="SYST~157.DLL|System.Transactions.dll" Attributes="0" SourcePath="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\6.0.11\ref\net6.0\System.Transactions.dll" SelfReg="false"/>
     <ROW File="System.Transactions.Local.dll" Component_="System.Transactions.Local.dll" FileName="SYST~158.DLL|System.Transactions.Local.dll" Attributes="0" SourcePath="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\6.0.11\ref\net6.0\System.Transactions.Local.dll" SelfReg="false"/>
-    <ROW File="chrome.dll" Component_="chrome.dll" FileName="chrome.dll" Attributes="0" SourcePath="..\..\src\Ivao.It.Aurora.FlightStripPrinter\bin\Beta\net6.0-windows\BlinkBinaries\chrome.dll" SelfReg="false"/>
     <ROW File="System.Web.HttpUtility.dll" Component_="System.Web.HttpUtility.dll" FileName="SYST~159.DLL|System.Web.HttpUtility.dll" Attributes="0" SourcePath="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\6.0.11\ref\net6.0\System.Web.HttpUtility.dll" SelfReg="false"/>
     <ROW File="System.Windows.Controls.Ribbon.dll" Component_="System.Windows.Controls.Ribbon.dll" FileName="SYST~160.DLL|System.Windows.Controls.Ribbon.dll" Attributes="0" SourcePath="C:\Program Files\dotnet\packs\Microsoft.WindowsDesktop.App.Ref\6.0.11\ref\net6.0\System.Windows.Controls.Ribbon.dll" SelfReg="false"/>
     <ROW File="System.Windows.Presentation.dll" Component_="System.Windows.Presentation.dll" FileName="SYST~161.DLL|System.Windows.Presentation.dll" Attributes="0" SourcePath="C:\Program Files\dotnet\packs\Microsoft.WindowsDesktop.App.Ref\6.0.11\ref\net6.0\System.Windows.Presentation.dll" SelfReg="false"/>
@@ -611,19 +611,22 @@
     <ROW File="UIAutomationTypes.dll" Component_="UIAutomationTypes.dll" FileName="UIAUTO~4.DLL|UIAutomationTypes.dll" Attributes="0" SourcePath="C:\Program Files\dotnet\packs\Microsoft.WindowsDesktop.App.Ref\6.0.11\ref\net6.0\UIAutomationTypes.dll" SelfReg="false"/>
     <ROW File="WindowsBase.dll" Component_="WindowsBase.dll" FileName="WINDOW~1.DLL|WindowsBase.dll" Attributes="0" SourcePath="C:\Program Files\dotnet\packs\Microsoft.WindowsDesktop.App.Ref\6.0.11\ref\net6.0\WindowsBase.dll" SelfReg="false"/>
     <ROW File="Ivao.It.Aurora.FlightStripPrinter.deps.json" Component_="Ivao.It.Aurora.FlightStripPrinter.runtimeconfig.json" FileName="IVAOIT~2.JSO|Ivao.It.Aurora.FlightStripPrinter.deps.json" Attributes="0" SourcePath="..\..\src\Ivao.It.Aurora.FlightStripPrinter\bin\Beta\net6.0-windows\Ivao.It.Aurora.FlightStripPrinter.deps.json" SelfReg="false"/>
-    <ROW File="blank.html" Component_="Ivao.It.Aurora.FlightStripPrinter.runtimeconfig.json" FileName="BLANK~1.HTM|blank.html" Attributes="0" SourcePath="..\..\src\Ivao.It.Aurora.FlightStripPrinter\bin\Beta\net6.0-windows\Templates\blank.html" SelfReg="false"/>
-    <ROW File="template_any_in.html" Component_="Ivao.It.Aurora.FlightStripPrinter.runtimeconfig.json" FileName="TEMPLA~2.HTM|template_any_in.html" Attributes="0" SourcePath="..\..\src\Ivao.It.Aurora.FlightStripPrinter\bin\Beta\net6.0-windows\Templates\template_any_in.html" SelfReg="false"/>
-    <ROW File="template_any_out.html" Component_="Ivao.It.Aurora.FlightStripPrinter.runtimeconfig.json" FileName="TEMPLA~3.HTM|template_any_out.html" Attributes="0" SourcePath="..\..\src\Ivao.It.Aurora.FlightStripPrinter\bin\Beta\net6.0-windows\Templates\template_any_out.html" SelfReg="false"/>
-    <ROW File="template_any_vfr.html" Component_="Ivao.It.Aurora.FlightStripPrinter.runtimeconfig.json" FileName="TEMPLA~4.HTM|template_any_vfr.html" Attributes="0" SourcePath="..\..\src\Ivao.It.Aurora.FlightStripPrinter\bin\Beta\net6.0-windows\Templates\template_any_vfr.html" SelfReg="false"/>
-    <ROW File="template_lirf_in.html" Component_="Ivao.It.Aurora.FlightStripPrinter.runtimeconfig.json" FileName="TEMPLA~5.HTM|template_lirf_in.html" Attributes="0" SourcePath="..\..\src\Ivao.It.Aurora.FlightStripPrinter\bin\Beta\net6.0-windows\Templates\template_lirf_in.html" SelfReg="false"/>
-    <ROW File="template_lirf_out.html" Component_="Ivao.It.Aurora.FlightStripPrinter.runtimeconfig.json" FileName="TEMPLA~6.HTM|template_lirf_out.html" Attributes="0" SourcePath="..\..\src\Ivao.It.Aurora.FlightStripPrinter\bin\Beta\net6.0-windows\Templates\template_lirf_out.html" SelfReg="false"/>
+    <ROW File="blank.html" Component_="blank.html" FileName="BLANK~1.HTM|blank.html" Attributes="0" SourcePath="..\..\src\Ivao.It.Aurora.FlightStripPrinter\bin\Beta\net6.0-windows\Templates\blank.html" SelfReg="false"/>
+    <ROW File="template_any_in.html" Component_="blank.html" FileName="TEMPLA~1.HTM|template_any_in.html" Attributes="0" SourcePath="..\..\src\Ivao.It.Aurora.FlightStripPrinter\bin\Beta\net6.0-windows\Templates\template_any_in.html" SelfReg="false"/>
+    <ROW File="template_any_out.html" Component_="blank.html" FileName="TEMPLA~2.HTM|template_any_out.html" Attributes="0" SourcePath="..\..\src\Ivao.It.Aurora.FlightStripPrinter\bin\Beta\net6.0-windows\Templates\template_any_out.html" SelfReg="false"/>
+    <ROW File="template_any_vfr.html" Component_="blank.html" FileName="TEMPLA~3.HTM|template_any_vfr.html" Attributes="0" SourcePath="..\..\src\Ivao.It.Aurora.FlightStripPrinter\bin\Beta\net6.0-windows\Templates\template_any_vfr.html" SelfReg="false"/>
+    <ROW File="template_lirf_in.html" Component_="blank.html" FileName="TEMPLA~4.HTM|template_lirf_in.html" Attributes="0" SourcePath="..\..\src\Ivao.It.Aurora.FlightStripPrinter\bin\Beta\net6.0-windows\Templates\template_lirf_in.html" SelfReg="false"/>
+    <ROW File="template_lirf_out.html" Component_="blank.html" FileName="TEMPLA~5.HTM|template_lirf_out.html" Attributes="0" SourcePath="..\..\src\Ivao.It.Aurora.FlightStripPrinter\bin\Beta\net6.0-windows\Templates\template_lirf_out.html" SelfReg="false"/>
     <ROW File="appsettings.json" Component_="Ivao.It.Aurora.FlightStripPrinter.runtimeconfig.json" FileName="APPSET~2.JSO|appsettings.json" Attributes="0" SourcePath="..\..\src\Ivao.It.Aurora.FlightStripPrinter\bin\Beta\net6.0-windows\appsettings.json" SelfReg="false"/>
-    <ROW File="chrome.exe" Component_="chrome.exe" FileName="chrome.exe" Attributes="0" SourcePath="..\..\src\Ivao.It.Aurora.FlightStripPrinter\bin\Beta\net6.0-windows\BlinkBinaries\chrome.exe" SelfReg="false" DigSign="true"/>
-    <ROW File="chrome_100_percent.pak" Component_="Ivao.It.Aurora.FlightStripPrinter.runtimeconfig.json" FileName="CHROME~2.PAK|chrome_100_percent.pak" Attributes="0" SourcePath="..\..\src\Ivao.It.Aurora.FlightStripPrinter\bin\Beta\net6.0-windows\BlinkBinaries\chrome_100_percent.pak" SelfReg="false"/>
-    <ROW File="chrome_elf.dll" Component_="chrome_elf.dll" FileName="CHROME~1.DLL|chrome_elf.dll" Attributes="0" SourcePath="..\..\src\Ivao.It.Aurora.FlightStripPrinter\bin\Beta\net6.0-windows\BlinkBinaries\chrome_elf.dll" SelfReg="false"/>
-    <ROW File="icudtl.dat" Component_="Ivao.It.Aurora.FlightStripPrinter.runtimeconfig.json" FileName="icudtl.dat" Attributes="0" SourcePath="..\..\src\Ivao.It.Aurora.FlightStripPrinter\bin\Beta\net6.0-windows\BlinkBinaries\icudtl.dat" SelfReg="false"/>
-    <ROW File="enUS.pak" Component_="Ivao.It.Aurora.FlightStripPrinter.runtimeconfig.json" FileName="en-US.pak" Attributes="0" SourcePath="..\..\src\Ivao.It.Aurora.FlightStripPrinter\bin\Beta\net6.0-windows\BlinkBinaries\locales\en-US.pak" SelfReg="false"/>
-    <ROW File="v8_context_snapshot.bin" Component_="Ivao.It.Aurora.FlightStripPrinter.runtimeconfig.json" FileName="V8_CON~1.BIN|v8_context_snapshot.bin" Attributes="0" SourcePath="..\..\src\Ivao.It.Aurora.FlightStripPrinter\bin\Beta\net6.0-windows\BlinkBinaries\v8_context_snapshot.bin" SelfReg="false"/>
+    <ROW File="manifest_1" Component_="manifest" FileName="100048~1.MAN|100.0.4896.127.manifest" Attributes="0" SourcePath="..\..\src\Ivao.It.Aurora.FlightStripPrinter\bin\Beta\net6.0-windows\BlinkBinariesWindows\100.0.4896.127.manifest" SelfReg="false"/>
+    <ROW File="chrome.dll_1" Component_="chrome.dll_1" FileName="chrome.dll" Attributes="0" SourcePath="..\..\src\Ivao.It.Aurora.FlightStripPrinter\bin\Beta\net6.0-windows\BlinkBinariesWindows\chrome.dll" SelfReg="false"/>
+    <ROW File="chrome.exe_1" Component_="chrome.exe_1" FileName="chrome.exe" Attributes="0" SourcePath="..\..\src\Ivao.It.Aurora.FlightStripPrinter\bin\Beta\net6.0-windows\BlinkBinariesWindows\chrome.exe" SelfReg="false" DigSign="true"/>
+    <ROW File="chrome_100_percent.pak_1" Component_="manifest" FileName="CHROME~1.PAK|chrome_100_percent.pak" Attributes="0" SourcePath="..\..\src\Ivao.It.Aurora.FlightStripPrinter\bin\Beta\net6.0-windows\BlinkBinariesWindows\chrome_100_percent.pak" SelfReg="false"/>
+    <ROW File="chrome_200_percent.pak_1" Component_="manifest" FileName="CHROME~2.PAK|chrome_200_percent.pak" Attributes="0" SourcePath="..\..\src\Ivao.It.Aurora.FlightStripPrinter\bin\Beta\net6.0-windows\BlinkBinariesWindows\chrome_200_percent.pak" SelfReg="false"/>
+    <ROW File="chrome_elf.dll_1" Component_="chrome_elf.dll_1" FileName="CHROME~1.DLL|chrome_elf.dll" Attributes="0" SourcePath="..\..\src\Ivao.It.Aurora.FlightStripPrinter\bin\Beta\net6.0-windows\BlinkBinariesWindows\chrome_elf.dll" SelfReg="false"/>
+    <ROW File="icudtl.dat_1" Component_="manifest" FileName="icudtl.dat" Attributes="0" SourcePath="..\..\src\Ivao.It.Aurora.FlightStripPrinter\bin\Beta\net6.0-windows\BlinkBinariesWindows\icudtl.dat" SelfReg="false"/>
+    <ROW File="resources.pak_1" Component_="manifest" FileName="RESOUR~1.PAK|resources.pak" Attributes="0" SourcePath="..\..\src\Ivao.It.Aurora.FlightStripPrinter\bin\Beta\net6.0-windows\BlinkBinariesWindows\resources.pak" SelfReg="false"/>
+    <ROW File="v8_context_snapshot.bin_1" Component_="manifest" FileName="V8_CON~1.BIN|v8_context_snapshot.bin" Attributes="0" SourcePath="..\..\src\Ivao.It.Aurora.FlightStripPrinter\bin\Beta\net6.0-windows\BlinkBinariesWindows\v8_context_snapshot.bin" SelfReg="false"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.BootstrOptComponent">
     <ROW BootstrOptKey="GlobalOptions" DownloadFolder="[AppDataFolder][|Manufacturer]\[|ProductName]\prerequisites" Options="2"/>
@@ -698,7 +701,7 @@
     <ROW Action="AI_SHOW_LOG" Type="65" Source="aicustact.dll" Target="LaunchLogFile" WithoutSeq="true"/>
     <ROW Action="AI_STORE_LOCATION" Type="51" Source="ARPINSTALLLOCATION" Target="[APPDIR]"/>
     <ROW Action="SET_APPDIR" Type="307" Source="APPDIR" Target="[ProgramFilesFolder][Manufacturer]\[ProductName]"/>
-    <ROW Action="SET_SHORTCUTDIR" Type="307" Source="SHORTCUTDIR" Target="[ProgramMenuFolder][ProductName]"/>
+    <ROW Action="SET_SHORTCUTDIR" Type="307" Source="SHORTCUTDIR" Target="[ProgramMenuFolder][ProductName]" MultiBuildTarget="AnyCPU_Beta:[ProgramMenuFolder][Manufacturer]\[ProductName]"/>
     <ROW Action="SET_TARGETDIR_TO_APPDIR" Type="51" Source="TARGETDIR" Target="[APPDIR]"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiFeatCompsComponent">
@@ -964,7 +967,6 @@
     <ROW Feature_="MainFeature" Component_="System.Threading.Timer.dll"/>
     <ROW Feature_="MainFeature" Component_="System.Transactions.dll"/>
     <ROW Feature_="MainFeature" Component_="System.Transactions.Local.dll"/>
-    <ROW Feature_="MainFeature" Component_="chrome.dll"/>
     <ROW Feature_="MainFeature" Component_="System.Web.HttpUtility.dll"/>
     <ROW Feature_="MainFeature" Component_="System.Windows.Controls.Ribbon.dll"/>
     <ROW Feature_="MainFeature" Component_="System.Windows.Presentation.dll"/>
@@ -980,9 +982,12 @@
     <ROW Feature_="MainFeature" Component_="UIAutomationProvider.dll"/>
     <ROW Feature_="MainFeature" Component_="UIAutomationTypes.dll"/>
     <ROW Feature_="MainFeature" Component_="WindowsBase.dll"/>
-    <ROW Feature_="MainFeature" Component_="chrome.exe"/>
-    <ROW Feature_="MainFeature" Component_="chrome_elf.dll"/>
     <ROW Feature_="MainFeature" Component_="IVAOItaly"/>
+    <ROW Feature_="MainFeature" Component_="manifest"/>
+    <ROW Feature_="MainFeature" Component_="chrome.dll_1"/>
+    <ROW Feature_="MainFeature" Component_="chrome.exe_1"/>
+    <ROW Feature_="MainFeature" Component_="chrome_elf.dll_1"/>
+    <ROW Feature_="MainFeature" Component_="blank.html"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiIconsComponent">
     <ROW Name="SystemFoldermsiexec.exe" SourcePath="&lt;AI_RES&gt;uninstall.ico" Index="0"/>
@@ -1022,7 +1027,7 @@
   <COMPONENT cid="caphyon.advinst.msicomp.MsiShortsComponent">
     <ROW Shortcut="Ivao.It.Aurora.FlightStripPrinter.e" Directory_="IVAOItaly_Dir" Name="AURORA~1.EXE|Aurora FlightStrip Printer BETA.exe" Component_="Ivao.It.Aurora.FlightStripPrinter.exe" Target="[#Ivao.It.Aurora.FlightStripPrinter.exe]" Description="Ivao.It.Aurora.FlightStripPrinter.exe" Hotkey="0" IconIndex="0" ShowCmd="1" WkDir="APPDIR"/>
     <ROW Shortcut="Ivao.It.Aurora.FlightStripPrinter_1" Directory_="DesktopFolder" Name="AURORA~1.EXE|Aurora FlightStrip Printer BETA.exe" Component_="Ivao.It.Aurora.FlightStripPrinter.exe" Target="[#Ivao.It.Aurora.FlightStripPrinter.exe]" Description="Ivao.It.Aurora.FlightStripPrinter.exe" Hotkey="0" IconIndex="0" ShowCmd="1" WkDir="APPDIR"/>
-    <ROW Shortcut="UninstallProductNameProductVersion" Directory_="IVAOItaly_Dir" Name="UNINST~1.0|Uninstall [|ProductName] [|ProductVersion]" Component_="chrome_elf.dll" Target="[SystemFolder]msiexec.exe" Arguments="/x [ProductCode]" Hotkey="0" Icon_="SystemFoldermsiexec.exe" IconIndex="0" ShowCmd="1"/>
+    <ROW Shortcut="UninstallProductNameProductVersion" Directory_="IVAOItaly_Dir" Name="UNINST~1.0|Uninstall [|ProductName] [|ProductVersion]" Component_="Caliburn.Micro.Platform.Core.dll" Target="[SystemFolder]msiexec.exe" Arguments="/x [ProductCode]" Hotkey="0" Icon_="SystemFoldermsiexec.exe" IconIndex="0" ShowCmd="1"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiThemeComponent">
     <ATTRIBUTE name="UsedTheme" value="classic"/>

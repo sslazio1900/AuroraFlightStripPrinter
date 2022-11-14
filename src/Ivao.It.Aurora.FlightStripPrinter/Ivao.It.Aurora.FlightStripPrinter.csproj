@@ -7,7 +7,7 @@
     <UseWPF>true</UseWPF>
     <UserSecretsId>69FC90A6-26BF-484E-9D51-50B42EE5E555</UserSecretsId>
     <ApplicationIcon>Icons\it_symbol_WHITE_128.ico</ApplicationIcon>
-    <Version>1.1.0-beta</Version>
+    <Version>1.1.1-beta</Version>
     <Configurations>Debug;Release;Beta</Configurations>
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>

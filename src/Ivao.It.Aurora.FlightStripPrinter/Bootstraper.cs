@@ -95,6 +95,7 @@ public class Bootstrapper : BootstrapperBase
         base.OnUnhandledException(sender, e);
     }
 
+
     private Serilog.ILogger CreateLogger()
     {
         var auroraSources = Matching.FromSource("Ivao.It.AuroraConnector");

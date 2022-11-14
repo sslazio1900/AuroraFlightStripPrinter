@@ -56,11 +56,12 @@ public sealed class FlightStripPrintService : IFlightStripPrintService
             var fileShowed = await converter.CreateStripInPathAsync(tfc.Callsign, html);
             await converter.ConvertToPdfAsync(tfc.Callsign, LastSettingsRead);
 
+            _logger.LogDebug("Strip generated for {callsign}", tfc.Callsign);
             return fileShowed;
         }
         catch(Exception ex)
         {
-            _logger.LogError(ex, "Error binding/printing strip");
+            _logger.LogError(ex, "Error binding/printing strip for {callsign}", tfc.Callsign);
             throw;
         }
     }
@@ -84,6 +85,7 @@ public sealed class FlightStripPrintService : IFlightStripPrintService
         }
         catch (Exception)
         {
+            _logger.LogError("Failed to print strip");
             return false;
         }
         return true;
