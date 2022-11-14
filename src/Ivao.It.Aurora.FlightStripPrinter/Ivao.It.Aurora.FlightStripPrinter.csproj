@@ -9,6 +9,7 @@
     <ApplicationIcon>Icons\it_symbol_WHITE_128.ico</ApplicationIcon>
     <Version>1.1.0-beta</Version>
     <Configurations>Debug;Release;Beta</Configurations>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
 
   <ItemGroup>
@@ -72,6 +73,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="app.manifest">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="appsettings.beta.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
