@@ -1,12 +1,29 @@
 {
   "profiles": {
-    "Aurora Enabled": {
-      "commandName": "Project"
-    },
-    "Aurora Disabled": {
+    "Beta Aurora Enabled": {
       "commandName": "Project",
       "environmentVariables": {
+        "Environment": "beta"
+      }
+    },
+    "Beta Aurora Disabled": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "Environment": "beta",
         "AuroraEnabled": "false"
+      }
+    },
+    "Debug Aurora Disabled": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "AuroraEnabled": "false",
+        "Environment": "debug"
+      }
+    },
+    "Debug Aurora Enabled": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "Environment": "debug"
       }
     }
   }

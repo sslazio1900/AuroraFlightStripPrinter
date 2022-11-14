@@ -84,7 +84,7 @@ public class FlightStripPrinterViewModel : PropertyChangedBase, IViewModel
         }
         catch (AuroraException ex)
         {
-            _logger.LogError("Unable to connect to Aurora");
+            _logger.LogError(ex, "Unable to connect to Aurora");
         }
     }
 
@@ -93,6 +93,7 @@ public class FlightStripPrinterViewModel : PropertyChangedBase, IViewModel
 
     private async Task PrintStripHandler(bool forcePrinterChoice = false)
     {
+        _logger.LogDebug("Strip print requested");
         var tfcData = await _aurora.GetSelectedTrafficAsync();
         if (tfcData is null)
         {
@@ -146,6 +147,8 @@ public class FlightStripPrinterViewModel : PropertyChangedBase, IViewModel
             Logs = new ObservableCollection<string>(logs.Reverse());
         }
     }
+
+    public Task ViewLoadedAsync() => Task.CompletedTask;
 }
 
 

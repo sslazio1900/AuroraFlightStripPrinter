@@ -3,12 +3,12 @@ using Ivao.It.Aurora.FlightStripPrinter.Services;
 using Ivao.It.Aurora.FlightStripPrinter.ViewModels;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using Serilog;
-using Serilog.Extensions.Logging;
 using Serilog.Filters;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Threading;
@@ -17,7 +17,6 @@ namespace Ivao.It.Aurora.FlightStripPrinter;
 public class Bootstrapper : BootstrapperBase
 {
     private ServiceProvider? _serviceProvider;
-    private ILoggerFactory? _lf;
 
     public Bootstrapper()
     {
@@ -26,18 +25,20 @@ public class Bootstrapper : BootstrapperBase
 
     protected override void Configure()
     {
-        CreateLogger();
+        EnvironmentHandler.ForceEnvIfNotSet();
         var sc = new ServiceCollection();
 
         //Config - Json like aspnetcore
         IConfiguration config = new ConfigurationBuilder()
             .SetBasePath(AppContext.BaseDirectory)
             .AddJsonFile("appsettings.json", optional: true)
+            .AddJsonFile($"appsettings.{EnvironmentHandler.GetCurrentEnvironment()}.json", optional: true)
+#if DEBUG
             .AddUserSecrets(Assembly.GetExecutingAssembly())
+#endif
             .Build();
 
-        //sc.AddSingleton<ILoggerFactory>(_lf);
-        sc.AddLogging(conf => conf.AddSerilog());
+        sc.AddLogging(conf => conf.AddSerilog(CreateLogger()));
 
         //ViewModels
         sc.AddScoped<ShellViewModel>();
@@ -47,6 +48,7 @@ public class Bootstrapper : BootstrapperBase
         //Services
         sc.AddScoped<ILogFileWatcherService, LogFileWatcherService>();
         sc.AddTransient<IAuroraService, AuroraService>();
+        sc.AddTransient<ISettingsService, SettingsService>();
         sc.AddScoped<IFlightStripPrintService, FlightStripPrintService>();
 
         //Caliburn
@@ -70,6 +72,8 @@ public class Bootstrapper : BootstrapperBase
 
     protected override async void OnStartup(object sender, StartupEventArgs e)
     {
+        await IoC.Get<ISettingsService>().InitNewSettingsIfNotExisting();
+
         await DisplayRootViewForAsync<ShellViewModel>(
             new Dictionary<string, object>{
                 {"Title", "IVAO IT Aurora Flight Strip Printer" },
@@ -91,7 +95,8 @@ public class Bootstrapper : BootstrapperBase
         base.OnUnhandledException(sender, e);
     }
 
-    private void CreateLogger()
+
+    private Serilog.ILogger CreateLogger()
     {
         var auroraSources = Matching.FromSource("Ivao.It.AuroraConnector");
         var traceId = Guid.NewGuid();
@@ -110,6 +115,12 @@ public class Bootstrapper : BootstrapperBase
                                 flushToDiskInterval: TimeSpan.FromMilliseconds(500))
             )
             .CreateLogger();
-        _lf = new SerilogLoggerFactory(Log.Logger);
+
+        //Manual file retaining policy: trace-id custom named file breakes Serilogs retaining policy
+        var files = new DirectoryInfo(DataFolderProvider.GetLogsFolder()).GetFiles().OrderByDescending(f => f.LastWriteTime).Skip(20);
+        foreach (var file in files)
+            file.Delete();
+
+        return Log.Logger;
     }
 }

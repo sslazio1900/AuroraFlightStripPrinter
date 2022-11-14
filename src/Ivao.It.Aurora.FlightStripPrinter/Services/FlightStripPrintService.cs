@@ -1,50 +1,69 @@
-﻿using System.Threading.Tasks;
-using System;
-using System.IO;
-using System.Windows.Controls;
-//using Spire.Pdf;
-using Ivao.It.AuroraConnector.Models;
-using System.Text.RegularExpressions;
-using System.Linq;
+﻿using Ivao.It.Aurora.FlightStripPrinter.Models;
 using Ivao.It.Aurora.FlightStripPrinter.Services.Models;
-using System.Collections.Generic;
+using Ivao.It.AuroraConnector.Models;
 using Ivao.It.FlightStripper;
+using Microsoft.Extensions.Logging;
 using Syncfusion.Windows.PdfViewer;
-using Caliburn.Micro;
-using System.Printing;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+using System.Windows.Controls;
 
 namespace Ivao.It.Aurora.FlightStripPrinter.Services;
 
 public sealed class FlightStripPrintService : IFlightStripPrintService
 {
     private string? _printQueueName;
-    private static Regex FixRegex = new Regex("^[A-Z]{3,5}$", RegexOptions.Compiled);
-    private static Regex CleanUpRegex = new Regex("\\[[\\w-]*\\]", RegexOptions.Compiled);
+    private static readonly Regex FixRegex = new Regex("^[A-Z]{3,5}$", RegexOptions.Compiled);
+    private static readonly Regex CleanUpRegex = new Regex("\\[[\\w-]*\\]", RegexOptions.Compiled);
+    private readonly ISettingsService _settingsService;
+    private readonly ILogger<FlightStripPrintService> _logger;
+    private SettingsModel? LastSettingsRead;
+
+    public FlightStripPrintService(ISettingsService settingsService, ILogger<FlightStripPrintService> logger)
+    {
+        _settingsService = settingsService;
+        _logger = logger;
+    }
 
 
     /// <inheritdoc/>
-    public async Task<string> BindAndConvertToPdf(AuroraTraffic tfc, List<AirportConfig> apts)
+    public async Task<string?> BindAndConvertToPdf(AuroraTraffic tfc, List<AirportConfig> apts)
     {
         HtmlToPdf converter = new();
 
-        var trafficType = GetTrafficType(tfc, apts);
-        var template = GetTemplatePath(trafficType);
-        var html = await File.ReadAllTextAsync(template);
-        var rwy = trafficType.Type switch
+        try
         {
-            TrafficType.Departure => trafficType.Cfg?.DepRwys.Count == 1 ? trafficType.Cfg?.DepRwys[0] : null,
-            TrafficType.Arrival => trafficType.Cfg?.ArrRwys.Count == 1 ? trafficType.Cfg?.ArrRwys[0] : null,
-            TrafficType.Transit => null,
-            TrafficType.Vfr => null,
-            _ => throw new ArgumentOutOfRangeException()
-        };
+            var trafficType = GetTrafficType(tfc, apts);
+            var template = GetTemplatePath(trafficType);
+            var html = await File.ReadAllTextAsync(template);
+            var rwy = trafficType.Type switch
+            {
+                TrafficType.Departure => trafficType.Cfg?.DepRwys.Count == 1 ? trafficType.Cfg?.DepRwys[0] : null,
+                TrafficType.Arrival => trafficType.Cfg?.ArrRwys.Count == 1 ? trafficType.Cfg?.ArrRwys[0] : null,
+                TrafficType.Transit => null,
+                TrafficType.Vfr => null,
+                _ => throw new ArgumentOutOfRangeException()
+            };
 
-        html = BindStrip(html, tfc.Flightplan, tfc.Pos, rwy);
+            LastSettingsRead = await _settingsService.GetSettingsAsync();
 
-        var fileShowed = await converter.CreateStripInPathAsync(tfc.Callsign, html);
-        await converter.ConvertToPdfAsync(tfc.Callsign);
+            html = BindStrip(html, tfc.Flightplan, tfc.Pos, rwy);
 
-        return fileShowed;
+            var fileShowed = await converter.CreateStripInPathAsync(tfc.Callsign, html);
+            await converter.ConvertToPdfAsync(tfc.Callsign, LastSettingsRead);
+
+            _logger.LogDebug("Strip generated for {callsign}", tfc.Callsign);
+            return fileShowed;
+        }
+        catch(Exception ex)
+        {
+            _logger.LogError(ex, "Error binding/printing strip for {callsign}", tfc.Callsign);
+            throw;
+        }
     }
 
     /// <inheritdoc/>
@@ -58,13 +77,16 @@ public sealed class FlightStripPrintService : IFlightStripPrintService
         //Print
         viewer.PrinterSettings.PageSize = PdfViewerPrintSize.CustomScale;
         viewer.PrinterSettings.ShowPrintStatusDialog = true;
-        viewer.PrinterSettings.ScalePercentage = 190f;
+        //viewer.PrinterSettings.ScalePercentage = 190f;
+        viewer.PrinterSettings.ScalePercentage = LastSettingsRead?.PrintZoom ?? 0;
         try
         {
             viewer.Print(_printQueueName);
         }
-        catch (Exception)
+        catch (Exception e)
         {
+            //TODO Separate log from user log showed pup
+            _logger.LogError(e, "Failed to print strip");
             return false;
         }
         return true;
@@ -75,7 +97,7 @@ public sealed class FlightStripPrintService : IFlightStripPrintService
         PrintDialog dialog = new PrintDialog();
         if (
             (forcePrinterChoice || _printQueueName is null)
-            && 
+            &&
             (dialog.ShowDialog() ?? false)
             )
         {
@@ -85,37 +107,6 @@ public sealed class FlightStripPrintService : IFlightStripPrintService
         return false;
     }
 
-    ///// <inheritdoc/>
-    //public bool PrintWholeDocument(string filePath)
-    //{
-    //    PdfDocument doc = new PdfDocument();
-    //    doc.LoadFromFile(filePath.Replace(".html", ".pdf"));
-    //    PrintDialog dialogPrint = new PrintDialog();
-
-    //    //La print queue name può essere salvata per poter poi stampare "silent" senza passare dalla print dialog
-    //    if (_printQueueName is null && (dialogPrint.ShowDialog() ?? false))
-    //    {
-    //        _printQueueName = dialogPrint.PrintQueue.Name;
-    //    }
-    //    if (_printQueueName is null) return false;
-
-    //    //Print
-    //    doc.PrintSettings.SelectPageRange(1, 1);
-    //    doc.PrintSettings.PrinterName = dialogPrint.PrintQueue.Name;
-    //    doc.PrintSettings.
-    //    try
-    //    {
-    //        doc.Print();
-    //    }
-    //    catch (Exception)
-    //    {
-    //        return false;
-    //    }
-    //    return true;
-    //}
-
-
-
 
     /// <summary>
     /// Binda i dati sulla flightstrip
@@ -124,7 +115,7 @@ public sealed class FlightStripPrintService : IFlightStripPrintService
     /// <param name="fpl"></param>
     /// <param name="pos"></param>
     /// <returns></returns>
-    private static string BindStrip(string html, Flightplan fpl, TrafficPosition pos, string? rwy)
+    private string BindStrip(string html, Flightplan fpl, TrafficPosition pos, string? rwy)
     {
         //ETA
         var deptTimeHh = int.Parse(fpl.DepartureTime[..2]);
@@ -147,6 +138,14 @@ public sealed class FlightStripPrintService : IFlightStripPrintService
             route = $"{string.Join(' ', routeChunks[..3])}...{string.Join(' ', routeChunks[^3..])}";
         }
 
+        var depIcao2 = fpl.DepartureIcao.StartsWith(LastSettingsRead?.AreaIcaoCode ?? string.Empty) 
+            ? fpl.DepartureIcao?.Substring(2, 2) 
+            : fpl.DepartureIcao;
+
+        var arrIcao2 = fpl.ArrivalIcao.StartsWith(LastSettingsRead?.AreaIcaoCode ?? string.Empty)
+            ? fpl.ArrivalIcao?.Substring(2, 2)
+            : fpl.ArrivalIcao;
+
         //TODO CHECK NEXT FROM TRAFFIC POS -> Freq? Nome? Se Freq molto utile...
 
 
@@ -163,9 +162,9 @@ public sealed class FlightStripPrintService : IFlightStripPrintService
             .Replace("[rfl]", fpl.CruisingAlt)
             .Replace("[rf]", fpl.CruisingAlt?.Replace("F", ""))
             .Replace("[dep]", fpl.DepartureIcao)
-            .Replace("[dep2]", fpl.DepartureIcao?.Substring(2, 2))
+            .Replace("[dep2]", depIcao2)
             .Replace("[dest]", fpl.ArrivalIcao)
-            .Replace("[dest2]", fpl.ArrivalIcao?.Substring(2, 2))
+            .Replace("[dest2]", arrIcao2)
             .Replace("[tas]", fpl.CruisingSpeed)
             .Replace("[alt]", fpl.AlternateIcao)
             .Replace("[rte]", route)
@@ -175,7 +174,7 @@ public sealed class FlightStripPrintService : IFlightStripPrintService
             .Replace("[eet]", fpl.Eet)
             .Replace("[eta]", eta.ToString("HHmm"))
             .Replace("[endur]", fpl.Endurance)
-            .Replace("[sid]", pos.WaypointLabel)
+            .Replace("[proc-wpt]", pos.WaypointLabel)
             .Replace("[afl]", pos.AltitudeLabel)
             .Replace("[exit-fix]", entry)
             .Replace("[entry-fix]", exit)
@@ -211,12 +210,12 @@ public sealed class FlightStripPrintService : IFlightStripPrintService
                     ? template
                     : Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @$"Templates\template_{Consts.AnyTemplate}_out.html");
             case TrafficType.Arrival:
-                template = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @$"Templates\template_{trafficType.Cfg!.Icao}_out.html");
+                template = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @$"Templates\template_{trafficType.Cfg!.Icao}_in.html");
                 return File.Exists(template)
                     ? template
-                    : Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @$"Templates\template_{Consts.AnyTemplate}_out.html");
+                    : Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @$"Templates\template_{Consts.AnyTemplate}_in.html");
             case TrafficType.Vfr:
-                    return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @$"Templates\template_{Consts.AnyTemplate}_vfr.html");
+                return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @$"Templates\template_{Consts.AnyTemplate}_vfr.html");
             default:
                 return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Templates\template_trans.html");
         }

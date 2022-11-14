@@ -14,7 +14,10 @@ public class ShellViewModel : Conductor<object>, IViewModel
         _winManager = winManager;
     }
 
-    public string Version => $"v{Assembly.GetExecutingAssembly().GetName().Version!.Major}.{Assembly.GetExecutingAssembly().GetName().Version!.Minor}.{Assembly.GetExecutingAssembly().GetName().Version!.Build}";
+    public string Version => $"v{Assembly.GetExecutingAssembly().GetName().Version!.Major}." +
+        $"{Assembly.GetExecutingAssembly().GetName().Version!.Minor}." +
+        $"{Assembly.GetExecutingAssembly().GetName().Version!.Build} " +
+        $"{(EnvironmentHandler.IsProduction() ? string.Empty : EnvironmentHandler.GetCurrentEnvironment()!.ToUpper())}";
 
     protected override async void OnViewLoaded(object view)
     {
@@ -24,4 +27,6 @@ public class ShellViewModel : Conductor<object>, IViewModel
     }
 
     public async Task ShowSettings() => await this.ShowDialogAsync<SettingsViewModel>();
+
+    public Task ViewLoadedAsync() => Task.CompletedTask;
 }
