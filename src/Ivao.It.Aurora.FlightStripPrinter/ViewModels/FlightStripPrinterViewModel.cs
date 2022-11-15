@@ -1,6 +1,7 @@
 ﻿using Caliburn.Micro;
 using Ivao.It.Aurora.FlightStripPrinter.HotMouseAndKeys;
 using Ivao.It.Aurora.FlightStripPrinter.Services;
+using Ivao.It.Aurora.FlightStripPrinter.Services.Models;
 using Ivao.It.AuroraConnector.Exceptions;
 using Microsoft.Extensions.Logging;
 using System;
@@ -35,11 +36,13 @@ public class FlightStripPrinterViewModel : PropertyChangedBase, IViewModel
             this.NotifyOfPropertyChange(() => CanConnectToAurora);
             this.NotifyOfPropertyChange(() => CanPrintStrip);
             this.NotifyOfPropertyChange(() => CanPrintStripWithPrinterChoice);
+            this.NotifyOfPropertyChange(() => CanGenerateStrip);
         }
     }
     public bool CanConnectToAurora => !this.IsConnected;
     public bool CanPrintStrip => this.IsConnected;
     public bool CanPrintStripWithPrinterChoice => this.IsConnected;
+    public bool CanGenerateStrip => this.IsConnected;
 
     private ObservableCollection<string> _logs;
     public ObservableCollection<string> Logs
@@ -87,18 +90,19 @@ public class FlightStripPrinterViewModel : PropertyChangedBase, IViewModel
             _logger.LogError(ex, "Unable to connect to Aurora");
         }
     }
+    public async Task GenerateStrip() => await this.GerateStripHandlerAsync();
+    public async Task PrintStrip() => await this.PrintStripHandler();
+    public async Task PrintStripWithPrinterChoice() => await this.PrintStripHandler(true);
+    
 
-    public async Task PrintStrip() =>  await this.PrintStripHandler();
-    public async Task PrintStripWithPrinterChoice() =>  await this.PrintStripHandler(true);
-
-    private async Task PrintStripHandler(bool forcePrinterChoice = false)
+    private async Task<AuroraTraffic?> GerateStripHandlerAsync()
     {
-        _logger.LogDebug("Strip print requested");
+        _logger.LogDebug("Strip requested");
         var tfcData = await _aurora.GetSelectedTrafficAsync();
         if (tfcData is null)
         {
             _logger.LogWarning("Unable to get selected label data from Aurora");
-            return;
+            return null;
         }
         var controlledApts = await _aurora.GetControlledAirportsAsync();
         if (controlledApts is null)
@@ -110,6 +114,13 @@ public class FlightStripPrinterViewModel : PropertyChangedBase, IViewModel
         _fileShowed = await _stripPrintService.BindAndConvertToPdf(tfcData, controlledApts);
         UiBrowser?.Navigate(new Uri($"file:///{_fileShowed}"));
         UiBrowser!.Visibility = System.Windows.Visibility.Visible;
+
+        return tfcData;
+    }
+    private async Task PrintStripHandler(bool forcePrinterChoice = false)
+    {
+        var tfcData = await this.GerateStripHandlerAsync();
+        if (tfcData is null) return;
 
         if (_fileShowed is null)
         {

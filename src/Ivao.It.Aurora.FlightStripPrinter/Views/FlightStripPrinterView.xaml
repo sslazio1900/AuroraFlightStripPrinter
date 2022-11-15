@@ -57,6 +57,7 @@
                 <ColumnDefinition />
                 <ColumnDefinition />
                 <ColumnDefinition />
+                <ColumnDefinition />
             </Grid.ColumnDefinitions>
             <Grid.Resources>
                 <Style BasedOn="{StaticResource MahApps.Styles.Button}" TargetType="Button">
@@ -65,12 +66,16 @@
             </Grid.Resources>
             <Button x:Name="ConnectToAurora" Content="Connect to Aurora" />
             <Button
-                x:Name="PrintStrip"
+                x:Name="GenerateStrip"
                 Grid.Column="1"
-                Content="Print Current Strip (F9)" />
+                Content="Generate Strip" />
+            <Button
+                x:Name="PrintStrip"
+                Grid.Column="2"
+                Content="Print Selected Label (F9)" />
             <Button
                 x:Name="PrintStripWithPrinterChoice"
-                Grid.Column="2"
+                Grid.Column="3"
                 Content="Print With Printer Setup" />
         </Grid>
     </Grid>
