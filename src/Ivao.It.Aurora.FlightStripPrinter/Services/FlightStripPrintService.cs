@@ -102,9 +102,9 @@ public sealed class FlightStripPrintService : IFlightStripPrintService
             )
         {
             _printQueueName = dialog.PrintQueue.Name;
-            return true;
         }
-        return false;
+
+        return _printQueueName is not null;
     }
 
 
