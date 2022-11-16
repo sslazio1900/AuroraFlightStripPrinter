@@ -176,8 +176,8 @@ public sealed class FlightStripPrintService : IFlightStripPrintService
             .Replace("[endur]", fpl.Endurance)
             .Replace("[proc-wpt]", pos.WaypointLabel)
             .Replace("[afl]", pos.AltitudeLabel)
-            .Replace("[exit-fix]", entry)
-            .Replace("[entry-fix]", exit)
+            .Replace("[exit-fix]", exit)
+            .Replace("[entry-fix]", entry)
             .Replace("[stand]", pos.CurrentGate)
             .Replace("[no-fpl]", fpl.Route.Contains("NO FPL") ? null : "&check;")
             .Replace("[p-time]", DateTime.UtcNow.ToString("HHmm"));
