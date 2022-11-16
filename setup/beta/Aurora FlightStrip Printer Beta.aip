@@ -14,10 +14,10 @@
     <ROW Property="ARPCOMMENTS" Value="This installer contains the logic and data required to install [|ProductName]." ValueLocId="*"/>
     <ROW Property="CTRLS" Value="2"/>
     <ROW Property="Manufacturer" Value="IVAO Italy"/>
-    <ROW Property="ProductCode" Value="1033:{6572A2A4-1634-419E-8963-F744F4AC341F} " Type="16"/>
+    <ROW Property="ProductCode" Value="1033:{B1BD8EA3-F01C-4757-868A-B6A8EE639098} " Type="16"/>
     <ROW Property="ProductLanguage" Value="1033"/>
     <ROW Property="ProductName" Value="Aurora FlightStrip Printer Beta"/>
-    <ROW Property="ProductVersion" Value="1.1.3"/>
+    <ROW Property="ProductVersion" Value="1.1.4"/>
     <ROW Property="RUNAPPLICATION" Value="1" Type="4"/>
     <ROW Property="SecureCustomProperties" Value="OLDPRODUCTS;AI_NEWERPRODUCTFOUND"/>
     <ROW Property="UpgradeCode" Value="{E92EA208-06F5-49BB-98A4-B1004E0C07B1}"/>
@@ -620,8 +620,6 @@
     <ROW File="template_any_in.html" Component_="blank.html" FileName="TEMPLA~1.HTM|template_any_in.html" Attributes="0" SourcePath="..\..\src\Ivao.It.Aurora.FlightStripPrinter\bin\Beta\net6.0-windows\Templates\template_any_in.html" SelfReg="false"/>
     <ROW File="template_any_out.html" Component_="blank.html" FileName="TEMPLA~2.HTM|template_any_out.html" Attributes="0" SourcePath="..\..\src\Ivao.It.Aurora.FlightStripPrinter\bin\Beta\net6.0-windows\Templates\template_any_out.html" SelfReg="false"/>
     <ROW File="template_any_vfr.html" Component_="blank.html" FileName="TEMPLA~3.HTM|template_any_vfr.html" Attributes="0" SourcePath="..\..\src\Ivao.It.Aurora.FlightStripPrinter\bin\Beta\net6.0-windows\Templates\template_any_vfr.html" SelfReg="false"/>
-    <ROW File="template_lirf_in.html" Component_="blank.html" FileName="TEMPLA~4.HTM|template_lirf_in.html" Attributes="0" SourcePath="..\..\src\Ivao.It.Aurora.FlightStripPrinter\bin\Beta\net6.0-windows\Templates\template_lirf_in.html" SelfReg="false"/>
-    <ROW File="template_lirf_out.html" Component_="blank.html" FileName="TEMPLA~5.HTM|template_lirf_out.html" Attributes="0" SourcePath="..\..\src\Ivao.It.Aurora.FlightStripPrinter\bin\Beta\net6.0-windows\Templates\template_lirf_out.html" SelfReg="false"/>
     <ROW File="appsettings.json" Component_="Ivao.It.Aurora.FlightStripPrinter.runtimeconfig.json" FileName="APPSET~2.JSO|appsettings.json" Attributes="0" SourcePath="..\..\src\Ivao.It.Aurora.FlightStripPrinter\bin\Beta\net6.0-windows\appsettings.json" SelfReg="false"/>
     <ROW File="pdfium.dll" Component_="pdfium.dll" FileName="pdfium.dll" Attributes="0" SourcePath="..\..\resources\blinkfiles-for-setup\Pdfium\x64\pdfium.dll" SelfReg="false"/>
     <ROW File="manifest" Component_="manifest" FileName="100048~1.MAN|100.0.4896.127.manifest" Attributes="0" SourcePath="..\..\resources\blinkfiles-for-setup\BlinkBinariesWindows\100.0.4896.127.manifest" SelfReg="false"/>
@@ -1037,8 +1035,8 @@
     <ROW Registry="Version" Root="-1" Key="Software\[Manufacturer]\[ProductName]" Name="Version" Value="[ProductVersion]" Component_="ProductInformation"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiShortsComponent">
-    <ROW Shortcut="Ivao.It.Aurora.FlightStripPrinter.e" Directory_="IVAOItaly_Dir" Name="AURORA~1.EXE|Aurora FlightStrip Printer BETA.exe" Component_="Ivao.It.Aurora.FlightStripPrinter.exe" Target="[#Ivao.It.Aurora.FlightStripPrinter.exe]" Description="Ivao.It.Aurora.FlightStripPrinter.exe" Hotkey="0" IconIndex="0" ShowCmd="1" WkDir="APPDIR"/>
-    <ROW Shortcut="Ivao.It.Aurora.FlightStripPrinter_1" Directory_="DesktopFolder" Name="AURORA~1.EXE|Aurora FlightStrip Printer BETA.exe" Component_="Ivao.It.Aurora.FlightStripPrinter.exe" Target="[#Ivao.It.Aurora.FlightStripPrinter.exe]" Description="Ivao.It.Aurora.FlightStripPrinter.exe" Hotkey="0" IconIndex="0" ShowCmd="1" WkDir="APPDIR"/>
+    <ROW Shortcut="Ivao.It.Aurora.FlightStripPrinter.e" Directory_="IVAOItaly_Dir" Name="AURORA~1|Aurora FlightStrip Printer BETA" Component_="Ivao.It.Aurora.FlightStripPrinter.exe" Target="[#Ivao.It.Aurora.FlightStripPrinter.exe]" Description="Ivao.It.Aurora.FlightStripPrinter.exe" Hotkey="0" IconIndex="0" ShowCmd="1" WkDir="APPDIR"/>
+    <ROW Shortcut="Ivao.It.Aurora.FlightStripPrinter_1" Directory_="DesktopFolder" Name="AURORA~1|Aurora FlightStrip Printer BETA" Component_="Ivao.It.Aurora.FlightStripPrinter.exe" Target="[#Ivao.It.Aurora.FlightStripPrinter.exe]" Description="Ivao.It.Aurora.FlightStripPrinter.exe" Hotkey="0" IconIndex="0" ShowCmd="1" WkDir="APPDIR"/>
     <ROW Shortcut="UninstallProductNameProductVersion" Directory_="IVAOItaly_Dir" Name="UNINST~1.0|Uninstall [|ProductName] [|ProductVersion]" Component_="Caliburn.Micro.Platform.Core.dll" Target="[SystemFolder]msiexec.exe" Arguments="/x [ProductCode]" Hotkey="0" Icon_="SystemFoldermsiexec.exe" IconIndex="0" ShowCmd="1"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiThemeComponent">

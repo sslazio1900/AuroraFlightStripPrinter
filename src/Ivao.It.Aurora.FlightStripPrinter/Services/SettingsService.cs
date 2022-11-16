@@ -33,6 +33,8 @@ public class SettingsService : ISettingsService
 
         var settings = new SettingsModel
         {
+            AreaIcaoCode = "LI",
+            MarginBottom = 16,
             PrintZoom = 100,
             StripHeigth = 65,
             StripWidth = 300,

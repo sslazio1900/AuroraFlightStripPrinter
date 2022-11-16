@@ -16,7 +16,7 @@ public class LogLevelToColorConverter : MarkupExtension, IValueConverter
 
         if (strVal.Contains(" [INF] "))
         {
-            return new SolidColorBrush(Colors.MediumBlue);
+            return new SolidColorBrush(Colors.Cyan);
         }
 
         if (strVal.Contains(" [WRN] "))
