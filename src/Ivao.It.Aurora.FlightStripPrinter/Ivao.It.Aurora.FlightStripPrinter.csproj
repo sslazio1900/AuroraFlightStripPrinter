@@ -53,7 +53,7 @@
 
   <ItemGroup>
     <PackageReference Include="Caliburn.Micro" Version="4.0.212" />
-    <PackageReference Include="Ivao.It.AuroraConnector" Version="1.2.1-beta" />
+    <PackageReference Include="Ivao.It.AuroraConnector" Version="1.2.2" />
     <PackageReference Include="MahApps.Metro" Version="2.4.9" />
     <PackageReference Include="MahApps.Metro.IconPacks" Version="4.11.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="6.0.1" />
