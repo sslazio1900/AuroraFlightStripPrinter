@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Windows;
 using System.Windows.Threading;
 
@@ -56,7 +55,7 @@ public class Bootstrapper : BootstrapperBase
         sc.AddScoped<IEventAggregator, EventAggregator>();
 
         //Init Syncfusion
-        HtmlToPdf.Init(config.GetSection("SyncfusionLicenseKey").Value, DataFolderProvider.GetStripsFolder());
+        HtmlToPdf.Init(config.GetRequiredSection("SyncfusionLicenseKey").Value!, DataFolderProvider.GetStripsFolder());
 
         //Wiring up with Bootstrapper
         _serviceProvider = sc.BuildServiceProvider();
@@ -96,7 +95,7 @@ public class Bootstrapper : BootstrapperBase
     }
 
 
-    private Serilog.ILogger CreateLogger()
+    private ILogger CreateLogger()
     {
         var auroraSources = Matching.FromSource("Ivao.It.AuroraConnector");
         var traceId = Guid.NewGuid();
