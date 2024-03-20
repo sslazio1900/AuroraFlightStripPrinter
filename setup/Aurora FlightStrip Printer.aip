@@ -18,15 +18,18 @@
     <ROW Property="ARPPRODUCTICON" Value="icon.exe" Type="8"/>
     <ROW Property="ARPURLINFOABOUT" Value="https://discord.ivao.it"/>
     <ROW Property="ARPURLUPDATEINFO" Value="https://github.com/sslazio1900/AuroraFlightStripPrinter"/>
+    <ROW Property="AppName" Value="Aurora Flight Strip Printer"/>
     <ROW Property="CTRLS" Value="2"/>
-    <ROW Property="Manufacturer" Value="IVAO Italy"/>
+    <ROW Property="CurrentVersion" Value="1.1.6"/>
+    <ROW Property="Manufacturer" Value="[|Vendor]"/>
     <ROW Property="ProductCode" Value="1033:{23CF3468-7942-485D-866B-0BF4772BDAD9} " Type="16"/>
     <ROW Property="ProductLanguage" Value="1033"/>
-    <ROW Property="ProductName" Value="Aurora Flight Strip Printer"/>
+    <ROW Property="ProductName" Value="[|AppName] v[|CurrentVersion]"/>
     <ROW Property="ProductVersion" Value="1.1.6" Options="32"/>
     <ROW Property="RUNAPPLICATION" Value="1" Type="4"/>
     <ROW Property="SecureCustomProperties" Value="OLDPRODUCTS;AI_NEWERPRODUCTFOUND"/>
     <ROW Property="UpgradeCode" Value="{A2B908CD-0C39-4C48-8555-5EC038B33839}"/>
+    <ROW Property="Vendor" Value="Ivao Italy"/>
     <ROW Property="WindowsType9X" MultiBuildValue="AnyCPU_Release:Windows 9x/ME" ValueLocId="-"/>
     <ROW Property="WindowsType9XDisplay" MultiBuildValue="AnyCPU_Release:Windows 9x/ME" ValueLocId="-"/>
     <ROW Property="WindowsTypeNT" MultiBuildValue="AnyCPU_Release:Windows 7 x86, Windows 8 x86, Windows 8.1 x86" ValueLocId="-"/>
@@ -44,11 +47,14 @@
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiDirsComponent">
     <ROW Directory="APPDIR" Directory_Parent="TARGETDIR" DefaultDir="APPDIR:." IsPseudoRoot="1"/>
+    <ROW Directory="AppDataFolder" Directory_Parent="TARGETDIR" DefaultDir="APPDAT~1|AppDataFolder" IsPseudoRoot="1"/>
+    <ROW Directory="AuroraFlightStripPrinter_Dir" Directory_Parent="IVAOItaly_Dir" DefaultDir="AURORA~1|Aurora Flight Strip Printer"/>
     <ROW Directory="DesktopFolder" Directory_Parent="TARGETDIR" DefaultDir="DESKTO~1|DesktopFolder" IsPseudoRoot="1"/>
+    <ROW Directory="IVAOItaly_Dir" Directory_Parent="AppDataFolder" DefaultDir="IVAOIT~1|IVAO Italy"/>
     <ROW Directory="Pdfium_Dir" Directory_Parent="APPDIR" DefaultDir="Pdfium"/>
     <ROW Directory="SHORTCUTDIR" Directory_Parent="TARGETDIR" DefaultDir="SHORTC~1|SHORTCUTDIR" IsPseudoRoot="1"/>
     <ROW Directory="TARGETDIR" DefaultDir="SourceDir"/>
-    <ROW Directory="Templates_Dir" Directory_Parent="APPDIR" DefaultDir="TEMPLA~1|Templates"/>
+    <ROW Directory="Templates_Dir" Directory_Parent="AuroraFlightStripPrinter_Dir" DefaultDir="TEMPLA~1|Templates"/>
     <ROW Directory="arm64_Dir" Directory_Parent="Pdfium_Dir" DefaultDir="arm64"/>
     <ROW Directory="de_Dir" Directory_Parent="APPDIR" DefaultDir="de"/>
     <ROW Directory="locales_Dir" Directory_Parent="native_Dir" DefaultDir="locales"/>
@@ -61,6 +67,7 @@
   <COMPONENT cid="caphyon.advinst.msicomp.MsiCompsComponent">
     <ROW Component="AI_INSTALLPERUSER" ComponentId="{15642C8A-C2F4-4C7F-A4C1-A580FE8BF476}" Directory_="APPDIR" Attributes="4" KeyPath="AI_INSTALLPERUSER" Options="1"/>
     <ROW Component="APPDIR" ComponentId="{2FD525B4-C1E2-404E-B929-45A0F3E05E37}" Directory_="APPDIR" Attributes="0"/>
+    <ROW Component="AuroraFlightStripPrinter" ComponentId="{22449C82-6DFC-4660-8695-8151214B37C4}" Directory_="AuroraFlightStripPrinter_Dir" Attributes="0"/>
     <ROW Component="AuroraFlightStripPrinter.dll" ComponentId="{43BD3C48-C16B-425C-A7BD-AB53A5A5990B}" Directory_="APPDIR" Attributes="256" KeyPath="AuroraFlightStripPrinter.dll"/>
     <ROW Component="AuroraFlightStripPrinter.exe" ComponentId="{92C6EC25-5DD8-484C-B076-E041ACA4C744}" Directory_="APPDIR" Attributes="256" KeyPath="AuroraFlightStripPrinter.exe"/>
     <ROW Component="Caliburn.Micro.Core.dll" ComponentId="{DE1BA9C6-DCE6-415A-8D44-BDB21522566B}" Directory_="APPDIR" Attributes="0" KeyPath="Caliburn.Micro.Core.dll"/>
@@ -145,7 +152,7 @@
     <ROW Component="Tcp.NET.Client.dll" ComponentId="{5284C8EC-FA66-4535-B96C-8E7C1E446054}" Directory_="APPDIR" Attributes="0" KeyPath="Tcp.NET.Client.dll"/>
     <ROW Component="Tcp.NET.Core.dll" ComponentId="{ACBD2A9B-D946-4E21-B5EE-9EE08C3FCD7B}" Directory_="APPDIR" Attributes="0" KeyPath="Tcp.NET.Core.dll"/>
     <ROW Component="YamlDotNet.dll" ComponentId="{22FF96F2-F28D-489A-8A32-E25B4D86AE23}" Directory_="APPDIR" Attributes="0" KeyPath="YamlDotNet.dll"/>
-    <ROW Component="blank.html" ComponentId="{AFDFD698-911A-48C6-A081-D0BAF093687E}" Directory_="Templates_Dir" Attributes="0" KeyPath="blank.html" Type="0"/>
+    <ROW Component="blank.html" ComponentId="{05C1C4AB-B1A5-465E-AA61-7031059778D2}" Directory_="Templates_Dir" Attributes="0" KeyPath="blank.html" Type="0"/>
     <ROW Component="chrome.dll" ComponentId="{A909E028-5487-4837-8B3A-4CCF8ADBB5B3}" Directory_="APPDIR" Attributes="256" KeyPath="chrome.dll"/>
     <ROW Component="chrome.dll_2" ComponentId="{E6DF3B67-0D1E-4778-93D6-284CD877BAF9}" Directory_="native_Dir" Attributes="256" KeyPath="chrome.dll_2"/>
     <ROW Component="chrome.exe" ComponentId="{5AB9DCD0-144B-4F18-A218-C4C4A6F2FA43}" Directory_="APPDIR" Attributes="256" KeyPath="chrome.exe"/>
@@ -376,6 +383,7 @@
   <COMPONENT cid="caphyon.advinst.msicomp.MsiCreateFolderComponent">
     <ROW Directory_="APPDIR" Component_="APPDIR" ManualDelete="true"/>
     <ROW Directory_="SHORTCUTDIR" Component_="SHORTCUTDIR" ManualDelete="false"/>
+    <ROW Directory_="AuroraFlightStripPrinter_Dir" Component_="AuroraFlightStripPrinter" ManualDelete="false"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiCustActComponent">
     <ROW Action="AI_ApplyShortcutFlags" Type="3073" Source="ShortcutFlags.dll" Target="UpdateShortcutFlags" WithoutSeq="true"/>
@@ -519,8 +527,9 @@
     <ROW Feature_="MainFeature" Component_="vk_swiftshader.dll_2"/>
     <ROW Feature_="MainFeature" Component_="vulkan1.dll_2"/>
     <ROW Feature_="MainFeature" Component_="SHORTCUTDIR"/>
-    <ROW Feature_="MainFeature" Component_="blank.html"/>
     <ROW Feature_="MainFeature" Component_="AI_INSTALLPERUSER"/>
+    <ROW Feature_="MainFeature" Component_="AuroraFlightStripPrinter"/>
+    <ROW Feature_="MainFeature" Component_="blank.html"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiIconsComponent">
     <ROW Name="icon.exe" SourcePath="..\src\Ivao.It.Aurora.FlightStripPrinter\Icons\icon.ico" Index="0"/>
@@ -583,8 +592,8 @@
     <ROW Registry="Version" Root="-1" Key="Software\[Manufacturer]\[ProductName]" Name="Version" Value="[ProductVersion]" Component_="ProductInformation"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiShortsComponent">
-    <ROW Shortcut="AuroraFlightStripPrinter" Directory_="SHORTCUTDIR" Name="AURORA~1|Aurora Flight Strip Printer" Component_="AuroraFlightStripPrinter.exe" Target="[#AuroraFlightStripPrinter.exe]" Hotkey="0" IconIndex="0" ShowCmd="1" WkDir="APPDIR" CustomFlags="2"/>
-    <ROW Shortcut="AuroraFlightStripPrinter1" Directory_="DesktopFolder" Name="AURORA~1|Aurora Flight Strip Printer" Component_="AuroraFlightStripPrinter.exe" Target="[#AuroraFlightStripPrinter.exe]" Hotkey="0" IconIndex="0" ShowCmd="1" WkDir="APPDIR" CustomFlags="2"/>
+    <ROW Shortcut="AuroraFlightStripPrinter" Directory_="SHORTCUTDIR" Name="AURORA~1.6|[|AppName] v[|CurrentVersion]" Component_="AuroraFlightStripPrinter.exe" Target="[#AuroraFlightStripPrinter.exe]" Hotkey="0" IconIndex="0" ShowCmd="1" WkDir="APPDIR" CustomFlags="2"/>
+    <ROW Shortcut="AuroraFlightStripPrinter1" Directory_="DesktopFolder" Name="AURORA~1.6|[|AppName] v[|CurrentVersion]" Component_="AuroraFlightStripPrinter.exe" Target="[#AuroraFlightStripPrinter.exe]" Hotkey="0" IconIndex="0" ShowCmd="1" WkDir="APPDIR" CustomFlags="2"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiThemeComponent">
     <ATTRIBUTE name="UsedTheme" value="classic"/>
