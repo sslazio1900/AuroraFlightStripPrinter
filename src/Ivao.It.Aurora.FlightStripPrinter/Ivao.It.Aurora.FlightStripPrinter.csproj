@@ -32,6 +32,7 @@
 
   <ItemGroup>
     <Content Include="Icons\it_symbol_WHITE_128.ico" />
+    <Content Include="Icons\icon.ico" />
   </ItemGroup>
 
   <ItemGroup>
@@ -47,14 +48,10 @@
     <Resource Include="Icons\it_symbol_WHITE_32.ico" />
     <Resource Include="Icons\it_symbol_WHITE_64.ico" />
     <Resource Include="Icons\it_symbol_WHITE_96.ico" />
-    <Resource Include="Images\icon.png">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Resource>
+    <Resource Include="Images\icon.png" />
     <Resource Include="Images\it_symbol_WHITE.svg" />
     <Resource Include="Images\ivao_white.svg" />
-    <Resource Include="Images\Logo_IT_WHITE.svg">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Resource>
+    <Resource Include="Images\Logo_IT_WHITE.svg" />
     <Resource Include="Images\logo_s_white.svg" />
   </ItemGroup>
 
