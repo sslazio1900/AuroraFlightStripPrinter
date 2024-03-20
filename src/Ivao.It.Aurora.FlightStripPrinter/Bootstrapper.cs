@@ -64,7 +64,7 @@ public class Bootstrapper : BootstrapperBase
         //Wiring up with Bootstrapper
         _serviceProvider = sc.BuildServiceProvider();
 
-        Log.Logger.Warning("App started & initialized!");
+        Log.Logger.Information("App started & initialized!");
     }
 
 

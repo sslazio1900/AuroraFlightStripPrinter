@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Linq;
 
 namespace Ivao.It.Aurora.FlightStripPrinter.Services;
@@ -6,18 +7,21 @@ namespace Ivao.It.Aurora.FlightStripPrinter.Services;
 public sealed class LogFileWatcherService : ILogFileWatcherService
 {
     private FileSystemWatcher? _watcher;
+    public FileInfo WatchingFile { get; private set; }
 
-    public LogFileWatcherService()
-    {
-    }
 
     public FileSystemEventHandler? OnLogfileChanged { get; set; }
+    public void Init(string logFoldlerPath)
+    {
+        WatchingFile = GetMostRecentLogFile(logFoldlerPath);
+    }
 
-    public void Start(string logFoldlerPath)
+    public void Start()
     {
         if (OnLogfileChanged is null) return;
-        var fileToWatch = GetMostRecentLogFile(logFoldlerPath);
-        _watcher = new FileSystemWatcher(fileToWatch.DirectoryName!, fileToWatch.Name);
+        ArgumentNullException.ThrowIfNull(WatchingFile);
+
+        _watcher = new FileSystemWatcher(WatchingFile.DirectoryName!, WatchingFile.Name);
         _watcher.Changed += OnLogfileChanged;
         _watcher.NotifyFilter = NotifyFilters.LastAccess | NotifyFilters.LastWrite;
         _watcher.EnableRaisingEvents = true;

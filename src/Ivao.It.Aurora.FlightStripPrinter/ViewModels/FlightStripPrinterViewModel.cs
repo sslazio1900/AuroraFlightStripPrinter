@@ -26,23 +26,26 @@ public class FlightStripPrinterViewModel : PropertyChangedBase, IViewModel
     public WebBrowser? UiBrowser;
 
     #region Binded properties
-    private bool _isConnected;
-    public bool IsConnected
+    private bool? _isConnected;
+    public bool? IsConnected
     {
         get { return _isConnected; }
         set
         {
             _isConnected = value;
             this.NotifyOfPropertyChange(() => CanConnectToAurora);
-            this.NotifyOfPropertyChange(() => CanPrintStrip);
-            this.NotifyOfPropertyChange(() => CanPrintStripWithPrinterChoice);
-            this.NotifyOfPropertyChange(() => CanGenerateStrip);
+            if (value != null)
+            {
+                this.NotifyOfPropertyChange(() => CanPrintStrip);
+                this.NotifyOfPropertyChange(() => CanPrintStripWithPrinterChoice);
+                this.NotifyOfPropertyChange(() => CanGenerateStrip);
+            }
         }
     }
-    public bool CanConnectToAurora => !this.IsConnected;
-    public bool CanPrintStrip => this.IsConnected;
-    public bool CanPrintStripWithPrinterChoice => this.IsConnected;
-    public bool CanGenerateStrip => this.IsConnected;
+    public bool CanConnectToAurora => !(this.IsConnected ?? true);
+    public bool CanPrintStrip => this.IsConnected??false;
+    public bool CanPrintStripWithPrinterChoice => this.IsConnected ?? false;
+    public bool CanGenerateStrip => this.IsConnected ?? false;
 
     private ObservableCollection<string> _logs;
     public ObservableCollection<string> Logs
@@ -64,21 +67,26 @@ public class FlightStripPrinterViewModel : PropertyChangedBase, IViewModel
         _stripPrintService = stripPrintService;
         _hooksKeys = new KeyboardHook();
         Logs = new ObservableCollection<string>();
+        IsConnected = false;
+        
+        _logWhatcher.Init(DataFolderProvider.GetLogsFolder());
+        ReadLogs(_logWhatcher.WatchingFile.FullName);
     }
 
     #region Commands
     public async Task ConnectToAurora()
     {
         _logWhatcher.OnLogfileChanged += LogFileChanged;
-        _logWhatcher.Start(DataFolderProvider.GetLogsFolder());
+        _logWhatcher.Start();
         try
         {
+            IsConnected = null;
             if (Environment.GetEnvironmentVariable("AuroraEnabled") != "false")
             {
                 await _aurora.ConnectAsync();
             }
-            IsConnected = true;
             _logger.LogWarning("Connected to Aurora");
+            IsConnected = true;
 
             _hooksKeys.SetPresentationSource(PresentationSourceProvider.Current!);
             _hooksKeys.KeyUp += new KeyEventHandler(HotkeyUp);
@@ -95,6 +103,8 @@ public class FlightStripPrinterViewModel : PropertyChangedBase, IViewModel
             {
                 _logger.LogError(ex, "Unable to connect to Aurora");
             }
+
+            IsConnected = false;
         }
     }
     public async Task GenerateStrip() => await this.GerateStripHandlerAsync();
@@ -158,12 +168,21 @@ public class FlightStripPrinterViewModel : PropertyChangedBase, IViewModel
 
     private async void LogFileChanged(object sender, FileSystemEventArgs e)
     {
-        using (var stream = File.Open(e.FullPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
-        using (var reader = new StreamReader(stream))
-        {
-            var logs = (await reader.ReadToEndAsync()).Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries);
-            Logs = new ObservableCollection<string>(logs.Reverse());
-        }
+        //using (var stream = File.Open(e.FullPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+        //using (var reader = new StreamReader(stream))
+        //{
+        //    var logs = (await reader.ReadToEndAsync()).Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries);
+        //    Logs = new ObservableCollection<string>(logs.Reverse());
+        //}
+        ReadLogs(e.FullPath);
+    }
+
+    private async void ReadLogs(string fullPath)
+    {
+        await using var stream = File.Open(fullPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+        using var reader = new StreamReader(stream);
+        var logs = (await reader.ReadToEndAsync()).Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries);
+        Logs = new ObservableCollection<string>(logs.Reverse());
     }
 
     public Task ViewLoadedAsync() => Task.CompletedTask;
