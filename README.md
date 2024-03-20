@@ -4,7 +4,9 @@ Print your flight strips directly from Aurora!
 A cheap POS thermal printer is strongly recommended. Prints with no costs and is really cheap to buy! And also, with a little effort you can print on a correct size paper.
 
 ## How the strip data binding works?
-Look into "templates" folder, there are a few files:
+All the templates are installed in `%appdata%\Ivao Italy\Aurora Flight Strip Printer\Templates`
+
+Looking into `Templates` folder, there are a few files:
 * `template_any_in.html`
 * `template_any_out.html`
 * `template_vfr.html`

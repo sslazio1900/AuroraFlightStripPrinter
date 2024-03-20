@@ -56,7 +56,7 @@ public sealed class FlightStripPrintService : IFlightStripPrintService
             var fileShowed = await converter.CreateStripInPathAsync(tfc.Callsign, html);
             await converter.ConvertToPdfAsync(tfc.Callsign, LastSettingsRead);
 
-            _logger.LogDebug("Strip generated for {callsign}", tfc.Callsign);
+            _logger.LogInformation("Strip generated for {callsign}", tfc.Callsign);
             return fileShowed;
         }
         catch(Exception ex)
@@ -201,23 +201,24 @@ public sealed class FlightStripPrintService : IFlightStripPrintService
     private static string GetTemplatePath((TrafficType Type, AirportConfig? Cfg) trafficType)
     {
         string template;
+        var folder = DataFolderProvider.GetTemplatesFolder();
 
         switch (trafficType.Type)
         {
             case TrafficType.Departure:
-                template = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @$"Templates\template_{trafficType.Cfg!.Icao}_out.html");
+                template = Path.Combine(folder, @$"template_{trafficType.Cfg!.Icao}_out.html");
                 return File.Exists(template)
                     ? template
-                    : Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @$"Templates\template_{Consts.AnyTemplate}_out.html");
+                    : Path.Combine(folder, @$"template_{Consts.AnyTemplate}_out.html");
             case TrafficType.Arrival:
-                template = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @$"Templates\template_{trafficType.Cfg!.Icao}_in.html");
+                template = Path.Combine(folder, @$"template_{trafficType.Cfg!.Icao}_in.html");
                 return File.Exists(template)
                     ? template
-                    : Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @$"Templates\template_{Consts.AnyTemplate}_in.html");
+                    : Path.Combine(folder, @$"template_{Consts.AnyTemplate}_in.html");
             case TrafficType.Vfr:
-                return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @$"Templates\template_{Consts.AnyTemplate}_vfr.html");
+                return Path.Combine(folder, @$"template_{Consts.AnyTemplate}_vfr.html");
             default:
-                return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Templates\template_trans.html");
+                return Path.Combine(folder, @"template_trans.html");
         }
     }
 
