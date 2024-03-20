@@ -1,9 +1,8 @@
 ﻿using System.Windows;
 
-namespace Ivao.It.Aurora.FlightStripPrinter
+namespace Ivao.It.Aurora.FlightStripPrinter;
+
+internal class PresentationSourceProvider
 {
-    internal class PresentationSourceProvider
-    {
-        public static PresentationSource? Current;
-    }
+    public static PresentationSource? Current;
 }

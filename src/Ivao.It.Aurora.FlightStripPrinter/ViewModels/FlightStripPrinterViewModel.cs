@@ -87,7 +87,14 @@ public class FlightStripPrinterViewModel : PropertyChangedBase, IViewModel
         }
         catch (AuroraException ex)
         {
-            _logger.LogError(ex, "Unable to connect to Aurora");
+            if (EnvironmentHandler.IsProduction())
+            {
+                _logger.LogError("Unable to connect to Aurora. Check you have enabled 3rd party software access.");
+            }
+            else
+            {
+                _logger.LogError(ex, "Unable to connect to Aurora");
+            }
         }
     }
     public async Task GenerateStrip() => await this.GerateStripHandlerAsync();

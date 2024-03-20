@@ -6,6 +6,7 @@ using Ivao.It.AuroraConnector.AuroraMessages.Requests;
 using Ivao.It.Aurora.FlightStripPrinter.Services.Models;
 using Ivao.It.AuroraConnector.Models;
 using System.Collections.Generic;
+using Ivao.It.AuroraConnector.Exceptions;
 
 namespace Ivao.It.Aurora.FlightStripPrinter.Services;
 
@@ -33,7 +34,7 @@ public sealed class AuroraService : IAuroraService
             _logger.LogError("No Aurora traffic selected");
             return null;
         }
-       
+
         var fpl = await _aurora.SendAsync<FlightplanResponse>(FlightplanRequest.ForCallsign(response.Callsign));
         var pos = await _aurora.SendAsync<TrafficPositionResponse>(TrafficPositionRequest.ForCallsign(response.Callsign));
         if (fpl.Flightplan is null || pos.LabelData is null)

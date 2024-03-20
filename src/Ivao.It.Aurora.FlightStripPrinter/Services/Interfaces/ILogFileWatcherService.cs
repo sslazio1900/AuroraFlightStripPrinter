@@ -1,11 +1,10 @@
 ﻿using System.IO;
 
-namespace Ivao.It.Aurora.FlightStripPrinter.Services
-{
-    public interface ILogFileWatcherService
-    {
-        FileSystemEventHandler? OnLogfileChanged { get; set; }
+namespace Ivao.It.Aurora.FlightStripPrinter.Services;
 
-        void Start(string logFoldlerPath);
-    }
+public interface ILogFileWatcherService
+{
+    FileSystemEventHandler? OnLogfileChanged { get; set; }
+
+    void Start(string logFoldlerPath);
 }

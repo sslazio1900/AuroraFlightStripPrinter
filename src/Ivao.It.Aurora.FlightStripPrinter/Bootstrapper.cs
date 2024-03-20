@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Threading;
 
@@ -32,8 +33,10 @@ public class Bootstrapper : BootstrapperBase
             .SetBasePath(AppContext.BaseDirectory)
             .AddJsonFile("appsettings.json", optional: true)
             .AddJsonFile($"appsettings.{EnvironmentHandler.GetCurrentEnvironment()}.json", optional: true)
-#if DEBUG
+#if DEBUG || BETA
             .AddUserSecrets(Assembly.GetExecutingAssembly())
+#else
+            .AddSyncfusionLicensing()
 #endif
             .Build();
 

@@ -54,3 +54,14 @@ Aurora provides data to bind the following data:
 | [stand]     | Aurora Label assigned gate                                                                                                                               |
 | [no-fpl]    | Flightplan route "NO FPL" to represent a no flight plan flight. It will contains a "check" icon flag a no-fpl box in the strip.                          |
 | [p-time]    | Strip print UTC time, format HHMM                                                                                                                        |
+
+
+### What if I want to collaborate?
+ 
+This project uses [Syncfusion](https://www.syncfusion.com/) for PDF handling and printing strips. So if you need to build and run from your IDE this app, you need to grab a proper license key.
+
+On my own environment I implemented a custom config builder to provide the key into the config dictionaries (see bootstraper AddSyncfusionLicensing() call on IConfigurationBuilder).
+Otherwise, for development purposes, you can use App Secrets and provide the proper value with key `SyncfusionLicenseKey`.
+
+
+Be advised: if app doesn't find a value of `SyncfusionLicenseKey`, it will not start at all.

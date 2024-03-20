@@ -16,7 +16,7 @@ internal static class EnvironmentHandler
     {
 #if DEBUG
         var env = GetCurrentEnvironment();
-         if (GetCurrentEnvironment() is null|| env != "debug")
+        if (GetCurrentEnvironment() is null || env != "debug")
         {
             Environment.SetEnvironmentVariable("Environment", "debug");
         }
@@ -25,6 +25,12 @@ internal static class EnvironmentHandler
         if (env is null || env != "beta")
         {
             Environment.SetEnvironmentVariable("Environment", "beta");
+        }
+#else
+        var env = GetCurrentEnvironment();
+        if (env is null || env != "production")
+        {
+            Environment.SetEnvironmentVariable("Environment", "production");
         }
 #endif
     }
