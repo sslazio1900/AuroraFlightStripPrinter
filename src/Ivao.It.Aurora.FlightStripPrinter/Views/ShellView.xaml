@@ -12,19 +12,16 @@
     Width="800"
     Height="750"
     MinWidth="800"
-    Icon="pack://application:,,,/Images/icon.png"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
-    <!--<mah:MetroWindow.IconTemplate>
+    <mah:MetroWindow.IconTemplate>
         <DataTemplate>
-    -->
-    <!--<svg:SvgViewbox
+            <svg:SvgViewbox
                 Width="22"
                 Height="22"
-                Source="/Images/it_symbol_WHITE.svg" />-->
-    <!--
+                Source="/Images/it_symbol_WHITE.svg" />
         </DataTemplate>
-    </mah:MetroWindow.IconTemplate>-->
+    </mah:MetroWindow.IconTemplate>
     <mah:MetroWindow.RightWindowCommands>
         <mah:WindowCommands>
             <Button Click="ShowSettings_Click" ToolTip="Setup App &amp; Print Pref">

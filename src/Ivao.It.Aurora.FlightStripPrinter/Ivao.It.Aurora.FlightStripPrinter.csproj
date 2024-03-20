@@ -10,6 +10,7 @@
     <Version>1.1.6</Version>
     <Configurations>Debug;Release;Beta</Configurations>
     <ApplicationManifest>app.manifest</ApplicationManifest>
+    <AssemblyName>Aurora Flight Strip Printer</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
