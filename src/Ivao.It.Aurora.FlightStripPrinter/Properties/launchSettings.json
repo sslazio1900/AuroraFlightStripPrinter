@@ -25,6 +25,12 @@
       "environmentVariables": {
         "Environment": "debug"
       }
+    },
+    "Prod Aurora Disabled": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "AuroraEnabled": "false"
+      }
     }
   }
 }
