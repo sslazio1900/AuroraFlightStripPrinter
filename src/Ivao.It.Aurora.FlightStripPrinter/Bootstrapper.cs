@@ -12,6 +12,7 @@ using System.Linq;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Threading;
+using Serilog.Events;
 
 namespace Ivao.It.Aurora.FlightStripPrinter;
 public class Bootstrapper : BootstrapperBase
@@ -62,6 +63,7 @@ public class Bootstrapper : BootstrapperBase
 
         //Wiring up with Bootstrapper
         _serviceProvider = sc.BuildServiceProvider();
+
         Log.Logger.Warning("App started & initialized!");
     }
 
@@ -114,7 +116,9 @@ public class Bootstrapper : BootstrapperBase
                 .Filter.ByExcluding(auroraSources)
                 .WriteTo.File($"{DataFolderProvider.GetLogsFolder()}/log-{traceId}.txt",
                                 outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss} [{Level:u3}] {Message:lj}{NewLine}{Exception}",
-                                flushToDiskInterval: TimeSpan.FromMilliseconds(500))
+                                flushToDiskInterval: TimeSpan.FromMilliseconds(500), 
+                                restrictedToMinimumLevel: EnvironmentHandler.IsProduction() ? LogEventLevel.Information : LogEventLevel.Verbose
+                                )
             )
             .CreateLogger();
 

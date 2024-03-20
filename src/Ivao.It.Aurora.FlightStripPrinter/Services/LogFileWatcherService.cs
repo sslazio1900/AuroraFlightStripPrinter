@@ -34,6 +34,7 @@ public sealed class LogFileWatcherService : ILogFileWatcherService
     {
         var directory = new DirectoryInfo(logFoldlerPath);
         var myFile = directory.GetFiles()
+                     .Where(f => f.Name.StartsWith("log"))
                      .OrderByDescending(f => f.LastWriteTime)
                      .First();
         return myFile;
