@@ -33,6 +33,11 @@
                 <Setter Property="BorderThickness" Value="1" />
                 <Setter Property="BorderBrush" Value="LightGray" />
                 <Setter Property="Margin" Value="0,0,5,0" />
+                <Setter Property="Height" Value="28" />
+            </Style>
+
+            <Style BasedOn="{StaticResource MahApps.Styles.TextBox}" TargetType="TextBox">
+                <Setter Property="Height" Value="28" />
             </Style>
         </ResourceDictionary>
     </mah:MetroWindow.Resources>
@@ -97,7 +102,7 @@
                     <Label DockPanel.Dock="Right" Style="{StaticResource LabelAffixTb}">
                         %
                     </Label>
-                    <TextBox x:Name="Settings_PrintZoom" Margin="0,4" />
+                    <TextBox x:Name="Settings_PrintZoom" Margin="4,0,0,0" />
                 </DockPanel>
             </DockPanel>
 
