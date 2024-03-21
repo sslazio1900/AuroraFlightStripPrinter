@@ -21,10 +21,10 @@
     <ROW Property="AppName" Value="Aurora Flight Strip Printer"/>
     <ROW Property="CTRLS" Value="2"/>
     <ROW Property="CurrentVersion" Value="1.1.6"/>
-    <ROW Property="Manufacturer" Value="[|Vendor]"/>
+    <ROW Property="Manufacturer" Value="Ivao Italy"/>
     <ROW Property="ProductCode" Value="1033:{23CF3468-7942-485D-866B-0BF4772BDAD9} " Type="16"/>
     <ROW Property="ProductLanguage" Value="1033"/>
-    <ROW Property="ProductName" Value="[|AppName] v[|CurrentVersion]"/>
+    <ROW Property="ProductName" Value="Aurora Flight Strip Printer"/>
     <ROW Property="ProductVersion" Value="1.1.6" Options="32"/>
     <ROW Property="RUNAPPLICATION" Value="1" Type="4"/>
     <ROW Property="SecureCustomProperties" Value="OLDPRODUCTS;AI_NEWERPRODUCTFOUND"/>
@@ -317,7 +317,7 @@
     <ROW Action="AI_RESTORE_AI_SETUPEXEPATH" Condition="AI_SETUPEXEPATH_ORIGINAL" Sequence="251"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.BuildComponent">
-    <ROW BuildKey="AnyCPU_Release" BuildName="AnyCPU_Release" BuildOrder="1" BuildType="0" Languages="en" InstallationType="4" UseLargeSchema="true"/>
+    <ROW BuildKey="AnyCPU_Release" BuildName="AnyCPU_Release" BuildOrder="1" BuildType="0" PackageFileName="[|Manufacturer] - [|ProductName] v[|ProductVersion]" Languages="en" InstallationType="4" UseLargeSchema="true"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.DictionaryComponent">
     <ROW Path="&lt;AI_DICTS&gt;ui.ail"/>
@@ -592,8 +592,8 @@
     <ROW Registry="Version" Root="-1" Key="Software\[Manufacturer]\[ProductName]" Name="Version" Value="[ProductVersion]" Component_="ProductInformation"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiShortsComponent">
-    <ROW Shortcut="AuroraFlightStripPrinter" Directory_="SHORTCUTDIR" Name="AURORA~1.6|[|AppName] v[|CurrentVersion]" Component_="AuroraFlightStripPrinter.exe" Target="[#AuroraFlightStripPrinter.exe]" Hotkey="0" IconIndex="0" ShowCmd="1" WkDir="APPDIR" CustomFlags="2"/>
-    <ROW Shortcut="AuroraFlightStripPrinter1" Directory_="DesktopFolder" Name="AURORA~1.6|[|AppName] v[|CurrentVersion]" Component_="AuroraFlightStripPrinter.exe" Target="[#AuroraFlightStripPrinter.exe]" Hotkey="0" IconIndex="0" ShowCmd="1" WkDir="APPDIR" CustomFlags="2"/>
+    <ROW Shortcut="AuroraFlightStripPrinter" Directory_="SHORTCUTDIR" Name="AURORA~2.6|[|ProductName] v[|ProductVersion]" Component_="AuroraFlightStripPrinter.exe" Target="[#AuroraFlightStripPrinter.exe]" Hotkey="0" IconIndex="0" ShowCmd="1" WkDir="APPDIR" CustomFlags="2"/>
+    <ROW Shortcut="AuroraFlightStripPrinter1" Directory_="DesktopFolder" Name="AURORA~2.6|[|ProductName] v[|ProductVersion]" Component_="AuroraFlightStripPrinter.exe" Target="[#AuroraFlightStripPrinter.exe]" Hotkey="0" IconIndex="0" ShowCmd="1" WkDir="APPDIR" CustomFlags="2"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiThemeComponent">
     <ATTRIBUTE name="UsedTheme" value="classic"/>

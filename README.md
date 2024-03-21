@@ -4,7 +4,9 @@ Print your flight strips directly from Aurora!
 A cheap POS thermal printer is strongly recommended. Prints with no costs and is really cheap to buy! And also, with a little effort you can print on a correct size paper.
 
 ## How the strip data binding works?
-All the templates are installed in `%appdata%\Ivao Italy\Aurora Flight Strip Printer\Templates`
+
+> [!TIP]
+> All the templates are installed in `%appdata%\Ivao Italy\Aurora Flight Strip Printer\Templates`
 
 Looking into `Templates` folder, there are a few files:
 * `template_any_in.html`
@@ -88,6 +90,7 @@ Then you have 4 options:
 
 #### Settings
 ![Settings](https://i.imgur.com/iqmFOph.png)
+
 Settings view is used to setup print zoom, margins, and sizes. 
 
 The **area ICAO code filter** is used to truncate ICAO codes. Some real life systems are using a shortening of ICAO codes removing the local area ICAO code. 
