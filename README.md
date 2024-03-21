@@ -3,7 +3,12 @@
 Print your flight strips directly from Aurora!
 A cheap POS thermal printer is strongly recommended. Prints with no costs and is really cheap to buy! And also, with a little effort you can print on a correct size paper.
 
-1. [How the strip data binding works?](#how-the-strip-data-binding-works)
+* [How the strip data binding works?](#how-the-strip-data-binding-works)
+    * [What data is bindable to my flightstrips](#what-data-is-bindable-to-my-flightstrips)
+    * [How to use this app](#how-to-use-this-app)
+        * [Control bar and how to print](#control-bar-and-how-to-print)
+        * [Settings](#settings)
+* [What if i want to collaborate](#what-if-i-want-to-collaborate)
 
 ## How the strip data binding works?
 
@@ -100,7 +105,7 @@ For example, in Italy (LI) for LIRF on the strip is only reported **RF**. So you
 Every code that starts with something different than the value in this box will be left untouched.
 
 
-### What if I want to collaborate?
+## What if I want to collaborate?
  
 This project uses [Syncfusion](https://www.syncfusion.com/) for PDF handling and printing strips. So if you need to build and run from your IDE this app, you need to grab a proper license key.
 
