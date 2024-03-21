@@ -73,6 +73,9 @@
     <PackageReference Include="Syncfusion.HtmlToPdfConverter.WPF" Version="25.1.35" />
     <PackageReference Include="Syncfusion.Licensing" Version="25.1.35" />
     <PackageReference Include="Syncfusion.PdfViewer.WPF" Version="25.1.35" />
+    <!--<PackageReference Include="Syncfusion.HtmlToPdfConverter.WPF" Version="20.3.0.56" />
+    <PackageReference Include="Syncfusion.Licensing" Version="20.3.0.56" />
+    <PackageReference Include="Syncfusion.PdfViewer.WPF" Version="20.3.0.56" />-->
     <PackageReference Include="YamlDotNet" Version="15.1.2" />
   </ItemGroup>
 

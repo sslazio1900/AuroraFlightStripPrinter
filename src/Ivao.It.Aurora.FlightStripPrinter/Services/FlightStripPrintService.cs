@@ -77,15 +77,13 @@ public sealed class FlightStripPrintService : IFlightStripPrintService
         //Print
         viewer.PrinterSettings.PageSize = PdfViewerPrintSize.CustomScale;
         viewer.PrinterSettings.ShowPrintStatusDialog = true;
-        //viewer.PrinterSettings.ScalePercentage = 190f;
-        viewer.PrinterSettings.ScalePercentage = LastSettingsRead?.PrintZoom ?? 0;
+        viewer.PrinterSettings.ScalePercentage = LastSettingsRead?.PrintZoom ?? 100;
         try
         {
             viewer.Print(_printQueueName);
         }
         catch (Exception e)
         {
-            //TODO Separate log from user log showed pup
             _logger.LogError(e, "Failed to print strip");
             return false;
         }
