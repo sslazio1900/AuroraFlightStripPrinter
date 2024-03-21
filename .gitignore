@@ -477,3 +477,5 @@ $RECYCLE.BIN/
 *.lnk
 /src/Ivao.It.Aurora.FlightStripPrinter/appsettings.beta.json
 /resources/blinkfiles-for-setup/BlinkBinariesWindows
+/src/Ivao.It.Aurora.FlightStripPrinter/SyncfusionLicenseKeyProvider.cs
+/src/Ivao.It.Aurora.FlightStripPrinter/SyncfusionLicense.cs

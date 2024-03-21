@@ -2,15 +2,15 @@
 using System.Windows;
 using System.Windows.Controls;
 
-namespace Ivao.It.Aurora.FlightStripPrinter.Views
+namespace Ivao.It.Aurora.FlightStripPrinter.Views;
+
+/// <summary>
+/// Interaction logic for FlightStripPrinterView.xaml
+/// </summary>
+public partial class FlightStripPrinterView : UserControl
 {
-    /// <summary>
-    /// Interaction logic for FlightStripPrinterView.xaml
-    /// </summary>
-    public partial class FlightStripPrinterView : UserControl
+    public FlightStripPrinterView()
     {
-        public FlightStripPrinterView()
-        {
             InitializeComponent();
 
             this.Loaded += (s, e) =>
@@ -19,5 +19,4 @@ namespace Ivao.It.Aurora.FlightStripPrinter.Views
                 ((FlightStripPrinterViewModel)this.DataContext).UiBrowser = WBrowser;
             };
         }
-    }
 }

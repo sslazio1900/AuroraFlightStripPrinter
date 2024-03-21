@@ -1,17 +1,16 @@
 ﻿using Ivao.It.Aurora.FlightStripPrinter.ViewModels;
 using MahApps.Metro.Controls;
 
-namespace Ivao.It.Aurora.FlightStripPrinter.Views
+namespace Ivao.It.Aurora.FlightStripPrinter.Views;
+
+public class BaseWindow : MetroWindow
 {
-    public class BaseWindow : MetroWindow
+    public BaseWindow()
     {
-        public BaseWindow()
-        {
             Loaded += BaseWindow_Loaded;
         }
 
 
-        private async void BaseWindow_Loaded(object sender, System.Windows.RoutedEventArgs e) 
-            => await ((IViewModel)this.DataContext).ViewLoadedAsync();
-    }
+    private async void BaseWindow_Loaded(object sender, System.Windows.RoutedEventArgs e) 
+        => await ((IViewModel)this.DataContext).ViewLoadedAsync();
 }
