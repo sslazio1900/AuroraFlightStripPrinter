@@ -62,8 +62,7 @@ Aurora provides data to bind the following data:
  
 This project uses [Syncfusion](https://www.syncfusion.com/) for PDF handling and printing strips. So if you need to build and run from your IDE this app, you need to grab a proper license key.
 
-On my own environment I implemented a custom config builder to provide the key into the config dictionaries (see bootstraper AddSyncfusionLicensing() call on IConfigurationBuilder).
-Otherwise, for development purposes, you can use App Secrets and provide the proper value with key `SyncfusionLicenseKey`.
+You can find an implementation of a custom ConfigProvider for IConfiguration abstractions in order to provide a license key into the config collecion of the app (Asp.Net Core like).
+You just need to wrap your key in a static class for grabbing the key in `SyncfusionLicenseKeyProvider`.
 
-
-Be advised: if app doesn't find a value of `SyncfusionLicenseKey`, it will not start at all.
+**Remember to avoid committing your key on GitHiub!**
