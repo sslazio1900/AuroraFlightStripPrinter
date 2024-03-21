@@ -57,6 +57,43 @@ Aurora provides data to bind the following data:
 | [no-fpl]    | Flightplan route "NO FPL" to represent a no flight plan flight. It will contains a "check" icon flag a no-fpl box in the strip.                          |
 | [p-time]    | Strip print UTC time, format HHMM                                                                                                                        |
 
+### How to use this app?
+App is based on IVAO Aurora 3rd party integration.
+
+In order to have the integration working, this integration should be enabled in Aurora settings view, in the Other tab:
+![Aurora 3rd party access](https://i.imgur.com/sGhdbsV.png)
+
+The app has a main window formed as follows:
+![App UI sample](https://i.imgur.com/fvaklaB.png)
+1. Title bar with settings button. Use this icon to open strip generation settings view (described below).
+2. App version.
+3. Generated flight strip preview. Once the app creates a new flight strip, a preview is shown in this box.
+4. App logs: a glance on what is going on in the app, you can use it to analyze error message or the status of the app as well.
+5. Controls: here you can control the app with your mouse.
+
+#### Control bar and how to print
+![Control bar at app startup](https://i.imgur.com/5J0VEPd.png)
+Once the app has been started you can find this status of the control. 
+Ensure that you have Aurora running, then you can connect to it clicking on **Connect to Aurora**.
+
+When successfully connected, buttons are shown as follows:
+![Control bar when connected to Aurora](https://i.imgur.com/vpUhxVZ.png)
+Then you have 4 options:
+1. **Generate Strip**: this generates the strip of the selected label in Aurora and shows it in the preview pane. **Remember that you have to select a label on Aurora prior hitting this key!** No print will be sent using this key. Useful when you're customizing a strip template and you just wand to take a look to this without any print cost.
+2. **Print Selected Label (F9)**: This key will generate the strip as in step nr1, but also sends this to the printer. **If this is the first print request of the session, system print dialog will be shown.** Select you favorite printer and options, then the app stores them to reuse for every print request until you close the app. 
+    
+    **You can then minimize the App and simply printing your stip hitting F9 key from within Aurora.**
+
+3. **Print with printer setup**: If you want to change printer preferences, you can use this button to recall system print dialog. **Then those new options are stored to be used with step 3 or F9 key as well.**
+
+#### Settings
+![Settings](https://i.imgur.com/iqmFOph.png)
+Settings view is used to setup print zoom, margins, and sizes. 
+
+The **area ICAO code filter** is used to truncate ICAO codes. Some real life systems are using a shortening of ICAO codes removing the local area ICAO code. 
+For example, in Italy (LI) for LIRF on the strip is only reported **RF**. So you are able to request the app to remove **LI** using this field.
+Every code that starts with something different than the value in this box will be left untouched.
+
 
 ### What if I want to collaborate?
  
