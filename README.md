@@ -3,12 +3,27 @@
 Print your flight strips directly from Aurora!
 A cheap POS thermal printer is strongly recommended. Prints with no costs and is really cheap to buy! And also, with a little effort you can print on a correct size paper.
 
+> [!CAUTION]
+> **.NET 8.0 Desktop Runtime needed!**
+> 
+> [You can download it here](https://dotnet.microsoft.com/en-us/download/dotnet/8.0)
+
 * [How the strip data binding works?](#how-the-strip-data-binding-works)
+* [Which printer do I need?](#which-printer-do-i-need)
     * [What data is bindable to my flightstrips](#what-data-is-bindable-to-my-flightstrips)
     * [How to use this app](#how-to-use-this-app)
         * [Control bar and how to print](#control-bar-and-how-to-print)
         * [Settings](#settings)
 * [What if i want to collaborate](#what-if-i-want-to-collaborate)
+
+
+### Which printer do I need?
+
+The app is designed to be printer agnostic. It actually uses any printer on your system.
+By the way, what i prefer to use is a cheap POS thermal printer bought on Amazon or AliExpress with 58mm paper rolls. This size is quite perfect for being folded in an half and fit a 30mm-ish tall stip holder.
+![Example printer](https://i.imgur.com/5J0VEPd.png)
+
+Talking about strip holders, if you find companies that sells those items for everyone, good to you. But you can even think to 3d print them down.
 
 ## How the strip data binding works?
 
