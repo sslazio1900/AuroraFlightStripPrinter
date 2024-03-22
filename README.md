@@ -21,7 +21,7 @@ A cheap POS thermal printer is strongly recommended. Prints with no costs and is
 
 The app is designed to be printer agnostic. It actually uses any printer on your system.
 By the way, what i prefer to use is a cheap POS thermal printer bought on Amazon or AliExpress with 58mm paper rolls. This size is quite perfect for being folded in an half and fit a 30mm-ish tall stip holder.
-![Example printer](https://i.imgur.com/5J0VEPd.png)
+![Example printer](https://i.imgur.com/BcXvPyU.jpeg)
 
 Talking about strip holders, if you find companies that sells those items for everyone, good to you. But you can even think to 3d print them down.
 
