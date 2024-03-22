@@ -125,3 +125,6 @@ You can find an implementation of a custom ConfigProvider for IConfiguration abs
 You just need to wrap your key in a static class for grabbing the key in `SyncfusionLicenseKeyProvider`.
 
 **Remember to avoid committing your key on GitHiub!**
+
+
+This app uses also a package to connect to Aurora and get data using 3rd party integration. Since this part of docs are not released for public use, the repo is private. But you can build this app using the proper version of my package from [Here](https://github.com/sslazio1900?tab=packages)
