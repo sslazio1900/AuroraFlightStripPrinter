@@ -6,11 +6,9 @@
   <COMPONENT cid="caphyon.advinst.msicomp.MsiPropsComponent">
     <ROW Property="AI_APP_FILE" Value="[#AuroraFlightStripPrinter.exe]"/>
     <ROW Property="AI_BITMAP_DISPLAY_MODE" Value="0"/>
-    <ROW Property="AI_PREDEF_LCONDS_PROPS" Value="AI_DETECTED_ADMIN_USER;AI_DETECTED_DIRECTX_VERSION;AI_DETECTED_DOTNET_CORE_VERSION"/>
+    <ROW Property="AI_PREDEF_LCONDS_PROPS" Value="AI_DETECTED_ADMIN_USER;AI_DETECTED_DIRECTX_VERSION"/>
     <ROW Property="AI_REQUIRED_DIRECTX_DISPLAY" MultiBuildValue="AnyCPU_Release:11" ValueLocId="-"/>
     <ROW Property="AI_REQUIRED_DIRECTX_VERSION" MultiBuildValue="AnyCPU_Release:11" ValueLocId="-"/>
-    <ROW Property="AI_REQUIRED_DOTNET_CORE_DISPLAY" MultiBuildValue="AnyCPU_Release:8.0" ValueLocId="-"/>
-    <ROW Property="AI_REQUIRED_DOTNET_CORE_VERSION" MultiBuildValue="AnyCPU_Release:8.0" ValueLocId="-"/>
     <ROW Property="ALLUSERS" Value="1" MultiBuildValue="AnyCPU_Release:2"/>
     <ROW Property="ARPCOMMENTS" Value="This installer database contains the logic and data required to install [|ProductName]." ValueLocId="*"/>
     <ROW Property="ARPHELPLINK" Value="https://github.com/sslazio1900/AuroraFlightStripPrinter"/>
@@ -575,7 +573,6 @@
     <ROW Condition="(VersionNT &lt;&gt; 500)" Description="[ProductName] cannot be installed on [WindowsTypeNT50Display]." DescriptionLocId="AI.LaunchCondition.NoNT50" IsPredefined="true" Builds="AnyCPU_Release"/>
     <ROW Condition="(VersionNT &lt;&gt; 600)" Description="[ProductName] cannot be installed on [WindowsTypeNT60Display]." DescriptionLocId="AI.LaunchCondition.NoNT60" IsPredefined="true" Builds="AnyCPU_Release"/>
     <ROW Condition="AI_DETECTED_DIRECTX_VERSION &gt;= AI_REQUIRED_DIRECTX_VERSION" Description="[ProductName] cannot be installed on systems with DirectX version lower than [AI_REQUIRED_DIRECTX_DISPLAY]." DescriptionLocId="AI.LaunchCondition.DirectX" IsPredefined="true" Builds="AnyCPU_Release"/>
-    <ROW Condition="AI_DETECTED_DOTNET_CORE_VERSION &gt;= AI_REQUIRED_DOTNET_CORE_VERSION" Description="[ProductName] cannot be installed on systems with .NET Core version lower than [AI_REQUIRED_DOTNET_CORE_DISPLAY]." DescriptionLocId="AI.LaunchCondition.DotNETCore" IsPredefined="true" Builds="AnyCPU_Release"/>
     <ROW Condition="VersionNT" Description="[ProductName] cannot be installed on [WindowsType9XDisplay]." DescriptionLocId="AI.LaunchCondition.No9X" IsPredefined="true" Builds="AnyCPU_Release"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiRegLocatorComponent">
