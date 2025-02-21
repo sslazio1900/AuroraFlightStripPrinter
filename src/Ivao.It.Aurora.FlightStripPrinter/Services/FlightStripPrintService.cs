@@ -17,7 +17,7 @@ namespace Ivao.It.Aurora.FlightStripPrinter.Services;
 public sealed class FlightStripPrintService : IFlightStripPrintService
 {
     private string? _printQueueName;
-    private static readonly Regex FixRegex = new Regex("^[A-Z]{3,5}$", RegexOptions.Compiled);
+    private static readonly Regex FixRegex = new Regex("^[A-Z]{2,5}$", RegexOptions.Compiled);
     private static readonly Regex CleanUpRegex = new Regex("\\[[\\w-]*\\]", RegexOptions.Compiled);
     private readonly ISettingsService _settingsService;
     private readonly ILogger<FlightStripPrintService> _logger;
