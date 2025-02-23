@@ -4,8 +4,10 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Vce Out</title>
-
+    <title>Out</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sometype+Mono:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">  
     <style media="all,print">
         @media print {
             @page {
@@ -13,7 +15,7 @@
                 size: landscape;
             }
             html {
-                margin-top: 0 !important;
+                margin-top: 12mm !important;
             }
             body {
                 margin: 0;
@@ -25,24 +27,26 @@
             height: 26mm;
             margin: 0;
             padding: 0;
-            font-family: monospace;
+            font-family: "Sometype Mono";
         }
 
-       /* html {
+        html {
             margin-top: 2mm;
         }
 
-*/
+
         table {
-            background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAjcAAABKCAYAAABHC3WYAAAByUlEQVR4nO3aS26DQBBAQYg4ODd35IiFF5GycUzPU9UJWvOxHuANAKBkP8/Thr7RtZ6PO9d2wgzca4UzMH1G88Ganvfhy94BACXiBgBIETcAQIq4AQBSxA0AkCJuAIAUcQMApIgbACBF3AAAKeIGAEgRNwBAirgBAFLEDQCQIm4AgBRxAwCkiBsAIEXcAAAp4gYASBE3AECKuAEAUsQNAJAibgCAFHEDAKSIGwAgRdwAACniBgBIETcAQIq4AQBSxA0AkCJuAIAUcQMApIgbACBF3AAAKeIGAEgRNwBAirgBAFLEDQCQIm4AgBRxAwCkiBsAIEXcAAAp4gYASNlt5794DFjbnxnO87x5DO5w7fuEc/iX6TOaDxZ0XJeD97OuTLDCOZw+o/lgLfuxUPWv9IQy5c0NeKpv8+YGfnGs8Nnidcbp806Y1acoXjkPTSv9LsInPe+DPxQDACniBgBIETcAQIq4AQBSxA0AkCJuAIAUcQMApIgbACBF3AAAKeIGAEgRNwBAirgBAFLEDQCQIm4AgBRxAwCkiBsAIEXcAAAp4gYASBE3AECKuAEAUsQNAJAibgCAFHEDAKSIGwAgRdwAAAAAjLRt2zfX/D2R2cHHwQAAAABJRU5ErkJggg==') !important;
+            background-image: url('data:image/png;base64,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') !important;
+            border-left: 1px solid #000;
+            border-right: 1px solid #000;
             background-repeat: no-repeat !important;
-            background-size: 200mm 26mm !important;
-            margin: 0;
-            padding: 0;
-            width: 200mm;
+            background-size: 242mm 26mm !important;
+            margin: 0px 0px 0px 5px;
+            padding: 0px 0px 0px -2px;
+            width: 242mm;
             height: 26mm;
             border-spacing: 0;
-            border: 1px solid #666;
+            
         }
 
             table tbody {
@@ -52,72 +56,150 @@
 
             table tr td {
                 margin: 0;
-                padding: 0 4px;
+                padding: 0 0px;
                 vertical-align: top;
                 box-sizing: border-box;
                 /*border: 1px solid #c00;*/
                 border: 1px solid transparent;
             }
-
-        .callsign {
-            font-weight: bolder;
-            font-size: 37px;
-			line-height: 34px;
+            
+        .dest {
+            font-weight: 700;
+            font-size: 28px;
+			line-height: 25px;
             text-align: right
         }
 
-        .arrival-or-rwy {
+        .dep {
+            font-weight: normal;
+            font-size: 18px;
+			line-height: 19px;
+            text-align: right
+        }
+
+        .callsign {
+            font-family: "Sometype Mono";
             font-weight: bolder;
-            font-size: 20px;
+            font-size: 38px;
+			line-height: 40px;
+            text-align: left;
+            font-stretch: ultra-condensed;
+        }
+
+        .rwy {
+            font-weight: bolder;
+            font-size: 24.5px;
+            text-align: left;
+            vertical-align: bottom;
+        }
+        
+        .eobt {
+            font-weight: bolder;
+            font-size: 22.5px;
             text-align: center;
+            vertical-align: middle;
+        }
+
+        .clrnc {
+            font-weight: bolder;
+            font-size: 30px;
+            text-align: left;
             vertical-align: bottom;
         }
 
-        .route {
+        .text {
+            font-weight: normal;
+            font-size: 18px;
+            text-align: center;
+            vertical-align: top;
+
+        }
+        .eobt-sm {
+            font-weight: normal;
+            font-size: 18px;
+            text-align: center;
+            vertical-align: top;
+            line-height: 13px;
+        }
+        .text-b {
+            font-weight: normal;
+            font-size: 18px;
+            text-align: center;
+            vertical-align: top;
+        }
+        .text-sm {
+            font-weight: normal;
+            font-size: 15px;
+            text-align: center;
+            vertical-align: top;
+        }
+        .rte {
+            font-weight: normal;
+            font-size: 12px;
+            text-overflow: ellipsis;
+
+        }
+        .stand {
+            font-weight: bolder;
+            font-size: 35px;
+            text-align: left;
+            vertical-align: middle;
+            line-height: 10px;
+        }
+        .ssr {
+            font-weight: bolder;
+            font-size: 24px;
+            text-align: left;
+            vertical-align: middle;
+            line-height: 10px;
+        }
+        .tutorial {
             font-weight: bold;
-            font-size: 14px;
+            font-size: 12px;
+            text-align: center;
+            vertical-align: top;
+            line-height: 7px;
+            color: #000;
         }
     </style>
 </head>
 <body>
     <table>
         <tbody>
-            <tr style="height: 60px">
-				<td colspan="2" style="text-align: center; margin: 0;">
-					<span class="callsign">[dest2]</span>
-					<hr style="margin:0;border: 1px solid #000">
-					[dep2]
+            <tr style="height: 33px">
+				<td colspan="2" style="text-align: center; margin: -10px; width: 15mm;">
+					<span class="dep">[dep]</span></br>
+                    <span class="dest">[dest]</span>
 				</td>				
-                <td>[rf]</td>
-                <td style="width: 171px; text-align: right;" rowspan="2">
-                    <div >[acft-cat] [acft-typ]</div>
-                    <div class="callsign" style="margin-top: 10px">[cs]</div>
-                    <div style="vertical-align: bottom;">[tas]</div>
+                <td class="text-b" style="width: 14mm;">[rf]</td>
+                <td style="width: 49mm; text-align: right;" rowspan="2">
+                    <div class="text" style="text-align: right;">[acft-cat] [acft-typ]&nbsp;</div>
+                    <div class="callsign" style="margin-top: 10px; padding-left: 5px;">[cs]</div>
+                    <div class="text" style="vertical-align: bottom;float: right;">[tas]&nbsp;</div>
                 </td>
-                <td style="width: 54px">[eobt]</td>
-                <td style="width: 54px"></td>
-                <td style="width: 54px"></td>
-                <td>
+                <td class="tutorial" style="width: 15.7mm">CLR/STR</td>
+                <td class="tutorial" style="width: 15.7mm">PUSH</td>
+                <td class="tutorial" style="width: 15.7mm">TAXI</td>
+                <td style="width: max-content; padding-left: 10 px;"> 
                     <div>
-                        <div style="float: left;">[exit-fix]</div>
+                        <div style="float: left; padding-left: 10px;">[entry-fix]</div>
                         <div style="float: right;">[p-time]</div>
                     </div>
-                    <div style="clear: both; font-size:  30px; font-weight: bolder;">
-                        <div style="float: left;">[proc-wpt]</div>
-                        <div style="float: right;">[afl]</div>
+                    <div style="clear: both; font-size:  30px; font-weight: bolder; padding-left: 10px; ">
+                        <div class="clrnc" style="float: left;">[proc-wpt]</div>
+                        <div class="clrnc" style="float: right;">[afl]</div>
                     </div>
                 </td>
             </tr>
-            <tr>
-                <td style="width: 57px">[eobt]</td>
-                <td style="width: 57px"></td>
-                <td style="width: 45px"></td>
+            <tr style="height: 35px">
+                <td class="eobt-sm" style="width: 13mm; text-align: left; padding-left: 2px;"><span class="tutorial" style="text-align: center;">&nbsp;EOBT</br></span>[eobt]</td>
+                <td class="tutorial" style="width: 13.7mm">ATD</td>
+                <td class="tutorial" class="route" style="width: 13mm">FLCH</td>
 
-                <td colspan="3">
-                    <span class="arrival-or-rwy" style="float: right;">[rwy]</span>
-                </td>
-                <td style="vertical-align: bottom;">
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[assr]
+                <td colspan="3" class="ssr" style="width: 47mm; padding-left:4px; padding-right: 4px;"></td>
+                
+                <td class="stand" style="vertical-align: middle; padding-left:10px; width: max-content;">
+                    <div><span class="stand" >[stand]</span><span class="ssr">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A[assr]</span></div>
                 </td>
             </tr>
         </tbody>
