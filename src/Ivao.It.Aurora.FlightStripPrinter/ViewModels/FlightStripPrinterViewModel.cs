@@ -5,10 +5,12 @@ using Ivao.It.Aurora.FlightStripPrinter.Services.Models;
 using Ivao.It.AuroraConnector.Exceptions;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
@@ -18,12 +20,14 @@ public class FlightStripPrinterViewModel : PropertyChangedBase, IViewModel
 {
     private readonly ILogger<FlightStripPrinterViewModel> _logger;
     private readonly IAuroraService _aurora;
+    private readonly IWindowManager _winmgr;
     private readonly ILogFileWatcherService _logWhatcher;
     private readonly IFlightStripPrintService _stripPrintService;
     private readonly KeyboardHook _hooksKeys;
 
     private string? _fileShowed;
     public WebBrowser? UiBrowser;
+    private PrintPreviewViewModel? _printPreviewVm;
 
     #region Binded properties
     private bool? _isConnected;
@@ -39,15 +43,18 @@ public class FlightStripPrinterViewModel : PropertyChangedBase, IViewModel
                 this.NotifyOfPropertyChange(() => CanPrintStrip);
                 this.NotifyOfPropertyChange(() => CanPrintStripWithPrinterChoice);
                 this.NotifyOfPropertyChange(() => CanGenerateStrip);
+                this.NotifyOfPropertyChange(() => CanShowPrintPreview);
             }
         }
     }
     public bool CanConnectToAurora => !(this.IsConnected ?? true);
-    public bool CanPrintStrip => this.IsConnected??false;
+    public bool CanPrintStrip => this.IsConnected ?? false;
     public bool CanPrintStripWithPrinterChoice => this.IsConnected ?? false;
     public bool CanGenerateStrip => this.IsConnected ?? false;
+    public bool CanShowPrintPreview => (this.IsConnected ?? false) && _printPreviewVm is null;
 
     private ObservableCollection<string> _logs;
+
     public ObservableCollection<string> Logs
     {
         get { return _logs; }
@@ -58,17 +65,19 @@ public class FlightStripPrinterViewModel : PropertyChangedBase, IViewModel
     public FlightStripPrinterViewModel(
         ILogger<FlightStripPrinterViewModel> logger,
         IAuroraService aurora,
+        IWindowManager winmgr,
         ILogFileWatcherService logWhatcher,
         IFlightStripPrintService stripPrintService)
     {
         _logger = logger;
         _aurora = aurora;
+        _winmgr = winmgr;
         _logWhatcher = logWhatcher;
         _stripPrintService = stripPrintService;
         _hooksKeys = new KeyboardHook();
         Logs = new ObservableCollection<string>();
         IsConnected = false;
-        
+
         _logWhatcher.Init(DataFolderProvider.GetLogsFolder());
         ReadLogs(_logWhatcher.WatchingFile.FullName);
     }
@@ -110,7 +119,24 @@ public class FlightStripPrinterViewModel : PropertyChangedBase, IViewModel
     public async Task GenerateStrip() => await this.GerateStripHandlerAsync();
     public async Task PrintStrip() => await this.PrintStripHandler();
     public async Task PrintStripWithPrinterChoice() => await this.PrintStripHandler(true);
-    
+
+    public async Task ShowPrintPreview()
+    {
+        _printPreviewVm = new PrintPreviewViewModel();
+        NotifyOfPropertyChange(() => CanShowPrintPreview);
+        _printPreviewVm.OnClosed += (s, e) =>
+        {
+            _printPreviewVm = null;
+            NotifyOfPropertyChange(() => CanShowPrintPreview);
+        };
+
+
+        if (_fileShowed is not null)
+        {
+            _printPreviewVm.PdfFilePath = _fileShowed!.Replace(".html", ".pdf");
+        }
+        await _winmgr.ShowWindowAsync(_printPreviewVm, null);
+    }
 
     private async Task<AuroraTraffic?> GerateStripHandlerAsync()
     {
@@ -131,6 +157,8 @@ public class FlightStripPrinterViewModel : PropertyChangedBase, IViewModel
         _fileShowed = await _stripPrintService.BindAndConvertToPdf(tfcData, controlledApts);
         UiBrowser?.Navigate(new Uri($"file:///{_fileShowed}"));
         UiBrowser!.Visibility = System.Windows.Visibility.Visible;
+
+        if (_printPreviewVm is not null) _printPreviewVm.PdfFilePath = _fileShowed!.Replace(".html", ".pdf");
 
         return tfcData;
     }
@@ -168,12 +196,6 @@ public class FlightStripPrinterViewModel : PropertyChangedBase, IViewModel
 
     private async void LogFileChanged(object sender, FileSystemEventArgs e)
     {
-        //using (var stream = File.Open(e.FullPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
-        //using (var reader = new StreamReader(stream))
-        //{
-        //    var logs = (await reader.ReadToEndAsync()).Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries);
-        //    Logs = new ObservableCollection<string>(logs.Reverse());
-        //}
         ReadLogs(e.FullPath);
     }
 
@@ -186,13 +208,14 @@ public class FlightStripPrinterViewModel : PropertyChangedBase, IViewModel
     }
 
     public Task ViewLoadedAsync() => Task.CompletedTask;
+    public EventHandler<EventArgs>? OnClosed { get; set; }
 }
 
 
 public class FlightStripPrinterViewModelDesign : FlightStripPrinterViewModel
 {
 #pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
-    public FlightStripPrinterViewModelDesign() : base(null, null, null, null)
+    public FlightStripPrinterViewModelDesign() : base(null, null, null, null, null)
 #pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
     {
         this.Logs = new ObservableCollection<string> {

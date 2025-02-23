@@ -11,6 +11,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Windows;
+using System.Windows.Navigation;
 using System.Windows.Threading;
 using Serilog.Events;
 
@@ -43,10 +44,13 @@ public class Bootstrapper : BootstrapperBase
 
         sc.AddLogging(conf => conf.AddSerilog(CreateLogger()));
 
+        sc.AddSyncfusionLicensing();
+
         //ViewModels
         sc.AddScoped<ShellViewModel>();
         sc.AddScoped<FlightStripPrinterViewModel>();
         sc.AddScoped<SettingsViewModel>();
+        sc.AddScoped<PrintPreviewViewModel>();
 
         //Services
         sc.AddScoped<ILogFileWatcherService, LogFileWatcherService>();
@@ -59,7 +63,7 @@ public class Bootstrapper : BootstrapperBase
         sc.AddScoped<IEventAggregator, EventAggregator>();
 
         //Init Syncfusion
-        HtmlToPdf.Init(config.GetRequiredSection("SyncfusionLicenseKey").Value!, DataFolderProvider.GetStripsFolder());
+        HtmlToPdf.Init(DataFolderProvider.GetStripsFolder());
 
         //Wiring up with Bootstrapper
         _serviceProvider = sc.BuildServiceProvider();
@@ -84,6 +88,8 @@ public class Bootstrapper : BootstrapperBase
                 {"MinWidth", 800 },
                 {"MinHeight", 600 },
             });
+
+        await new GitHubUpdateManager().CheckForUpdates();
     }
 
     protected override void OnExit(object sender, EventArgs e)

@@ -1,4 +1,5 @@
-﻿using Caliburn.Micro;
+﻿using System;
+using Caliburn.Micro;
 using Ivao.It.Aurora.FlightStripPrinter.Models;
 using Ivao.It.Aurora.FlightStripPrinter.Services;
 using System.Threading.Tasks;
@@ -27,6 +28,8 @@ public class SettingsViewModel : Screen, IViewModel
 
     public async Task ViewLoadedAsync()
         => Settings = await _settingsService.GetSettingsAsync();
+
+    public EventHandler<EventArgs>? OnClosed { get; set; }
 
     public async Task SaveSettingsAndClose()
     {

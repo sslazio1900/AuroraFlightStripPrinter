@@ -58,6 +58,7 @@
                 <ColumnDefinition />
                 <ColumnDefinition />
                 <ColumnDefinition />
+                <ColumnDefinition />
             </Grid.ColumnDefinitions>
             <Grid.Resources>
                 <Style BasedOn="{StaticResource MahApps.Styles.Button}" TargetType="Button">
@@ -70,12 +71,16 @@
                 Grid.Column="1"
                 Content="Generate Strip" />
             <Button
-                x:Name="PrintStrip"
+                x:Name="ShowPrintPreview"
                 Grid.Column="2"
+                Content="Print Preview" />
+            <Button
+                x:Name="PrintStrip"
+                Grid.Column="3"
                 Content="Print Selected Label (F9)" />
             <Button
                 x:Name="PrintStripWithPrinterChoice"
-                Grid.Column="3"
+                Grid.Column="4"
                 Content="Print With Printer Setup" />
         </Grid>
     </Grid>

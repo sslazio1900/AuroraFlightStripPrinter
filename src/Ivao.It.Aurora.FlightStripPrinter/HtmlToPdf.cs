@@ -1,25 +1,20 @@
 ﻿using Ivao.It.Aurora.FlightStripPrinter.Models;
 using Syncfusion.HtmlConverter;
-using Syncfusion.Licensing;
 using System;
 using System.Drawing;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using Syncfusion.Pdf;
-using Syncfusion.Pdf.Graphics;
 
 namespace Ivao.It.Aurora.FlightStripPrinter;
 
 public class HtmlToPdf
 {
-    public static void Init(string key, string appDataPath)
+    public static void Init(string appDataPath)
     {
-        ArgumentNullException.ThrowIfNull(key);
         ArgumentNullException.ThrowIfNull(appDataPath);
 
         AppDataPath = appDataPath;
-        SyncfusionLicenseProvider.RegisterLicense(key);
         WipeoutTempFolder();
     }
 
@@ -59,7 +54,7 @@ public class HtmlToPdf
         //    settings.StripHeigth + settings.MarginLeft + settings.MarginRight);
 
         htmlConverter.ConverterSettings.PdfPageSize = new SizeF(settings.StripWidth, settings.StripHeigth);
-        
+
         htmlConverter.ConverterSettings.Margin.All = 0;
 
 

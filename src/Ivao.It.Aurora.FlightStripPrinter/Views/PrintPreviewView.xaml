@@ -1,0 +1,37 @@
+﻿<mah:MetroWindow
+    x:Class="Ivao.It.Aurora.FlightStripPrinter.Views.PrintPreviewView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:sf="clr-namespace:Syncfusion.Windows.PdfViewer;assembly=Syncfusion.PdfViewer.WPF"
+    xmlns:sfskin="clr-namespace:Syncfusion.SfSkinManager;assembly=Syncfusion.SfSkinManager.WPF"
+    Title="Print Preview"
+    Width="350"
+    Height="800"
+    mc:Ignorable="d">
+
+    <Grid>
+        <sf:PdfViewerControl
+            HorizontalContentAlignment="Center"
+            VerticalContentAlignment="Center"
+            sfskin:SfSkinManager.Theme="{sfskin:SkinManagerExtension ThemeName=MaterialDark}"
+            EnableLayers="False"
+            EnableNotificationBar="False"
+            EnableRedactionTool="False"
+            IsBookmarkEnabled="False"
+            IsManipulationEnabled="False"
+            IsTextSearchEnabled="False"
+            IsTextSelectionEnabled="False"
+            ItemSource="{Binding RelativeSource={RelativeSource AncestorType=mah:MetroWindow}, Path=DataContext.PdfFilePath}"
+            ShowHorizontalScrollBar="True">
+            <sf:PdfViewerControl.ToolbarSettings>
+                <sf:PdfViewerToolbarSettings
+                    ShowAnnotationTools="False"
+                    ShowFileTools="True"
+                    ShowPageNavigationTools="False" />
+            </sf:PdfViewerControl.ToolbarSettings>
+        </sf:PdfViewerControl>
+    </Grid>
+</mah:MetroWindow>
