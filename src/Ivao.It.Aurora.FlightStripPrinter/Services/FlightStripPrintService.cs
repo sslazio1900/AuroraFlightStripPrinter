@@ -17,8 +17,9 @@ namespace Ivao.It.Aurora.FlightStripPrinter.Services;
 public sealed class FlightStripPrintService : IFlightStripPrintService
 {
     private string? _printQueueName;
-    private static readonly Regex FixRegex = new Regex("^[A-Z]{2,5}$", RegexOptions.Compiled);
+    private static readonly Regex FixRegex = new Regex("^(?!DCT)[A-Z]{2,5}$", RegexOptions.Compiled);
     private static readonly Regex CleanUpRegex = new Regex("\\[[\\w-]*\\]", RegexOptions.Compiled);
+    private static readonly Regex AltSpeedConstraintsRegex = new Regex("(/[NM]\\d{3,4}[FA]\\d{3,5})", RegexOptions.Compiled);
     private readonly ISettingsService _settingsService;
     private readonly ILogger<FlightStripPrintService> _logger;
     private SettingsModel? LastSettingsRead;
@@ -107,7 +108,7 @@ public sealed class FlightStripPrintService : IFlightStripPrintService
 
 
     /// <summary>
-    /// Binda i dati sulla flightstrip
+    /// FLightstrip binding
     /// </summary>
     /// <param name="html"></param>
     /// <param name="fpl"></param>
@@ -125,17 +126,13 @@ public sealed class FlightStripPrintService : IFlightStripPrintService
 
         //Entry/Exit
         var routeSegments = fpl.Route.Split(" ", StringSplitOptions.RemoveEmptyEntries);
-        var entry = routeSegments.FirstOrDefault(i => FixRegex.IsMatch(i));
-        var exit = routeSegments.Reverse().FirstOrDefault(i => FixRegex.IsMatch(i));
+        var entry = routeSegments.FirstOrDefault(FixRegex.IsMatch);
+        var exit = routeSegments.LastOrDefault(FixRegex.IsMatch);
 
-        //Route truncate: primi 3 blocchi (SID WPT AWY) ... ultimi 3 blocchi (AWY WPT STAR)
-        var routeChunks = fpl.Route.Split(' ');
-        string route = fpl.Route;
-        if (routeChunks.Length >= 3)
-        {
-            route = $"{string.Join(' ', routeChunks[..3])}...{string.Join(' ', routeChunks[^3..])}";
-        }
-
+        //Route truncate: first 3 blocks (SID WPT AWY) ... last 3 blocks (AWY WPT STAR)
+        string routeCnstr = GetStartEndOfRoute(fpl.Route);
+        string route = GetStartEndOfRoute(AltSpeedConstraintsRegex.Replace(fpl.Route, string.Empty));
+        
         var depIcao2 = fpl.DepartureIcao.StartsWith(LastSettingsRead?.AreaIcaoCode ?? string.Empty) 
             ? fpl.DepartureIcao?.Substring(2, 2) 
             : fpl.DepartureIcao;
@@ -166,6 +163,7 @@ public sealed class FlightStripPrintService : IFlightStripPrintService
             .Replace("[tas]", fpl.CruisingSpeed)
             .Replace("[alt]", fpl.AlternateIcao)
             .Replace("[rte]", route)
+            .Replace("[rte-cnstr]", routeCnstr)
             .Replace("[rmk]", fpl.Remarks)
             //.Replace("[pob]", fpl.p)
             .Replace("[eobt]", fpl.DepartureTime)
@@ -188,6 +186,18 @@ public sealed class FlightStripPrintService : IFlightStripPrintService
         strip = CleanUpRegex.Replace(strip, string.Empty);
 
         return strip;
+
+
+        string GetStartEndOfRoute(string routeString)
+        {
+            var chunks = routeString.Split(' ');
+            if (chunks.Length >= 3)
+            {
+                return $"{string.Join(' ', chunks[..3])}...{string.Join(' ', chunks[^3..])}";
+            }
+
+            return routeString;
+        }
     }
 
     /// <summary>

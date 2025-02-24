@@ -64,7 +64,8 @@ Aurora provides data to bind the following data:
 | [dest2]     | Flightplan Destination 2 letters (only if the first 2 letters are matching ICAO Area code saved in settings). Eg: Settings = LI, LIRF =>RF, EDDM => EDDM |
 | [tas]       | Flightplan cruising speed                                                                                                                                |
 | [alt]       | Flightplan Alternate                                                                                                                                     |
-| [rte]       | Flightplan Route shortened like: first 3 identifiers ... last 3 identifiers                                                                              |
+| [rte]       | Flightplan Route shortened like: first 3 identifiers ... last 3 identifiers without constraints (blocks like /N0450F320 will be removed)                 |
+| [rte-cnstr] | Flightplan Route shortened like: first 3 identifiers ... last 3 identifiers (constraints included)                                                       |
 | [rmk]       | Flightplan Remaks                                                                                                                                        |
 | [eobt]      | Flightplan Departure Time                                                                                                                                |
 | [eta]       | Flightplan Estimated time of arrival (by FPL, EOBT+EET)                                                                                                  |
