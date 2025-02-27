@@ -154,11 +154,18 @@ public class FlightStripPrinterViewModel : PropertyChangedBase, IViewModel
             controlledApts = new();
         }
 
-        _fileShowed = await _stripPrintService.BindAndConvertToPdf(tfcData, controlledApts);
-        UiBrowser?.Navigate(new Uri($"file:///{_fileShowed}"));
-        UiBrowser!.Visibility = System.Windows.Visibility.Visible;
+        try
+        {
+            _fileShowed = await _stripPrintService.BindAndConvertToPdf(tfcData, controlledApts);
+            UiBrowser?.Navigate(new Uri($"file:///{_fileShowed}"));
+            UiBrowser!.Visibility = System.Windows.Visibility.Visible;
 
-        if (_printPreviewVm is not null) _printPreviewVm.PdfFilePath = _fileShowed!.Replace(".html", ".pdf");
+            if (_printPreviewVm is not null) _printPreviewVm.PdfFilePath = _fileShowed!.Replace(".html", ".pdf");
+        }
+        catch (Exception e)
+        {
+            _logger.LogError("Strip generation failed with error: {error}", e.Message);
+        }
 
         return tfcData;
     }
