@@ -60,24 +60,21 @@
     <PackageReference Include="Ivao.It.AuroraConnector" Version="1.2.4" />
     <PackageReference Include="MahApps.Metro" Version="2.4.10" />
     <PackageReference Include="MahApps.Metro.IconPacks" Version="5.1.0" />
-    <PackageReference Include="Microsoft.Extensions.Configuration" Version="9.0.1" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="9.0.1" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="9.0.1" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.1" />
-    <PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="9.*" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="9.*" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="9.*" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.*" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="9.*" />
     <PackageReference Include="Serilog" Version="4.2.0" />
-    <PackageReference Include="Serilog.Extensions.Logging" Version="9.0.0" />
-    <PackageReference Include="Serilog.Sinks.File" Version="6.0.0" />
+    <PackageReference Include="Serilog.Extensions.Logging" Version="9.*" />
+    <PackageReference Include="Serilog.Sinks.File" Version="6.*" />
     <PackageReference Include="Serilog.Sinks.Map" Version="2.0.0" />
     <PackageReference Include="SharpVectors" Version="1.8.4.2" />
-    <PackageReference Include="Syncfusion.HtmlToPdfConverter.WPF" Version="28.2.4" />
-    <PackageReference Include="Syncfusion.Licensing" Version="28.2.4" />
-    <PackageReference Include="Syncfusion.PdfViewer.WPF" Version="28.2.4" />
-    <PackageReference Include="Syncfusion.SfSkinManager.WPF" Version="28.2.4" />
-    <PackageReference Include="Syncfusion.Themes.MaterialDark.Wpf" Version="28.2.4" />
-    <!--<PackageReference Include="Syncfusion.HtmlToPdfConverter.WPF" Version="20.3.0.56" />
-    <PackageReference Include="Syncfusion.Licensing" Version="20.3.0.56" />
-    <PackageReference Include="Syncfusion.PdfViewer.WPF" Version="20.3.0.56" />-->
+    <PackageReference Include="Syncfusion.HtmlToPdfConverter.WPF" Version="28.*" />
+    <PackageReference Include="Syncfusion.Licensing" Version="28.*" />
+    <PackageReference Include="Syncfusion.PdfViewer.WPF" Version="28.*" />
+    <PackageReference Include="Syncfusion.SfSkinManager.WPF" Version="28.*" />
+    <PackageReference Include="Syncfusion.Themes.MaterialDark.Wpf" Version="28.*" />
     <PackageReference Include="YamlDotNet" Version="16.3.0" />
   </ItemGroup>
 
