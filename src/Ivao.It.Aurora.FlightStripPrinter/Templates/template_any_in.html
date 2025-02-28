@@ -1,34 +1,38 @@
 ﻿<!DOCTYPE html>
 
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Vce In</title>
-
+    <title>In</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sometype+Mono:ital,wght@0,400..700;1,400..700&display=swap"
+        rel="stylesheet">
     <style media="all,print">
         @media print {
             @page {
                 margin: 0;
                 size: landscape;
             }
+
             html {
                 margin-top: 12mm !important;
             }
+
             body {
                 margin: 0;
             }
-            table {
-                background-color: #00ffc0 !important;
-            }
         }
 
-        html, body {
+        html,
+        body {
             width: 200mm;
             height: 26mm;
             margin: 0;
             padding: 0;
-            font-family: monospace;
+            font-family: "Sometype Mono";
         }
 
         html {
@@ -37,93 +41,195 @@
 
 
         table {
-            background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAjcAAABKCAYAAABHC3WYAAADcklEQVR4nO3cv47UVRgG4HeUhtKe2sQb4E+DtIiG0oYCaKxIgERop8FEuQISEykhscJwAdKg9MIFaE9JZcZMmI3L7CLj7MzOOd95nnqT+b7zyyRv5vz2DQBAJZPedplOpw1Msb5988/m59/7PutyDmPq9bm3NHcrsyx/bg/PcvnsdjsN2/SR0wXgCGYOj9YINwBAKcINAFCKcAMAlCLcAAClCDcAQCnCDQBQinADAJQi3AAApQg3AEApwg0AUIpwAwCUItwAAKUINwBAKcINAFCKcAMAlCLcAAClCDcAQCnCDQBQinADAJQi3AAApQg3AEApwg0AUIpwAwCUItwAAKUINwBAKSd6W2Y6nTYwBQDQKr/cAAClCDe7cWnEpQHgOAg3x2uS5G6SByMtDQDHqbt3bjp2MsmPST5NcjbJn6MfCABsg19ujsepJM8Wn3Q+yV/VFwaAXRFutu9ckudJfk5yJcmb6gsDwC65ltquq0m+T3I9ydPKi8I6eq12aGnuVmZR00FLhJvt+DjJ/SRfJrmQ5FXFJQGgRcLN5n2S5HGSWZIzSV5XWxA2ZNbpQbY0dyuz9PosKUq42azPkjxJ8kuSb5P8XWk52LBJhwc6a2juVmZp6UxWJYwVJ9xszryY76ckd5I8rLIUbFMv72ksz7nLuVuZpaUzWZX3gsYh3BzdZBFobiS5vPjPKABgR4Sbo1ku5tNfAwA7pudmfYr5AKBBws165sV8vynmA4D2uJb6/xTzAUDDhJvVKeYDgA4IN6uZF/M9WvylYj4AaJh3bj5sXsz3IskfSb4QbACgbcLNf5sX8/2a5F6S2xqHAaB9rqUOp5gPADol3BykmA8AOuZa6l2K+QCgc8LNvxTzAUABrqXemhfz/ZDkmmI+AOjb6OFmr5jvqySfK+YDgP6NHG72F/Od1l8DADWM+s6NYj4AKGrEcKOYDwAKG+laSjEfAAxglHCjmA8ABjHCtZRiPgAYSPVwo5gPAAZT+VpKMR8ADKhiuFHMBwADqxZu9or5Jor5AGBMld65mRfz/Z7kZZKLgg0AjKlKuNkr5vsuyS3FfAAwrt6vpRTzAQDv6DncKOYDAA7o9VpKMR8AcKgew41iPgDgvXq8lrqZ5BvFfADAYXoMN183MMMmTPpfYSOcw5h6fe4tze27sz5nBwBAJ5L8A3ShlS7euw4kAAAAAElFTkSuQmCC') !important;
+            background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABzMAAADXCAYAAACeT3w9AAARwklEQVR4nO3dfbDldV3A8feGChEiRRhFYznlZI2WuYIoKUpmlKKjKE+CKAghhJqjTuaY4zhZTeowhISgoICwYIQPoeQTMioigpVjk2Vl6WAoUohIEA+3ueNpwOMP2GXvw++c83rN3H/2nnvO7/f9nmVnee/newJgxXyhWrrL1yMtLdyr/5j6ffMQSzZeS0tLP/AFABPXT/2Z/iALMwr2ZXbYq/FamvpinQ39nWTo7yqz8HU3vOcApvyQBQEAAAAAAADGSMwEAAAAAAAARknMBAAAAAAAAEZJzAQAAAAAAABGScwEAAAAAAAARknMBAAAAAAAAEZJzAQAAAAAAABGScwEAAAAAAAARknMBAAAAAAAAEZJzAQAAAAAAABGScwEAAAAAAAARknMBAAAAAAAAEZJzAQAAAAAAABGScwEAAAAAAAARknMBAAAAAAAAEZJzAQAAAAAAABGScwEAAAAAAAARknMBAAAAAAAAEZJzAQAAAAAAABGScwEAAAAAAAARknMBAAAAAAAAEZJzAQAAAAAAABGScwEAAAAAAAARknMBAAAAAAAAEZJzAQAAAAAAABGScwEAAAAAAAARknMBAAAAAAAAEZJzAQAAAAAAABGScwEAAAAAAAARknMBAAAAAAAAEZJzAQAAAAAAABGScwEAAAAAAAARknMBAAAAAAAAEZJzAQAAAAAAABGScwEAAAAAAAARknMBAAAAAAAAEZJzAQAAAAAAABGScwEAAAAAAAARknMBAAAAAAAAEZJzAQAAAAAAABGScwEAAAAAAAARknMBAAAAAAAAEZJzAQAAAAAAABGScwEAAAAAAAARknMBAAAAAAAAEZJzAQAAAAAAABGScwEAAAAAAAARknMBAAAAAAAAEZJzAQAAAAAAABGScwEAAAAAAAARknMBAAAAAAAAEZJzAQAAAAAAABGScwEAAAAAAAARknMBAAAAAAAAEZJzAQAAAAAAABGScwEAAAAAAAARknMBAAAAAAAAEZJzAQAAAAAAABGScwEAAAAAAAARknMBAAAAAAAAEZJzAQAAAAAAABGScwEAAAAAAAARknMBAAAAAAAAEZJzAQAAAAAAABGScwEAAAAAAAARknMBAAAAAAAAEZJzAQAAAAAAABGScwEAAAAAAAA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') !important;
+            background-color: yellow;
+            border-left: 1px solid #000;
+            border-right: 1px solid #000;
             background-repeat: no-repeat !important;
-            background-size: 200mm 26mm !important;
-            background-color: rgb(245, 254, 106);
-            margin: 0;
-            padding: 0;
-            width: 200mm;
+            background-size: 242mm 26mm !important;
+            margin: 0px 0px 0px 5px;
+            padding: 0px 0px 0px -2px;
+            width: 242mm;
             height: 26mm;
             border-spacing: 0;
-            border: 1px solid #666;
+
         }
 
-            table tbody {
-                margin: 0;
-                padding: 0;
-            }
+        table tbody {
+            margin: 0;
+            padding: 0;
+        }
 
-            table tr td {
-                margin: 0;
-                padding: 0 4px;
-                box-sizing: border-box;
-                /* border: 1px solid #c00 !important; */
-                border: 1px solid transparent;
-            }
+        table tr td {
+            margin: 0;
+            padding: 0 0px;
+            vertical-align: top;
+            /*box-sizing: border-box;*/
+            border: 1px solid #c0C;
+            border: 1px solid transparent;
+        }
+
+        .dest {
+            font-weight: 700;
+            font-size: 45px;
+            line-height: 25px;
+            text-align: right
+        }
+
+        .dep {
+            font-weight: normal;
+            font-size: 18px;
+            line-height: 19px;
+            text-align: right
+        }
 
         .callsign {
+            font-family: "Sometype Mono";
             font-weight: bolder;
-            font-size: 37px;
-            text-align: center
+            font-size: 52px;
+            line-height: 60px;
+            text-align: left;
+            font-stretch: ultra-condensed;
         }
 
-        .arrival-or-rwy {
+        .rwy {
             font-weight: bolder;
-            font-size: 20px;
+            font-size: 24.5px;
             text-align: center;
+            vertical-align: bottom;
+        }
+
+        .eobt {
+            font-weight: bolder;
+            font-size: 22.5px;
+            text-align: center;
+            vertical-align: bottom;
+        }
+
+        .clrnc {
+            font-weight: bolder;
+            font-size: 40px;
+            line-height: 30px;
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        .eta {
+            font-weight: bolder;
+            font-size: 30px;
+            line-height: 30px;
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        .text {
+            font-weight: normal;
+            font-size: 18px;
+            text-align: center;
+            /* vertical-align: middle; */
+        }
+
+        .stand {
+            font-weight: bolder;
+            font-size: 50px;
+            line-height: 15px;
+            text-align: center;
+            padding-left: 3px;
+            vertical-align: middle;
+            padding-top: 15px;
+        }
+
+        .text-b {
+            font-weight: bolder;
+            font-size: 18px;
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        .text-t {
+            font-weight: bolder;
+            font-size: 18px;
+            text-align: center;
+            vertical-align: top;
+        }
+
+        .text-sm {
+            font-weight: normal;
+            font-size: 15px;
+            text-align: center;
+            vertical-align: top;
         }
 
         .route {
             font-weight: bold;
             font-size: 14px;
         }
-        .stand {
-            font-weight: bold;
-            font-size: 20px;
+
+        .tutorial {
+            font-weight: bold !important;
+            font-size: 12px !important;
+            text-align: center !important;
+            vertical-align: top !important;
+            line-height: 12px !important;
+            color: #000 !important;
+            text-align: center;
         }
-		.rules {
-			font-size: 40px;
-			text-align:right;
-			font-weight: bold;			
-		}
+
+        .right {
+            float: right;
+        }
+
+        .left {
+            float: left;
+        }
     </style>
 </head>
+
 <body>
     <table>
         <tbody>
-            <tr style="height: 25px">
-            	<td style="width: 214px; text-align: right;">[afl]</td>
-            	<td style="width: 168px">[dep2] <span style="float: right;">[acft-typ]/[acft-cat]</span></td>
-            	<td style="width: 61px"></td>
-            	<td style="width: 47px"></td>
-            	<td style="width: 45px"></td>
-            	<td style="width: 60px">[exit-fix]</td>
-                <td rowspan="3">
-                    <div style="text-align: right;">[p-time]</div>
-                    <br>
-                    <br>
-                    <div style="text-align: left;">[ssr]</div>
-                    <div style="text-align: right;" class="stand">[proc-wpt]</div>
+            <tr style="height: 35px;">
+                <td rowspan="2" style=" padding-left: 10px; padding-top: 65px; width: 42mm;">
+                    <div class="eta" style="text-align: left; vertical-align: bottom;">[eta]</div>
+
+                </td>
+                <td rowspan="2" style="width: 26.5mm;" class="text-b"></td>
+                <td style=" text-align: right; width: 65mm; margin-left: 2mm;" rowspan="2">
+                    <div>
+                        <span class="right">[acft-typ]&nbsp;</span><span class="left">&nbsp;[dep]</span>
+                    </div>
+                    <div class="callsign"
+                        style="margin-top: 10px; padding-left: 10px; padding-top: 0px; text-align: left;">[cs]</div>
+                    <span class="right">[acft-cat]&nbsp;</span><span class="left">&nbsp;</span>
+
+                </td>
+
+                <td class="text" style="width: 12.8mm; "><span class="tutorial">MA</span></td>
+                <td class="text" style="width: 13.5mm;"><span class="tutorial">ATA</span></td>
+                <td class="text" style="width: 13mm;"></td>
+                <td class="text" style="width: 20mm;"></td>
+                <td rowspan="2" class="stand" style="width: 20mm; padding-left: 2mm;">
+                    [stand]&nbsp;<br>
+                    <span style="font-size: 15px; font-weight: bold;">[ssr]</span>
+                </td>
+                <td class="text" style="width: max-content;">
+                    <span class="text-sm" style="vertical-align:top; float: right; ">[p-time]</span><br>
+                    &nbsp;
                 </td>
             </tr>
-            <tr style="height: 50px">
-            	<td class="rules" style="padding-right: 32px;">[rules]</td>
-            	<td class="callsign">[cs]</td>
-            	<td style="vertical-align: bottom;">[dest2]</td>
-            	<td style="vertical-align: bottom;"></td>
-            	<td></td>
-            	<td style="vertical-align: bottom;" class="arrival-or-rwy">[rwy]</td>
-            </tr>
-            <tr>
-            	<td>[eta]</td>
-            	<td style="text-align: right;">[tas]</td>
-            	<td></td>
-            	<td></td>
-            	<td></td>
-            	<td></td>
+            <tr style="height: 35px;">
+                <td class="text-b" style="width: 6mm;">[dest]</td>
+                <td class="text" style="width: 6mm;"></td>
+                <td class="text" style="width: 10mm;"><span class=""></span></td>
+
+                <td style="width: 16mm;">
+                    <div class="tutorial">RWY</div>
+                    <div class="clrnc">[rwy-a]</div>
+                </td>
+                <td class="text-b" style="width:max-content; text-align: right; vertical-align: bottom;">[exit-fix]</td>
             </tr>
         </tbody>
     </table>
 </body>
+
 </html>

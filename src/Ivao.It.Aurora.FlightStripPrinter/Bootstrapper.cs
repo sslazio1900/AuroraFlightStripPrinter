@@ -4,6 +4,7 @@ using Ivao.It.Aurora.FlightStripPrinter.ViewModels;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Serilog;
+using Serilog.Events;
 using Serilog.Filters;
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,6 @@ using System.Linq;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Threading;
-using Serilog.Events;
 
 namespace Ivao.It.Aurora.FlightStripPrinter;
 public class Bootstrapper : BootstrapperBase
@@ -36,17 +36,18 @@ public class Bootstrapper : BootstrapperBase
             .AddJsonFile($"appsettings.{EnvironmentHandler.GetCurrentEnvironment()}.json", optional: true)
 #if DEBUG || BETA
             .AddUserSecrets(Assembly.GetExecutingAssembly())
-#else
-            .AddSyncfusionLicensing()
 #endif
             .Build();
 
         sc.AddLogging(conf => conf.AddSerilog(CreateLogger()));
 
+        sc.AddSyncfusionLicensing();
+
         //ViewModels
         sc.AddScoped<ShellViewModel>();
         sc.AddScoped<FlightStripPrinterViewModel>();
         sc.AddScoped<SettingsViewModel>();
+        sc.AddScoped<PrintPreviewViewModel>();
 
         //Services
         sc.AddScoped<ILogFileWatcherService, LogFileWatcherService>();
@@ -59,7 +60,7 @@ public class Bootstrapper : BootstrapperBase
         sc.AddScoped<IEventAggregator, EventAggregator>();
 
         //Init Syncfusion
-        HtmlToPdf.Init(config.GetRequiredSection("SyncfusionLicenseKey").Value!, DataFolderProvider.GetStripsFolder());
+        HtmlToPdf.Init(DataFolderProvider.GetStripsFolder());
 
         //Wiring up with Bootstrapper
         _serviceProvider = sc.BuildServiceProvider();
@@ -84,6 +85,8 @@ public class Bootstrapper : BootstrapperBase
                 {"MinWidth", 800 },
                 {"MinHeight", 600 },
             });
+
+        await new GitHubUpdateManager().CheckForUpdates();
     }
 
     protected override void OnExit(object sender, EventArgs e)
@@ -116,7 +119,7 @@ public class Bootstrapper : BootstrapperBase
                 .Filter.ByExcluding(auroraSources)
                 .WriteTo.File($"{DataFolderProvider.GetLogsFolder()}/log-{traceId}.txt",
                                 outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss} [{Level:u3}] {Message:lj}{NewLine}{Exception}",
-                                flushToDiskInterval: TimeSpan.FromMilliseconds(500), 
+                                flushToDiskInterval: TimeSpan.FromMilliseconds(500),
                                 restrictedToMinimumLevel: EnvironmentHandler.IsProduction() ? LogEventLevel.Information : LogEventLevel.Verbose
                                 )
             )

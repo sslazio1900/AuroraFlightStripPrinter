@@ -4,6 +4,7 @@ using Ivao.It.AuroraConnector.Models;
 using Ivao.It.FlightStripper;
 using Microsoft.Extensions.Logging;
 using Syncfusion.Windows.PdfViewer;
+using Syncfusion.Windows.Shared.Resources;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -17,8 +18,10 @@ namespace Ivao.It.Aurora.FlightStripPrinter.Services;
 public sealed class FlightStripPrintService : IFlightStripPrintService
 {
     private string? _printQueueName;
-    private static readonly Regex FixRegex = new Regex("^[A-Z]{3,5}$", RegexOptions.Compiled);
+    private static readonly Regex FixRegex = new Regex("^(?!DCT)[A-Z]{2,5}$", RegexOptions.Compiled);
     private static readonly Regex CleanUpRegex = new Regex("\\[[\\w-]*\\]", RegexOptions.Compiled);
+    private static readonly Regex AltSpeedConstraintsRegex = new Regex("(/[NM]\\d{3,4}[FA]\\d{3,5})", RegexOptions.Compiled);
+    private static readonly Regex RwyFromSid = new Regex("\\d{2}[RLC]{0,1}", RegexOptions.Compiled); //Aurora puts SIDS in format like WAYPT3A 16L
     private readonly ISettingsService _settingsService;
     private readonly ILogger<FlightStripPrintService> _logger;
     private SettingsModel? LastSettingsRead;
@@ -107,7 +110,7 @@ public sealed class FlightStripPrintService : IFlightStripPrintService
 
 
     /// <summary>
-    /// Binda i dati sulla flightstrip
+    /// FLightstrip binding
     /// </summary>
     /// <param name="html"></param>
     /// <param name="fpl"></param>
@@ -125,27 +128,22 @@ public sealed class FlightStripPrintService : IFlightStripPrintService
 
         //Entry/Exit
         var routeSegments = fpl.Route.Split(" ", StringSplitOptions.RemoveEmptyEntries);
-        var entry = routeSegments.FirstOrDefault(i => FixRegex.IsMatch(i));
-        var exit = routeSegments.Reverse().FirstOrDefault(i => FixRegex.IsMatch(i));
+        var entry = routeSegments.FirstOrDefault(FixRegex.IsMatch);
+        var exit = routeSegments.LastOrDefault(FixRegex.IsMatch);
 
-        //Route truncate: primi 3 blocchi (SID WPT AWY) ... ultimi 3 blocchi (AWY WPT STAR)
-        var routeChunks = fpl.Route.Split(' ');
-        string route = fpl.Route;
-        if (routeChunks.Length >= 3)
-        {
-            route = $"{string.Join(' ', routeChunks[..3])}...{string.Join(' ', routeChunks[^3..])}";
-        }
-
+        //Route truncate: first 3 blocks (SID WPT AWY) ... last 3 blocks (AWY WPT STAR)
+        string routeCnstr = GetStartEndOfRoute(fpl.Route);
+        string route = GetStartEndOfRoute(AltSpeedConstraintsRegex.Replace(fpl.Route, string.Empty));
+        
         var depIcao2 = fpl.DepartureIcao.StartsWith(LastSettingsRead?.AreaIcaoCode ?? string.Empty) 
             ? fpl.DepartureIcao?.Substring(2, 2) 
             : fpl.DepartureIcao;
 
         var arrIcao2 = fpl.ArrivalIcao.StartsWith(LastSettingsRead?.AreaIcaoCode ?? string.Empty)
             ? fpl.ArrivalIcao?.Substring(2, 2)
-            : fpl.ArrivalIcao;
+        : fpl.ArrivalIcao;
 
-        //TODO CHECK NEXT FROM TRAFFIC POS -> Freq? Nome? Se Freq molto utile...
-
+        var wptWithoutRwy = (RwyFromSid.Split(pos.WaypointLabel).FirstOrDefault() ?? string.Empty).Trim();
 
         var strip = html
             .Replace("[cs]", pos.Callsign)
@@ -166,19 +164,26 @@ public sealed class FlightStripPrintService : IFlightStripPrintService
             .Replace("[tas]", fpl.CruisingSpeed)
             .Replace("[alt]", fpl.AlternateIcao)
             .Replace("[rte]", route)
+            .Replace("[rte-cnstr]", routeCnstr)
             .Replace("[rmk]", fpl.Remarks)
             //.Replace("[pob]", fpl.p)
             .Replace("[eobt]", fpl.DepartureTime)
             .Replace("[eet]", fpl.Eet)
             .Replace("[eta]", eta.ToString("HHmm"))
             .Replace("[endur]", fpl.Endurance)
-            .Replace("[proc-wpt]", pos.WaypointLabel)
+            .Replace("[next]", pos.Next)
+            .Replace("[proc-wpt]", wptWithoutRwy)
             .Replace("[afl]", pos.AltitudeLabel)
             .Replace("[exit-fix]", exit)
             .Replace("[entry-fix]", entry)
             .Replace("[stand]", pos.CurrentGate)
             .Replace("[no-fpl]", fpl.Route.Contains("NO FPL") ? null : "&check;")
-            .Replace("[p-time]", DateTime.UtcNow.ToString("HHmm"));
+            .Replace("[p-time]", DateTime.UtcNow.ToString("HHmm"))
+            .Replace("[p-d-dmy]", DateTime.UtcNow.ToString("dd-MM-yy"))
+            .Replace("[p-d-ymd]", DateTime.UtcNow.ToString("yy-MM-dd"))
+            .Replace("[p-d-mdy]", DateTime.UtcNow.ToString("MM-dd-yy"))
+            .Replace("[rwy-a]", RwyFromSid.Match(pos.WaypointLabel).Value);
+
 
         if (rwy is not null)
         {
@@ -188,6 +193,18 @@ public sealed class FlightStripPrintService : IFlightStripPrintService
         strip = CleanUpRegex.Replace(strip, string.Empty);
 
         return strip;
+
+
+        string GetStartEndOfRoute(string routeString)
+        {
+            var chunks = routeString.Split(' ');
+            if (chunks.Length >= 3)
+            {
+                return $"{string.Join(' ', chunks[..3])}...{string.Join(' ', chunks[^3..])}";
+            }
+
+            return routeString;
+        }
     }
 
     /// <summary>

@@ -1,4 +1,5 @@
-﻿using Caliburn.Micro;
+﻿using System;
+using Caliburn.Micro;
 using Ivao.It.Aurora.FlightStripPrinter.Extensions;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -29,4 +30,5 @@ public class ShellViewModel : Conductor<object>, IViewModel
     public async Task ShowSettings() => await this.ShowDialogAsync<SettingsViewModel>();
 
     public Task ViewLoadedAsync() => Task.CompletedTask;
+    public EventHandler<EventArgs>? OnClosed { get; set; }
 }

@@ -3,7 +3,7 @@
 Print your flight strips directly from Aurora!
 A cheap POS thermal printer is strongly recommended. Prints with no costs and is really cheap to buy! And also, with a little effort you can print on a correct size paper.
 
-Runs on .NET 8.0. [You can download it here](https://dotnet.microsoft.com/en-us/download/dotnet/8.0) but the app prompts for download upon first start if needed.
+Runs on .NET 9.0. [You can download it here](https://dotnet.microsoft.com/en-us/download/dotnet/9.0) but the app prompts for download upon first start if needed.
 
 * [How the strip data binding works?](#how-the-strip-data-binding-works)
 * [Which printer do I need?](#which-printer-do-i-need)
@@ -64,19 +64,25 @@ Aurora provides data to bind the following data:
 | [dest2]     | Flightplan Destination 2 letters (only if the first 2 letters are matching ICAO Area code saved in settings). Eg: Settings = LI, LIRF =>RF, EDDM => EDDM |
 | [tas]       | Flightplan cruising speed                                                                                                                                |
 | [alt]       | Flightplan Alternate                                                                                                                                     |
-| [rte]       | Flightplan Route shortened like: first 3 identifiers ... last 3 identifiers                                                                              |
+| [rte]       | Flightplan Route shortened like: first 3 identifiers ... last 3 identifiers without constraints (blocks like /N0450F320 will be removed)                 |
+| [rte-cnstr] | Flightplan Route shortened like: first 3 identifiers ... last 3 identifiers (constraints included)                                                       |
 | [rmk]       | Flightplan Remaks                                                                                                                                        |
 | [eobt]      | Flightplan Departure Time                                                                                                                                |
 | [eta]       | Flightplan Estimated time of arrival (by FPL, EOBT+EET)                                                                                                  |
 | [eet]       | Flightplan Estimated enroute time                                                                                                                        |
 | [endur]     | Flightplan Endurance                                                                                                                                     |
 | [proc-wpt]  | Aurora Label procedure/waipoint assigned.                                                                                                                |
+| [rwy-a]     | Assigned departure runway from Aurora SID syntax in CWP ( WAYPT3A 16L => gets 16L as assigned runway)                                                    |
 | [afl]       | Aurora Label assigned FL/Alt                                                                                                                             |
 | [exit-fix]  | Flightplan Route last point                                                                                                                              |
 | [entry-fix] | Flightplan Route first point                                                                                                                             |
 | [stand]     | Aurora Label assigned gate                                                                                                                               |
 | [no-fpl]    | Flightplan route "NO FPL" to represent a no flight plan flight. It will contains a "check" icon flag a no-fpl box in the strip.                          |
+| [next]      | Next station from Aurora label (at the time being (Aurora 1.4.1.68) this data is not working. Will be usable once it will be fixed by IVAO DevOps.       |
 | [p-time]    | Strip print UTC time, format HHMM                                                                                                                        |
+| [p-d-dmy]   | Strip print date, format dd-mm-yy                                                                                                                        |
+| [p-d-ymd]   | Strip print date, format yy-mm-dd                                                                                                                        |
+| [p-d-mdy]   | Strip print date, format mm-dd-yy                                                                                                                        |
 
 ### How to use this app?
 App is based on IVAO Aurora 3rd party integration.

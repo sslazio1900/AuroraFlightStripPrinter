@@ -1,24 +1,20 @@
 ﻿using Ivao.It.Aurora.FlightStripPrinter.Models;
 using Syncfusion.HtmlConverter;
-using Syncfusion.Licensing;
 using System;
 using System.Drawing;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using Syncfusion.Pdf;
 
 namespace Ivao.It.Aurora.FlightStripPrinter;
 
 public class HtmlToPdf
 {
-    public static void Init(string key, string appDataPath)
+    public static void Init(string appDataPath)
     {
-        ArgumentNullException.ThrowIfNull(key);
         ArgumentNullException.ThrowIfNull(appDataPath);
 
         AppDataPath = appDataPath;
-        SyncfusionLicenseProvider.RegisterLicense(key);
         WipeoutTempFolder();
     }
 
@@ -53,14 +49,24 @@ public class HtmlToPdf
         var stripContents = await File.ReadAllTextAsync(sourceFilePath);
 
         HtmlToPdfConverter htmlConverter = new HtmlToPdfConverter();
-        htmlConverter.ConverterSettings.PdfPageSize = new SizeF(
-            settings.StripWidth + settings.MarginTop + settings.MarginBottom,
-            settings.StripHeigth + settings.MarginLeft + settings.MarginRight);
+        //htmlConverter.ConverterSettings.PdfPageSize = new SizeF(
+        //    settings.StripWidth + settings.MarginTop + settings.MarginBottom,
+        //    settings.StripHeigth + settings.MarginLeft + settings.MarginRight);
 
+        htmlConverter.ConverterSettings.PdfPageSize = new SizeF(settings.StripWidth, settings.StripHeigth);
+
+        htmlConverter.ConverterSettings.Margin.All = 0;
+
+
+        //htmlConverter.ConverterSettings.Margin.Top = settings.MarginTop;
+        //htmlConverter.ConverterSettings.Margin.Right = settings.MarginRight;
+        //htmlConverter.ConverterSettings.Margin.Bottom = settings.MarginBottom;
+        //htmlConverter.ConverterSettings.Margin.Left = settings.MarginLeft;
         htmlConverter.ConverterSettings.Margin.Top = settings.MarginRight;
         htmlConverter.ConverterSettings.Margin.Right = settings.MarginTop;
         htmlConverter.ConverterSettings.Margin.Bottom = settings.MarginLeft;
         htmlConverter.ConverterSettings.Margin.Left = settings.MarginBottom;
+
         htmlConverter.ConverterSettings.PageRotateAngle = Syncfusion.Pdf.PdfPageRotateAngle.RotateAngle90;
         Syncfusion.Pdf.PdfDocument document = htmlConverter.Convert(stripContents, "localhost");
         MemoryStream stream = new MemoryStream();

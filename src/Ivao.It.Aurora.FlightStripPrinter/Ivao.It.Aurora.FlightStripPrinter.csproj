@@ -2,12 +2,12 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net8.0-windows</TargetFramework>
+    <TargetFramework>net9.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
     <UserSecretsId>69FC90A6-26BF-484E-9D51-50B42EE5E555</UserSecretsId>
     <ApplicationIcon>Icons\icon.ico</ApplicationIcon>
-    <Version>1.1.6</Version>
+    <Version>1.2.0</Version>
     <Configurations>Debug;Release;Beta</Configurations>
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <AssemblyName>Aurora Flight Strip Printer</AssemblyName>
@@ -56,27 +56,26 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Caliburn.Micro" Version="4.0.212" />
+    <PackageReference Include="Caliburn.Micro" Version="4.0.230" />
     <PackageReference Include="Ivao.It.AuroraConnector" Version="1.2.4" />
     <PackageReference Include="MahApps.Metro" Version="2.4.10" />
-    <PackageReference Include="MahApps.Metro.IconPacks" Version="4.11.0" />
-    <PackageReference Include="Microsoft.Extensions.Configuration" Version="8.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="8.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="8.0.0" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Logging" Version="8.0.0" />
-    <PackageReference Include="Serilog" Version="3.1.1" />
-    <PackageReference Include="Serilog.Extensions.Logging" Version="8.0.0" />
-    <PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
-    <PackageReference Include="Serilog.Sinks.Map" Version="1.0.2" />
-    <PackageReference Include="SharpVectors" Version="1.8.4" />
-    <PackageReference Include="Syncfusion.HtmlToPdfConverter.WPF" Version="25.1.35" />
-    <PackageReference Include="Syncfusion.Licensing" Version="25.1.35" />
-    <PackageReference Include="Syncfusion.PdfViewer.WPF" Version="25.1.35" />
-    <!--<PackageReference Include="Syncfusion.HtmlToPdfConverter.WPF" Version="20.3.0.56" />
-    <PackageReference Include="Syncfusion.Licensing" Version="20.3.0.56" />
-    <PackageReference Include="Syncfusion.PdfViewer.WPF" Version="20.3.0.56" />-->
-    <PackageReference Include="YamlDotNet" Version="15.1.2" />
+    <PackageReference Include="MahApps.Metro.IconPacks" Version="5.1.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="9.*" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="9.*" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="9.*" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.*" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="9.*" />
+    <PackageReference Include="Serilog" Version="4.2.0" />
+    <PackageReference Include="Serilog.Extensions.Logging" Version="9.*" />
+    <PackageReference Include="Serilog.Sinks.File" Version="6.*" />
+    <PackageReference Include="Serilog.Sinks.Map" Version="2.0.0" />
+    <PackageReference Include="SharpVectors" Version="1.8.4.2" />
+    <PackageReference Include="Syncfusion.HtmlToPdfConverter.WPF" Version="28.*" />
+    <PackageReference Include="Syncfusion.Licensing" Version="28.*" />
+    <PackageReference Include="Syncfusion.PdfViewer.WPF" Version="28.*" />
+    <PackageReference Include="Syncfusion.SfSkinManager.WPF" Version="28.*" />
+    <PackageReference Include="Syncfusion.Themes.MaterialDark.Wpf" Version="28.*" />
+    <PackageReference Include="YamlDotNet" Version="16.3.0" />
   </ItemGroup>
 
   <ItemGroup>
