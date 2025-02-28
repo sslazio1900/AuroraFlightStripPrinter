@@ -4,6 +4,7 @@ using Ivao.It.AuroraConnector.Models;
 using Ivao.It.FlightStripper;
 using Microsoft.Extensions.Logging;
 using Syncfusion.Windows.PdfViewer;
+using Syncfusion.Windows.Shared.Resources;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -20,6 +21,7 @@ public sealed class FlightStripPrintService : IFlightStripPrintService
     private static readonly Regex FixRegex = new Regex("^(?!DCT)[A-Z]{2,5}$", RegexOptions.Compiled);
     private static readonly Regex CleanUpRegex = new Regex("\\[[\\w-]*\\]", RegexOptions.Compiled);
     private static readonly Regex AltSpeedConstraintsRegex = new Regex("(/[NM]\\d{3,4}[FA]\\d{3,5})", RegexOptions.Compiled);
+    private static readonly Regex RwyFromSid = new Regex("\\d{2}[RLC]{0,1}", RegexOptions.Compiled); //Aurora puts SIDS in format like WAYPT3A 16L
     private readonly ISettingsService _settingsService;
     private readonly ILogger<FlightStripPrintService> _logger;
     private SettingsModel? LastSettingsRead;
@@ -139,10 +141,9 @@ public sealed class FlightStripPrintService : IFlightStripPrintService
 
         var arrIcao2 = fpl.ArrivalIcao.StartsWith(LastSettingsRead?.AreaIcaoCode ?? string.Empty)
             ? fpl.ArrivalIcao?.Substring(2, 2)
-            : fpl.ArrivalIcao;
+        : fpl.ArrivalIcao;
 
-        //TODO CHECK NEXT FROM TRAFFIC POS -> Freq? Nome? Se Freq molto utile...
-
+        var wptWithoutRwy = (RwyFromSid.Split(pos.WaypointLabel).FirstOrDefault() ?? string.Empty).Trim();
 
         var strip = html
             .Replace("[cs]", pos.Callsign)
@@ -170,13 +171,19 @@ public sealed class FlightStripPrintService : IFlightStripPrintService
             .Replace("[eet]", fpl.Eet)
             .Replace("[eta]", eta.ToString("HHmm"))
             .Replace("[endur]", fpl.Endurance)
-            .Replace("[proc-wpt]", pos.WaypointLabel)
+            .Replace("[next]", pos.Next)
+            .Replace("[proc-wpt]", wptWithoutRwy)
             .Replace("[afl]", pos.AltitudeLabel)
             .Replace("[exit-fix]", exit)
             .Replace("[entry-fix]", entry)
             .Replace("[stand]", pos.CurrentGate)
             .Replace("[no-fpl]", fpl.Route.Contains("NO FPL") ? null : "&check;")
-            .Replace("[p-time]", DateTime.UtcNow.ToString("HHmm"));
+            .Replace("[p-time]", DateTime.UtcNow.ToString("HHmm"))
+            .Replace("[p-d-dmy]", DateTime.UtcNow.ToString("dd-MM-yy"))
+            .Replace("[p-d-ymd]", DateTime.UtcNow.ToString("yy-MM-dd"))
+            .Replace("[p-d-mdy]", DateTime.UtcNow.ToString("MM-dd-yy"))
+            .Replace("[rwy-a]", RwyFromSid.Match(pos.WaypointLabel).Value);
+
 
         if (rwy is not null)
         {

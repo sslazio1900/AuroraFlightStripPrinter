@@ -72,12 +72,17 @@ Aurora provides data to bind the following data:
 | [eet]       | Flightplan Estimated enroute time                                                                                                                        |
 | [endur]     | Flightplan Endurance                                                                                                                                     |
 | [proc-wpt]  | Aurora Label procedure/waipoint assigned.                                                                                                                |
+| [rwy-a]     | Assigned departure runway from Aurora SID syntax in CWP ( WAYPT3A 16L => gets 16L as assigned runway)                                                    |
 | [afl]       | Aurora Label assigned FL/Alt                                                                                                                             |
 | [exit-fix]  | Flightplan Route last point                                                                                                                              |
 | [entry-fix] | Flightplan Route first point                                                                                                                             |
 | [stand]     | Aurora Label assigned gate                                                                                                                               |
 | [no-fpl]    | Flightplan route "NO FPL" to represent a no flight plan flight. It will contains a "check" icon flag a no-fpl box in the strip.                          |
+| [next]      | Next station from Aurora label (at the time being (Aurora 1.4.1.68) this data is not working. Will be usable once it will be fixed by IVAO DevOps.       |
 | [p-time]    | Strip print UTC time, format HHMM                                                                                                                        |
+| [p-d-dmy]   | Strip print date, format dd-mm-yy                                                                                                                        |
+| [p-d-ymd]   | Strip print date, format yy-mm-dd                                                                                                                        |
+| [p-d-mdy]   | Strip print date, format mm-dd-yy                                                                                                                        |
 
 ### How to use this app?
 App is based on IVAO Aurora 3rd party integration.

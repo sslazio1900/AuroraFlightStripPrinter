@@ -154,12 +154,17 @@
             line-height: 10px;
         }
         .tutorial {
-            font-weight: bold;
-            font-size: 12px;
-            text-align: center;
-            vertical-align: top;
-            line-height: 7px;
-            color: #000;
+            font-weight: bold !important;
+            font-size: 12px !important;
+            text-align: center !important;
+            vertical-align: top !important;
+            line-height: 7px !important;
+            color: #000 !important;
+        }
+        .rwy {
+            font-weight: 900;
+            font-size: 30px;
+            line-height: 15px
         }
     </style>
 </head>
@@ -196,10 +201,14 @@
                 <td class="tutorial" style="width: 13.7mm">ATD</td>
                 <td class="tutorial" class="route" style="width: 13mm">FLCH</td>
 
-                <td colspan="3" class="ssr" style="width: 47mm; padding-left:4px; padding-right: 4px;"></td>
-                
+                <td  class="ssr" style=" padding-left:4px; padding-right: 4px"></td>
+                <td style="font-weight: bold;" class="text-sm">[next]</td>
+                <td class="rwy">
+                    <span class="tutorial" style="text-align: center;">RWY</span>
+                    [rwy-a]                    
+                </td>
                 <td class="stand" style="vertical-align: middle; padding-left:10px; width: max-content;">
-                    <div><span class="stand" >[stand]</span><span class="ssr">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A[assr]</span></div>
+                    <div><span class="stand" >[stand]</span> <span class="ssr">[assr]</span> <span class="text-sm" style="float:right">[p-d-dmy]</span></div>
                 </td>
             </tr>
         </tbody>
