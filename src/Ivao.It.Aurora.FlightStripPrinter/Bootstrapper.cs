@@ -4,16 +4,14 @@ using Ivao.It.Aurora.FlightStripPrinter.ViewModels;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Serilog;
+using Serilog.Events;
 using Serilog.Filters;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Windows;
-using System.Windows.Navigation;
 using System.Windows.Threading;
-using Serilog.Events;
 
 namespace Ivao.It.Aurora.FlightStripPrinter;
 public class Bootstrapper : BootstrapperBase
@@ -37,8 +35,6 @@ public class Bootstrapper : BootstrapperBase
             .AddJsonFile($"appsettings.{EnvironmentHandler.GetCurrentEnvironment()}.json", optional: true)
 #if DEBUG || BETA
             .AddUserSecrets(Assembly.GetExecutingAssembly())
-#else
-            .AddSyncfusionLicensing()
 #endif
             .Build();
 
@@ -122,7 +118,7 @@ public class Bootstrapper : BootstrapperBase
                 .Filter.ByExcluding(auroraSources)
                 .WriteTo.File($"{DataFolderProvider.GetLogsFolder()}/log-{traceId}.txt",
                                 outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss} [{Level:u3}] {Message:lj}{NewLine}{Exception}",
-                                flushToDiskInterval: TimeSpan.FromMilliseconds(500), 
+                                flushToDiskInterval: TimeSpan.FromMilliseconds(500),
                                 restrictedToMinimumLevel: EnvironmentHandler.IsProduction() ? LogEventLevel.Information : LogEventLevel.Verbose
                                 )
             )
