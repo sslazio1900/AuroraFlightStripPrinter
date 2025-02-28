@@ -3,7 +3,7 @@
 Print your flight strips directly from Aurora!
 A cheap POS thermal printer is strongly recommended. Prints with no costs and is really cheap to buy! And also, with a little effort you can print on a correct size paper.
 
-Runs on .NET 8.0. [You can download it here](https://dotnet.microsoft.com/en-us/download/dotnet/8.0) but the app prompts for download upon first start if needed.
+Runs on .NET 9.0. [You can download it here](https://dotnet.microsoft.com/en-us/download/dotnet/9.0) but the app prompts for download upon first start if needed.
 
 * [How the strip data binding works?](#how-the-strip-data-binding-works)
 * [Which printer do I need?](#which-printer-do-i-need)
