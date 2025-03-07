@@ -21,6 +21,7 @@ public sealed class FlightStripPrintService : IFlightStripPrintService
     private static readonly Regex FixRegex = new Regex("^(?!DCT)[A-Z]{2,5}$", RegexOptions.Compiled);
     private static readonly Regex CleanUpRegex = new Regex("\\[[\\w-]*\\]", RegexOptions.Compiled);
     private static readonly Regex AltSpeedConstraintsRegex = new Regex("(/[NM]\\d{3,4}[FA]\\d{3,5})", RegexOptions.Compiled);
+    private static readonly Regex GateInCwp = new Regex("(?<=G-)([A-Z]{0,1}[0-9]{1,3}[LCR]{0,1})", RegexOptions.Compiled);
     private static readonly Regex RwyFromSid = new Regex("\\d{2}[RLC]{0,1}", RegexOptions.Compiled); //Aurora puts SIDS in format like WAYPT3A 16L
     private readonly ISettingsService _settingsService;
     private readonly ILogger<FlightStripPrintService> _logger;
@@ -143,7 +144,21 @@ public sealed class FlightStripPrintService : IFlightStripPrintService
             ? fpl.ArrivalIcao?.Substring(2, 2)
         : fpl.ArrivalIcao;
 
-        var wptWithoutRwy = (RwyFromSid.Split(pos.WaypointLabel).FirstOrDefault() ?? string.Empty).Trim();
+        //Workaround for gate assigner waiting for gate read working from aurora, requested to IVAO DevOps in Feb 2025
+        var gateMatch = GateInCwp.Match(pos.WaypointLabel);
+        string? gate = null;
+        string? wptWithoutRwy = null;
+        string? rwyAssigned = null;
+        if (!gateMatch.Success)
+        {
+            wptWithoutRwy = (RwyFromSid.Split(pos.WaypointLabel).FirstOrDefault() ?? string.Empty).Trim();
+            rwyAssigned = RwyFromSid.Match(pos.WaypointLabel).Value;
+        }
+        else
+        {
+            gate = gateMatch.Value;
+        }
+        
 
         var strip = html
             .Replace("[cs]", pos.Callsign)
@@ -176,13 +191,14 @@ public sealed class FlightStripPrintService : IFlightStripPrintService
             .Replace("[afl]", pos.AltitudeLabel)
             .Replace("[exit-fix]", exit)
             .Replace("[entry-fix]", entry)
-            .Replace("[stand]", pos.CurrentGate)
+            //.Replace("[stand]", pos.CurrentGate) //not readable from aurora, look above comment...
+            .Replace("[stand]", gate)
             .Replace("[no-fpl]", fpl.Route.Contains("NO FPL") ? null : "&check;")
             .Replace("[p-time]", DateTime.UtcNow.ToString("HHmm"))
             .Replace("[p-d-dmy]", DateTime.UtcNow.ToString("dd-MM-yy"))
             .Replace("[p-d-ymd]", DateTime.UtcNow.ToString("yy-MM-dd"))
             .Replace("[p-d-mdy]", DateTime.UtcNow.ToString("MM-dd-yy"))
-            .Replace("[rwy-a]", RwyFromSid.Match(pos.WaypointLabel).Value);
+            .Replace("[rwy-a]", rwyAssigned);
 
 
         if (rwy is not null)
